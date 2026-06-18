@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:recipe_prokit/screens/RcDashBoardScreen.dart';
+import 'package:recipe_prokit/services/AuthStorage.dart';
 import 'package:recipe_prokit/utils/RCColors.dart';
 import 'package:recipe_prokit/services/AuthService.dart';
 
@@ -19,7 +20,7 @@ class RCSignInComponent extends StatelessWidget {
         key: form_key,
         autovalidateMode: AutovalidateMode.onUserInteraction,
         child: Column(children: [
-          Text('Bienvenido a,',
+          Text('Bienvenido a',
               style: boldTextStyle(
                   size: 30,
                   fontFamily: GoogleFonts.playfairDisplay().fontFamily)),
@@ -83,9 +84,18 @@ class RCSignInComponent extends StatelessWidget {
               );
 
               if (ok) {
-                RcDashBoardScreen(
-                  name: nameController.text,
-                ).launch(context);
+                await AuthStorage.saveUser(
+                  nameController.text,
+                );
+
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => RcDashBoardScreen(
+                      name: nameController.text,
+                    ),
+                  ),
+                );
               } else {
                 toast('Usuario o contraseña incorrectos');
               }

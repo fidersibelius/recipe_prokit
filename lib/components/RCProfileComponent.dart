@@ -11,6 +11,24 @@ class RCProfileScreen extends StatefulWidget {
 }
 
 class _RCProfileScreenState extends State<RCProfileScreen> {
+  String username = "Usuario";
+
+  @override
+  void initState() {
+    super.initState();
+    cargarUsuario();
+  }
+
+  Future<void> cargarUsuario() async {
+    final user = await AuthStorage.getUser();
+
+    if (user != null) {
+      setState(() {
+        username = user;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +46,7 @@ class _RCProfileScreenState extends State<RCProfileScreen> {
               ),
               20.height,
               Text(
-                'Usuario',
+                username,
                 style: boldTextStyle(size: 24),
               ),
               40.height,

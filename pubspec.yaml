@@ -55,7 +55,7 @@ flutter:
 flutter_icons:
   android: true
   ios: true
-  image_path: "images/recipe_app_logo.png"   
+  image_path: "images/bitsoftickets.png"   
 
   # fonts:
   #   - family: Schyler

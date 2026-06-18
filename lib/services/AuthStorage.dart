@@ -4,6 +4,7 @@ class AuthStorage {
   static final _storage = FlutterSecureStorage();
 
   static const _keyToken = "jwt_token";
+  static const _keyUser = "username";
   static const _keyFirstTime = "first_time";
 
   /// 🔑 GUARDAR TOKEN
@@ -11,9 +12,19 @@ class AuthStorage {
     await _storage.write(key: _keyToken, value: token);
   }
 
+  /// 👤 GUARDAR USUARIO
+  static Future<void> saveUser(String user) async {
+    await _storage.write(key: _keyUser, value: user);
+  }
+
   /// 🔍 OBTENER TOKEN
   static Future<String?> getToken() async {
     return await _storage.read(key: _keyToken);
+  }
+
+  /// 👤 OBTENER USUARIO
+  static Future<String?> getUser() async {
+    return await _storage.read(key: _keyUser);
   }
 
   /// ❌ BORRAR TOKEN (logout)

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+//import 'package:google_fonts/google_fonts.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:recipe_prokit/screens/RCWelcomeScreen.dart';
 import 'package:recipe_prokit/utils/RCColors.dart';
+import 'package:recipe_prokit/screens/AuthCheckScreen.dart';
 
 class RCSplashScreen extends StatefulWidget {
   const RCSplashScreen({Key? key}) : super(key: key);
@@ -15,15 +16,20 @@ class _RCSplashScreenState extends State<RCSplashScreen> {
   @override
   void initState() {
     super.initState();
-    //
+
+    print("🔥🔥🔥 SPLASH EJECUTANDOSE 🔥🔥🔥");
+
     init();
   }
 
   Future<void> init() async {
     setStatusBarColor(Colors.transparent);
-    await 10.seconds.delay;
+
+    await 3.seconds.delay;
+
     finish(context);
-    RCWelcomeScreen().launch(context);
+
+    const AuthCheckScreen().launch(context);
   }
 
   @override
@@ -34,60 +40,31 @@ class _RCSplashScreenState extends State<RCSplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
+      backgroundColor: Colors.white,
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Positioned(
-            bottom: -110,
-            right: -60,
-            child: Icon(Icons.cloud,
-                color: Colors.white.withOpacity(0.2), size: 350),
+          Image.asset(
+            'images/bitsoftickets.png',
+            width: 350,
           ),
-          Positioned(
-            right: 0,
-            child: Container(
-              height: 300,
-              width: 250,
-              decoration: BoxDecoration(
-                  borderRadius: radius(16),
-                  color: Colors.white.withOpacity(0.2)),
-              transform: Matrix4.rotationZ(6),
+          20.height,
+          Text(
+            'BITSOFMX Tickets',
+            style: boldTextStyle(
+              size: 28,
+              color: Colors.black,
             ),
           ),
-          Positioned(
-            top: 200,
-            left: -100,
-            child: Image.asset('images/recipe/fork.png',
-                height: 350, color: Colors.white.withOpacity(0.2)),
+          120.height,
+          Text(
+            'Powered by BitsofMX',
+            style: secondaryTextStyle(
+              size: 14,
+            ),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              RotatedBox(
-                quarterTurns: 2,
-                child: Text('K',
-                    style: boldTextStyle(
-                        size: 68,
-                        color: Colors.white,
-                        fontFamily: GoogleFonts.playfairDisplay().fontFamily)),
-              ),
-              Text('ifot',
-                  style: boldTextStyle(
-                      size: 50,
-                      color: Colors.white,
-                      fontFamily: GoogleFonts.playfairDisplay().fontFamily)),
-              RotatedBox(
-                quarterTurns: 2,
-                child: Text('A',
-                    style: boldTextStyle(
-                        size: 68,
-                        color: Colors.white,
-                        fontFamily: GoogleFonts.playfairDisplay().fontFamily)),
-              ),
-            ],
-          ).center(),
         ],
       ),
-      backgroundColor: primaryColor,
     );
   }
 }

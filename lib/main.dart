@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
-//import 'package:recipe_prokit/screens/RCSplashScreen.dart';
+import 'package:recipe_prokit/screens/RCSplashScreen.dart';
 import 'package:recipe_prokit/store/AppStore.dart';
 import 'package:recipe_prokit/utils/AppTheme.dart';
 import 'package:recipe_prokit/utils/RCConstants.dart';
 import 'package:recipe_prokit/utils/RCDataGenerator.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:recipe_prokit/screens/RCSignUpScreen.dart';
+//import 'package:recipe_prokit/screens/RCSignUpScreen.dart';
 import 'utils/NavigationService.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+//import 'package:recipe_prokit/screens/AuthCheckScreen.dart';
 
 AppStore appStore = AppStore();
 
@@ -38,7 +39,7 @@ class MyApp extends StatelessWidget {
       builder: (_) => MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Sneaker Shopping${!isMobile ? ' ${platformName()}' : ''}',
-        home: RCSignUpScreen(selectedIndex: 1),
+        home: const RCSplashScreen(),
 
         theme: !appStore.isDarkModeOn
             ? AppThemeData.lightTheme

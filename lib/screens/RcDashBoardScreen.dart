@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:recipe_prokit/components/RCHomeComponent.dart';
 import 'package:recipe_prokit/components/RCProfileComponent.dart';
-import 'package:recipe_prokit/components/RCSearchComponent.dart';
+//import 'package:recipe_prokit/components/RCSearchComponent.dart';
 import 'package:recipe_prokit/main.dart';
 import 'package:recipe_prokit/utils/RCColors.dart';
+import 'package:recipe_prokit/screens/QRScannerScreen.dart';
 
 class RcDashBoardScreen extends StatefulWidget {
   String name;
@@ -21,8 +22,6 @@ class _RcDashBoardScreenState extends State<RcDashBoardScreen> {
   Widget getTabs() {
     if (selectedIndex == 0) {
       return RCHomeComponent(name: widget.name);
-    } else if (selectedIndex == 1) {
-      return RCSearchScreen();
     } else if (selectedIndex == 2) {
       return RCProfileScreen();
     } else {
@@ -74,12 +73,19 @@ class _RcDashBoardScreenState extends State<RcDashBoardScreen> {
                       ],
                     )
                   : IconButton(
-                      onPressed: () {
-                        selectedIndex = 1;
-                        setState(() {});
+                      onPressed: () async {
+                        final result = await QRScannerScreen().launch(context);
+
+                        if (result == true) {
+                          selectedIndex = 0;
+                          setState(() {});
+                        }
                       },
-                      icon: Icon(Icons.qr_code_scanner,
-                          color: rcSecondaryTextColor, size: 30),
+                      icon: Icon(
+                        Icons.qr_code_scanner,
+                        color: rcSecondaryTextColor,
+                        size: 30,
+                      ),
                     ),
               selectedIndex == 2
                   ? Column(

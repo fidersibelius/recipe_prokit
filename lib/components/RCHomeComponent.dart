@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:recipe_prokit/screens/QRScannerScreen.dart';
-import 'package:recipe_prokit/services/TicketService.dart';
 
 class RCHomeComponent extends StatefulWidget {
   String name;
@@ -21,7 +20,7 @@ class _RCHomeComponentState extends State<RCHomeComponent> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           (context.statusBarHeight + 16).toInt().height,
-          Text(
+          /*  Text(
             'Bienvenido,',
             style: boldTextStyle(
               size: 30,
@@ -34,7 +33,7 @@ class _RCHomeComponentState extends State<RCHomeComponent> {
               size: 30,
               fontFamily: GoogleFonts.playfairDisplay().fontFamily,
             ),
-          ).paddingSymmetric(horizontal: 16),
+          ).paddingSymmetric(horizontal: 16),*/
           24.height,
           Center(
             child: Image.asset(
@@ -81,7 +80,7 @@ class _RCHomeComponentState extends State<RCHomeComponent> {
               splashColor: Colors.transparent,
               highlightColor: Colors.transparent),
           20.height,
-          Container(
+          /*Container(
             width: context.width(),
             margin: EdgeInsets.symmetric(horizontal: 16),
             padding: EdgeInsets.all(20),
@@ -106,7 +105,7 @@ class _RCHomeComponentState extends State<RCHomeComponent> {
                 ),
               ],
             ),
-          ),
+          ),*/
           80.height,
         ],
       ),

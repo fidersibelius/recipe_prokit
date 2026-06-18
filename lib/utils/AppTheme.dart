@@ -16,7 +16,7 @@ class AppThemeData {
     dividerColor: viewLineColor,
     fontFamily: GoogleFonts.openSans().fontFamily,
     appBarTheme: AppBarTheme(
-      color: appLayout_background,
+      backgroundColor: appLayout_background,
       iconTheme: IconThemeData(color: textPrimaryColor),
       systemOverlayStyle:
           SystemUiOverlayStyle(statusBarIconBrightness: Brightness.dark),
@@ -50,7 +50,7 @@ class AppThemeData {
     scaffoldBackgroundColor: appBackgroundColorDark,
     highlightColor: appBackgroundColorDark,
     appBarTheme: AppBarTheme(
-      color: appBackgroundColorDark,
+      backgroundColor: appBackgroundColorDark,
       iconTheme: IconThemeData(color: blackColor),
       systemOverlayStyle:
           SystemUiOverlayStyle(statusBarIconBrightness: Brightness.light),

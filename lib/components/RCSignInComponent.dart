@@ -19,7 +19,7 @@ class RCSignInComponent extends StatelessWidget {
         key: form_key,
         autovalidateMode: AutovalidateMode.onUserInteraction,
         child: Column(children: [
-          Text('Welcome to,',
+          Text('Bienvenido a,',
               style: boldTextStyle(
                   size: 30,
                   fontFamily: GoogleFonts.playfairDisplay().fontFamily)),
@@ -29,39 +29,45 @@ class RCSignInComponent extends StatelessWidget {
             height: 120,
           ),
           24.height,
-          AppTextField(
+          TextFormField(
             controller: nameController,
-            nextFocus: password,
-            textFieldType: TextFieldType.NAME,
-            textStyle: boldTextStyle(),
+            style: boldTextStyle(),
             decoration: InputDecoration(
-              prefixIcon:
-                  Icon(Icons.person_outlined, color: rcSecondaryTextColor),
-              hintText: 'Enter username',
+              prefixIcon: Icon(
+                Icons.person_outlined,
+                color: rcSecondaryTextColor,
+              ),
+              hintText: 'Usuario',
               hintStyle: secondaryTextStyle(),
               focusedBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(color: rcSecondaryTextColor)),
+                borderSide: BorderSide(
+                  color: rcSecondaryTextColor,
+                ),
+              ),
             ),
           ),
           16.height,
-          AppTextField(
+          TextFormField(
             controller: passwordController,
-            focus: password,
-            textFieldType: TextFieldType.PASSWORD,
-            suffixIconColor: rcSecondaryTextColor,
-            textStyle: boldTextStyle(),
+            obscureText: true,
+            style: boldTextStyle(),
             decoration: InputDecoration(
-              prefixIcon:
-                  Icon(Icons.lock_outlined, color: rcSecondaryTextColor),
-              hintText: 'Enter password',
+              prefixIcon: Icon(
+                Icons.lock_outlined,
+                color: rcSecondaryTextColor,
+              ),
+              hintText: 'Contraseña',
               hintStyle: secondaryTextStyle(),
               focusedBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(color: rcSecondaryTextColor)),
+                borderSide: BorderSide(
+                  color: rcSecondaryTextColor,
+                ),
+              ),
             ),
           ),
           150.height,
           Container(
-                  child: Text('Sign In',
+                  child: Text('Iniciar Sesión',
                           style: boldTextStyle(size: 18, color: Colors.white))
                       .center(),
                   width: context.width() - 40,

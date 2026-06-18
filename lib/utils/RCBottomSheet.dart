@@ -16,19 +16,25 @@ List<RCShareNameModel> shareNameList = getShareNameList();
 
 List<RCSortModel> sortList = getSortList();
 
-void showSaveBottomSheet(BuildContext context, List<RCCollectionModel> collectionList) {
+void showSaveBottomSheet(
+    BuildContext context, List<RCCollectionModel> collectionList) {
   showModalBottomSheet(
       context: context,
       isScrollControlled: true,
       enableDrag: true,
-      shape: RoundedRectangleBorder(borderRadius: radiusOnly(topLeft: 30, topRight: 30)),
+      shape: RoundedRectangleBorder(
+          borderRadius: radiusOnly(topLeft: 30, topRight: 30)),
       builder: (context) {
         return Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text('Save Article', style: boldTextStyle(fontFamily: GoogleFonts.playfairDisplay().fontFamily, size: 30)),
+            Text('Save Article',
+                style: boldTextStyle(
+                    fontFamily: GoogleFonts.playfairDisplay().fontFamily,
+                    size: 30)),
             8.height,
-            Text('Add this post to a collection', style: secondaryTextStyle(color: rcSecondaryTextColor)),
+            Text('Add this post to a collection',
+                style: secondaryTextStyle(color: rcSecondaryTextColor)),
             16.height,
             Wrap(
               runSpacing: 12,
@@ -40,23 +46,34 @@ void showSaveBottomSheet(BuildContext context, List<RCCollectionModel> collectio
             Row(
               children: [
                 Container(
-                  child: Text('Create New', style: boldTextStyle(size: 18, color: primaryColor)).center(),
+                  child: Text('Create New',
+                          style: boldTextStyle(size: 18, color: primaryColor))
+                      .center(),
                   width: context.width() / 2 - 32,
                   padding: EdgeInsets.symmetric(vertical: 8),
-                  decoration: BoxDecoration(borderRadius: radius(32), border: Border.all(color: primaryColor)),
+                  decoration: BoxDecoration(
+                      borderRadius: radius(32),
+                      border: Border.all(color: primaryColor)),
                 ).onTap(() {
                   finish(context);
                   showCreateBottomSheet(context, collectionList);
-                }, splashColor: Colors.transparent, highlightColor: Colors.transparent),
+                },
+                    splashColor: Colors.transparent,
+                    highlightColor: Colors.transparent),
                 16.width,
                 Container(
-                  child: Text('Done', style: boldTextStyle(size: 18, color: Colors.white)).center(),
+                  child: Text('Done',
+                          style: boldTextStyle(size: 18, color: Colors.white))
+                      .center(),
                   width: context.width() / 2 - 32,
                   padding: EdgeInsets.symmetric(vertical: 8),
-                  decoration: BoxDecoration(borderRadius: radius(32), color: primaryColor),
+                  decoration: BoxDecoration(
+                      borderRadius: radius(32), color: primaryColor),
                 ).onTap(() {
                   finish(context);
-                }, splashColor: Colors.transparent, highlightColor: Colors.transparent)
+                },
+                    splashColor: Colors.transparent,
+                    highlightColor: Colors.transparent)
               ],
             ),
             20.height,
@@ -65,25 +82,32 @@ void showSaveBottomSheet(BuildContext context, List<RCCollectionModel> collectio
       });
 }
 
-void showCreateBottomSheet(BuildContext context, List<RCCollectionModel> collectionList) {
+void showCreateBottomSheet(
+    BuildContext context, List<RCCollectionModel> collectionList) {
   showModalBottomSheet(
       context: context,
       isScrollControlled: true,
       enableDrag: true,
-      shape: RoundedRectangleBorder(borderRadius: radiusOnly(topLeft: 30, topRight: 30)),
+      shape: RoundedRectangleBorder(
+          borderRadius: radiusOnly(topLeft: 30, topRight: 30)),
       builder: (context) {
         return SingleChildScrollView(
-          padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+          padding:
+              EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text('Create A Cookbook', style: boldTextStyle(fontFamily: GoogleFonts.playfairDisplay().fontFamily, size: 30)),
+              Text('Create A Cookbook',
+                  style: boldTextStyle(
+                      fontFamily: GoogleFonts.playfairDisplay().fontFamily,
+                      size: 30)),
               16.height,
               Row(
                 children: [
                   Icon(Icons.info_outlined, color: rcSecondaryTextColor),
                   8.width,
-                  Text('Title', style: secondaryTextStyle(color: rcSecondaryTextColor)),
+                  Text('Title',
+                      style: secondaryTextStyle(color: rcSecondaryTextColor)),
                 ],
               ),
               AppTextField(
@@ -92,7 +116,8 @@ void showCreateBottomSheet(BuildContext context, List<RCCollectionModel> collect
                 decoration: InputDecoration(
                   hintText: 'Enter title',
                   hintStyle: secondaryTextStyle(),
-                  focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: rcSecondaryTextColor)),
+                  focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: rcSecondaryTextColor)),
                 ),
               ),
               16.height,
@@ -100,7 +125,8 @@ void showCreateBottomSheet(BuildContext context, List<RCCollectionModel> collect
                 children: [
                   Icon(Icons.info_outlined, color: rcSecondaryTextColor),
                   8.width,
-                  Text('Description', style: secondaryTextStyle(color: rcSecondaryTextColor)),
+                  Text('Description',
+                      style: secondaryTextStyle(color: rcSecondaryTextColor)),
                 ],
               ),
               AppTextField(
@@ -109,19 +135,25 @@ void showCreateBottomSheet(BuildContext context, List<RCCollectionModel> collect
                 decoration: InputDecoration(
                   hintText: 'Enter description',
                   hintStyle: secondaryTextStyle(),
-                  focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: rcSecondaryTextColor)),
+                  focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: rcSecondaryTextColor)),
                 ),
               ),
               30.height,
               Container(
-                child: Text('Save', style: boldTextStyle(size: 18, color: Colors.white)).center(),
+                child: Text('Save',
+                        style: boldTextStyle(size: 18, color: Colors.white))
+                    .center(),
                 width: context.width() - 40,
                 margin: EdgeInsets.all(16),
                 padding: EdgeInsets.symmetric(vertical: 8),
-                decoration: BoxDecoration(borderRadius: radius(32), color: primaryColor),
+                decoration: BoxDecoration(
+                    borderRadius: radius(32), color: primaryColor),
               ).onTap(() {
                 finish(context);
-              }, splashColor: Colors.transparent, highlightColor: Colors.transparent),
+              },
+                  splashColor: Colors.transparent,
+                  highlightColor: Colors.transparent),
             ],
           ).paddingAll(16),
         );
@@ -133,38 +165,55 @@ void showShareBottomSheet(BuildContext context) {
       context: context,
       isScrollControlled: true,
       enableDrag: true,
-      shape: RoundedRectangleBorder(borderRadius: radiusOnly(topLeft: 30, topRight: 30)),
+      shape: RoundedRectangleBorder(
+          borderRadius: radiusOnly(topLeft: 30, topRight: 30)),
       builder: (context) {
         return Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Share', style: boldTextStyle(fontFamily: GoogleFonts.playfairDisplay().fontFamily, size: 30)).center(),
+            Text('Share',
+                    style: boldTextStyle(
+                        fontFamily: GoogleFonts.playfairDisplay().fontFamily,
+                        size: 30))
+                .center(),
             30.height,
             AppTextField(
               textFieldType: TextFieldType.NAME,
               textStyle: boldTextStyle(),
               decoration: InputDecoration(
-                prefixIcon: Icon(Icons.info_outlined, color: rcSecondaryTextColor),
+                prefixIcon:
+                    Icon(Icons.info_outlined, color: rcSecondaryTextColor),
                 hintText: 'Enter description',
                 hintStyle: secondaryTextStyle(),
-                focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: rcSecondaryTextColor)),
+                focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: rcSecondaryTextColor)),
               ),
             ),
             16.height,
-            Text('Share With', style: boldTextStyle(fontFamily: GoogleFonts.playfairDisplay().fontFamily, size: 20)),
+            Text('Share With',
+                style: boldTextStyle(
+                    fontFamily: GoogleFonts.playfairDisplay().fontFamily,
+                    size: 20)),
             16.height,
             Wrap(
               spacing: 16,
               children: shareNameList.map((e) {
                 return Column(
                   mainAxisSize: MainAxisSize.min,
-                  children: [profileImage(e.path, 50, 50), 8.height, Text(e.name, style: primaryTextStyle())],
+                  children: [
+                    profileImage(e.path, 50, 50),
+                    8.height,
+                    Text(e.name, style: primaryTextStyle())
+                  ],
                 );
               }).toList(),
             ),
             16.height,
-            Text('CopyLink', style: boldTextStyle(fontFamily: GoogleFonts.playfairDisplay().fontFamily, size: 20)),
+            Text('CopyLink',
+                style: boldTextStyle(
+                    fontFamily: GoogleFonts.playfairDisplay().fontFamily,
+                    size: 20)),
             16.height,
             Container(
               child: Row(
@@ -177,25 +226,32 @@ void showShareBottomSheet(BuildContext context) {
                   ).center(),
                   Icon(Icons.copy, color: primaryColor).onTap(() {
                     Clipboard.setData(ClipboardData(text: "https://ui8.net/"));
-                    toast('Link Copied.', bgColor: Colors.black.withOpacity(0.5));
+                    toast('Link Copied.',
+                        bgColor: Colors.black.withOpacity(0.5));
                   })
                 ],
               ),
               width: context.width() - 40,
               margin: EdgeInsets.all(16),
               padding: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-              decoration: BoxDecoration(borderRadius: radius(32), color: rcSecondaryColor),
+              decoration: BoxDecoration(
+                  borderRadius: radius(32), color: rcSecondaryColor),
             ),
             30.height,
             Container(
-              child: Text('Share', style: boldTextStyle(size: 18, color: Colors.white)).center(),
+              child: Text('Share',
+                      style: boldTextStyle(size: 18, color: Colors.white))
+                  .center(),
               width: context.width() - 40,
               margin: EdgeInsets.all(16),
               padding: EdgeInsets.symmetric(vertical: 8),
-              decoration: BoxDecoration(borderRadius: radius(32), color: primaryColor),
+              decoration:
+                  BoxDecoration(borderRadius: radius(32), color: primaryColor),
             ).onTap(() {
               finish(context);
-            }, splashColor: Colors.transparent, highlightColor: Colors.transparent),
+            },
+                splashColor: Colors.transparent,
+                highlightColor: Colors.transparent),
           ],
         ).paddingAll(16);
       });
@@ -206,13 +262,18 @@ void showSortBottomSheet(BuildContext context) {
       context: context,
       isScrollControlled: true,
       enableDrag: true,
-      shape: RoundedRectangleBorder(borderRadius: radiusOnly(topLeft: 30, topRight: 30)),
+      shape: RoundedRectangleBorder(
+          borderRadius: radiusOnly(topLeft: 30, topRight: 30)),
       builder: (context) {
         return Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Sort', style: boldTextStyle(fontFamily: GoogleFonts.playfairDisplay().fontFamily, size: 30)).center(),
+            Text('Sort',
+                    style: boldTextStyle(
+                        fontFamily: GoogleFonts.playfairDisplay().fontFamily,
+                        size: 30))
+                .center(),
             16.height,
             RCSortComponent()
           ],
@@ -234,7 +295,8 @@ void showFilterBottomSheet(BuildContext context) {
       context: context,
       isScrollControlled: true,
       enableDrag: true,
-      shape: RoundedRectangleBorder(borderRadius: radiusOnly(topLeft: 30, topRight: 30)),
+      shape: RoundedRectangleBorder(
+          borderRadius: radiusOnly(topLeft: 30, topRight: 30)),
       builder: (context) {
         return StatefulBuilder(
           builder: (context, setState) {
@@ -243,7 +305,12 @@ void showFilterBottomSheet(BuildContext context) {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Filter', style: boldTextStyle(fontFamily: GoogleFonts.playfairDisplay().fontFamily, size: 30)).center(),
+                  Text('Filter',
+                          style: boldTextStyle(
+                              fontFamily:
+                                  GoogleFonts.playfairDisplay().fontFamily,
+                              size: 30))
+                      .center(),
                   16.height,
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -254,7 +321,8 @@ void showFilterBottomSheet(BuildContext context) {
                         children: [
                           Icon(Icons.add, color: primaryColor),
                           4.width,
-                          Text('More Cuisine', style: boldTextStyle(color: primaryColor)),
+                          Text('More Cuisine',
+                              style: boldTextStyle(color: primaryColor)),
                         ],
                       )
                     ],
@@ -269,8 +337,10 @@ void showFilterBottomSheet(BuildContext context) {
                       ),
                       IconButton(
                         icon: checkboxOne
-                            ? Icon(LineIcons.check_square, color: primaryColor, size: 30)
-                            : Icon(Icons.crop_square_sharp, size: 30, color: rcSecondaryTextColor),
+                            ? Icon(LineIcons.check_square,
+                                color: primaryColor, size: 30)
+                            : Icon(Icons.crop_square_sharp,
+                                size: 30, color: rcSecondaryTextColor),
                         onPressed: () {
                           checkboxOne = !checkboxOne;
                           setState(() {});
@@ -288,8 +358,10 @@ void showFilterBottomSheet(BuildContext context) {
                       ),
                       IconButton(
                         icon: checkboxTwo
-                            ? Icon(LineIcons.check_square, color: primaryColor, size: 30)
-                            : Icon(Icons.crop_square_sharp, size: 30, color: rcSecondaryTextColor),
+                            ? Icon(LineIcons.check_square,
+                                color: primaryColor, size: 30)
+                            : Icon(Icons.crop_square_sharp,
+                                size: 30, color: rcSecondaryTextColor),
                         onPressed: () {
                           checkboxTwo = !checkboxTwo;
                           setState(() {});
@@ -307,7 +379,8 @@ void showFilterBottomSheet(BuildContext context) {
                         children: [
                           Icon(Icons.add, color: primaryColor),
                           4.width,
-                          Text('More Occasion', style: boldTextStyle(color: primaryColor)),
+                          Text('More Occasion',
+                              style: boldTextStyle(color: primaryColor)),
                         ],
                       )
                     ],
@@ -322,8 +395,10 @@ void showFilterBottomSheet(BuildContext context) {
                       ),
                       IconButton(
                         icon: checkboxThree
-                            ? Icon(LineIcons.check_square, color: primaryColor, size: 30)
-                            : Icon(Icons.crop_square_sharp, size: 30, color: rcSecondaryTextColor),
+                            ? Icon(LineIcons.check_square,
+                                color: primaryColor, size: 30)
+                            : Icon(Icons.crop_square_sharp,
+                                size: 30, color: rcSecondaryTextColor),
                         onPressed: () {
                           checkboxThree = !checkboxThree;
                           setState(() {});
@@ -341,8 +416,10 @@ void showFilterBottomSheet(BuildContext context) {
                       ),
                       IconButton(
                         icon: checkboxFour
-                            ? Icon(LineIcons.check_square, color: primaryColor, size: 30)
-                            : Icon(Icons.crop_square_sharp, size: 30, color: rcSecondaryTextColor),
+                            ? Icon(LineIcons.check_square,
+                                color: primaryColor, size: 30)
+                            : Icon(Icons.crop_square_sharp,
+                                size: 30, color: rcSecondaryTextColor),
                         onPressed: () {
                           checkboxFour = !checkboxFour;
                           setState(() {});
@@ -363,7 +440,7 @@ void showFilterBottomSheet(BuildContext context) {
                           switchOne = val.validate();
                           setState(() {});
                         },
-                        activeColor: Colors.white,
+                        activeThumbColor: Colors.white,
                         activeTrackColor: primaryColor,
                       ),
                     ],
@@ -379,7 +456,7 @@ void showFilterBottomSheet(BuildContext context) {
                           switchTwo = val.validate();
                           setState(() {});
                         },
-                        activeColor: Colors.white,
+                        activeThumbColor: Colors.white,
                         activeTrackColor: primaryColor,
                       ),
                     ],
@@ -395,7 +472,7 @@ void showFilterBottomSheet(BuildContext context) {
                           switchThree = val.validate();
                           setState(() {});
                         },
-                        activeColor: Colors.white,
+                        activeThumbColor: Colors.white,
                         activeTrackColor: primaryColor,
                       ),
                     ],
@@ -403,22 +480,35 @@ void showFilterBottomSheet(BuildContext context) {
                   Row(
                     children: [
                       Container(
-                        child: Text('Cancel', style: boldTextStyle(size: 18, color: primaryColor)).center(),
+                        child: Text('Cancel',
+                                style: boldTextStyle(
+                                    size: 18, color: primaryColor))
+                            .center(),
                         width: context.width() / 2 - 32,
                         padding: EdgeInsets.symmetric(vertical: 8),
-                        decoration: BoxDecoration(borderRadius: radius(32), border: Border.all(color: primaryColor)),
+                        decoration: BoxDecoration(
+                            borderRadius: radius(32),
+                            border: Border.all(color: primaryColor)),
                       ).onTap(() {
                         finish(context);
-                      }, splashColor: Colors.transparent, highlightColor: Colors.transparent),
+                      },
+                          splashColor: Colors.transparent,
+                          highlightColor: Colors.transparent),
                       16.width,
                       Container(
-                        child: Text('Done', style: boldTextStyle(size: 18, color: Colors.white)).center(),
+                        child: Text('Done',
+                                style: boldTextStyle(
+                                    size: 18, color: Colors.white))
+                            .center(),
                         width: context.width() / 2 - 32,
                         padding: EdgeInsets.symmetric(vertical: 8),
-                        decoration: BoxDecoration(borderRadius: radius(32), color: primaryColor),
+                        decoration: BoxDecoration(
+                            borderRadius: radius(32), color: primaryColor),
                       ).onTap(() {
                         finish(context);
-                      }, splashColor: Colors.transparent, highlightColor: Colors.transparent)
+                      },
+                          splashColor: Colors.transparent,
+                          highlightColor: Colors.transparent)
                     ],
                   ),
                 ],
@@ -434,22 +524,33 @@ void showVideoBottomSheet(BuildContext context, RCVideoModel element) {
       context: context,
       isScrollControlled: true,
       enableDrag: true,
-      shape: RoundedRectangleBorder(borderRadius: radiusOnly(topLeft: 30, topRight: 30)),
+      shape: RoundedRectangleBorder(
+          borderRadius: radiusOnly(topLeft: 30, topRight: 30)),
       builder: (context) {
         return SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text('How to video', style: boldTextStyle(fontFamily: GoogleFonts.playfairDisplay().fontFamily, size: 30)).center(),
+              Text('How to video',
+                      style: boldTextStyle(
+                          fontFamily: GoogleFonts.playfairDisplay().fontFamily,
+                          size: 30))
+                  .center(),
               70.height,
               Stack(
                 children: [
-                  Image.asset(element.path, height: 150, width: context.width() - 32, fit: BoxFit.cover).cornerRadiusWithClipRRect(20),
+                  Image.asset(element.path,
+                          height: 150,
+                          width: context.width() - 32,
+                          fit: BoxFit.cover)
+                      .cornerRadiusWithClipRRect(20),
                   Container(
                     height: 150,
                     width: context.width() - 32,
-                    decoration: BoxDecoration(borderRadius: radius(20), color: Colors.black.withOpacity(0.2)),
+                    decoration: BoxDecoration(
+                        borderRadius: radius(20),
+                        color: Colors.black.withOpacity(0.2)),
                     child: Center(
                       child: IconButton(
                         onPressed: () {
@@ -475,7 +576,9 @@ void showVideoBottomSheet(BuildContext context, RCVideoModel element) {
                     children: [
                       Icon(LineIcons.clock, color: rcSecondaryTextColor),
                       4.width,
-                      Text(element.time, style: secondaryTextStyle(color: rcSecondaryTextColor)),
+                      Text(element.time,
+                          style:
+                              secondaryTextStyle(color: rcSecondaryTextColor)),
                     ],
                   ),
                   20.width,
@@ -483,7 +586,9 @@ void showVideoBottomSheet(BuildContext context, RCVideoModel element) {
                     children: [
                       Icon(LineIcons.eye, color: rcSecondaryTextColor),
                       4.width,
-                      Text(element.views, style: secondaryTextStyle(color: rcSecondaryTextColor)),
+                      Text(element.views,
+                          style:
+                              secondaryTextStyle(color: rcSecondaryTextColor)),
                     ],
                   )
                 ],

@@ -3,8 +3,6 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:recipe_prokit/components/RCSignInComponent.dart';
 import 'package:recipe_prokit/components/RCSignUpComponent.dart';
 import 'package:recipe_prokit/main.dart';
-import 'package:recipe_prokit/utils/RCColors.dart';
-import 'package:recipe_prokit/utils/RCCommon.dart';
 
 class RCSignUpScreen extends StatefulWidget {
   int selectedIndex;

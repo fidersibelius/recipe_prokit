@@ -48,7 +48,7 @@ class QRResultScreen extends StatelessWidget {
                 40.height,
                 ElevatedButton.icon(
                   onPressed: () {
-                    finish(context);
+                    Navigator.pop(context, true);
                   },
                   icon: const Icon(Icons.qr_code_scanner),
                   label: const Text('ESCANEAR OTRO'),

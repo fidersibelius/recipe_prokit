@@ -16,39 +16,49 @@ class _QRScannerScreenState extends State<QRScannerScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Escanear QR'),
-      ),
-      body: MobileScanner(
-        onDetect: (capture) async {
-          if (scanned) return;
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (didPop) {
+        if (!didPop) {
+          Navigator.pop(context, true);
+        }
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.pop(context, true);
+            },
+          ),
+          title: const Text('Escanear QR'),
+        ),
+        body: MobileScanner(
+          onDetect: (capture) async {
+            if (scanned) return;
 
-          scanned = true;
+            scanned = true;
 
-          final barcode = capture.barcodes.first;
-          //
-          final code = barcode.rawValue;
-          print('QR LEIDO: $code');
+            final barcode = capture.barcodes.first;
+            //
+            final code = barcode.rawValue;
+            print('QR LEIDO: $code');
 
-          if (code == null) return;
+            if (code == null) return;
 
-          print('QR: $code');
+            print('QR: $code');
 
-          final resp = await TicketService.registrarIngreso(code);
-
-          if (resp['estatus'] == true) {
-            QRResultScreen(
-              success: true,
-              message: resp['mensaje'],
+            final resp = await TicketService.registrarIngreso(code);
+            await QRResultScreen(
+              success: resp['estatus'] == true,
+              message: resp['estatus'] == true
+                  ? resp['mensaje']
+                  : resp['error_msg'] ?? 'Error',
             ).launch(context);
-          } else {
-            QRResultScreen(
-              success: false,
-              message: resp['error_msg'] ?? 'Error',
-            ).launch(context);
-          }
-        },
+
+            scanned = false;
+          },
+        ),
       ),
     );
   }

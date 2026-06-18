@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
+import '../services/TicketService.dart';
+import 'package:recipe_prokit/screens/QRResultScreen.dart';
+import 'package:nb_utils/nb_utils.dart';
 
 class QRScannerScreen extends StatefulWidget {
   const QRScannerScreen({super.key});
@@ -18,33 +21,33 @@ class _QRScannerScreenState extends State<QRScannerScreen> {
         title: const Text('Escanear QR'),
       ),
       body: MobileScanner(
-        onDetect: (capture) {
+        onDetect: (capture) async {
           if (scanned) return;
 
           scanned = true;
 
           final barcode = capture.barcodes.first;
-
+          //
           final code = barcode.rawValue;
-
           print('QR LEIDO: $code');
 
-          showDialog(
-            context: context,
-            builder: (_) => AlertDialog(
-              title: const Text('QR Detectado'),
-              content: Text(code ?? 'Sin datos'),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                    scanned = false;
-                  },
-                  child: const Text('Cerrar'),
-                )
-              ],
-            ),
-          );
+          if (code == null) return;
+
+          print('QR: $code');
+
+          final resp = await TicketService.registrarIngreso(code);
+
+          if (resp['estatus'] == true) {
+            QRResultScreen(
+              success: true,
+              message: resp['mensaje'],
+            ).launch(context);
+          } else {
+            QRResultScreen(
+              success: false,
+              message: resp['error_msg'] ?? 'Error',
+            ).launch(context);
+          }
         },
       ),
     );

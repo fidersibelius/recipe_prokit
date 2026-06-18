@@ -50,41 +50,7 @@ class _RCSignUpScreenState extends State<RCSignUpScreen> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Align(
-                      alignment: Alignment.topRight,
-                      child: Container(
-                        padding: EdgeInsets.all(8),
-                        margin: EdgeInsets.symmetric(vertical: 50),
-                        decoration: BoxDecoration(borderRadius: radius(16), color: rcSecondaryColor),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Container(
-                              decoration: BoxDecoration(borderRadius: radius(16), color: widget.selectedIndex == 0 ? primaryColor : rcSecondaryColor),
-                              child: Text('Sign Up', style: boldTextStyle(color: widget.selectedIndex == 0 ? Colors.white : rcSecondaryTextColor)),
-                              padding: EdgeInsets.all(8),
-                            ).onTap(() {
-                              widget.selectedIndex = 0;
-                              setState(() {});
-                            }),
-                            Container(
-                              decoration: BoxDecoration(borderRadius: radius(16), color: widget.selectedIndex == 1 ? primaryColor : rcSecondaryColor),
-                              child: Text('Sign In', style: boldTextStyle(color: widget.selectedIndex == 1 ? Colors.white : rcSecondaryTextColor)),
-                              padding: EdgeInsets.all(8),
-                            ).onTap(() {
-                              widget.selectedIndex = 1;
-                              setState(() {});
-                            }),
-                          ],
-                        ),
-                      ),
-                    ),
                     getComponent(),
-                    16.height,
-                    Text('or', style: secondaryTextStyle(color: rcSecondaryTextColor)),
-                    16.height,
-                    loginOptions(),
-                    20.height
                   ],
                 ).paddingAll(16),
               ),

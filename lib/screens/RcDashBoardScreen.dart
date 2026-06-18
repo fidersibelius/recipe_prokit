@@ -6,8 +6,6 @@ import 'package:recipe_prokit/components/RCSearchComponent.dart';
 import 'package:recipe_prokit/main.dart';
 import 'package:recipe_prokit/utils/RCColors.dart';
 
-
-
 class RcDashBoardScreen extends StatefulWidget {
   String name;
 
@@ -20,14 +18,14 @@ class RcDashBoardScreen extends StatefulWidget {
 class _RcDashBoardScreenState extends State<RcDashBoardScreen> {
   int selectedIndex = 0;
 
-  Widget getTabs(){
-    if(selectedIndex == 0){
+  Widget getTabs() {
+    if (selectedIndex == 0) {
       return RCHomeComponent(name: widget.name);
-    }else if(selectedIndex == 1){
+    } else if (selectedIndex == 1) {
       return RCSearchScreen();
-    }else if(selectedIndex == 2){
+    } else if (selectedIndex == 2) {
       return RCProfileScreen();
-    }else{
+    } else {
       return RCHomeComponent(name: widget.name);
     }
   }
@@ -35,74 +33,76 @@ class _RcDashBoardScreenState extends State<RcDashBoardScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: appStore.isDarkModeOn ? Colors.black : Colors.white,
-        body:getTabs(),
-        floatingActionButton:Material(
-          elevation: 5,
-          borderRadius: radius(24),
-          child: Container(
-            width: context.width() - 32,
-            decoration: boxDecorationDefault(
-                borderRadius: radius(24),
-                color: Colors.white
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                selectedIndex == 0
-                    ? Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text('Home', style: boldTextStyle(color: primaryColor)),
-                    4.height,
-                    Icon(Icons.circle, size: 10, color: primaryColor),
-                  ],
-                )
-                    : IconButton(
-                  onPressed: () {
-                    selectedIndex = 0;
-                    setState(() {});
-                  },
-                  icon: Icon(LineIcons.home,color: rcSecondaryTextColor,size: 30),
-                ),
-                selectedIndex == 1
-                    ? Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text('Search', style: boldTextStyle(color: primaryColor)),
-                    4.height,
-                    Icon(Icons.circle, size: 10, color: primaryColor),
-                  ],
-                )
-                    : IconButton(
-                  onPressed: () {
-                    selectedIndex = 1;
-                    setState(() {});
-                  },
-                  icon: Icon(LineIcons.search,color: rcSecondaryTextColor,size: 30),
-                ),
-                selectedIndex == 2
-                    ? Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text('Profile', style: boldTextStyle(color: primaryColor)),
-                    4.height,
-                    Icon(Icons.circle, size: 10, color: primaryColor),
-                  ],
-                )
-                    : IconButton(
-                  onPressed: () {
-                    selectedIndex = 2;
-                    setState(() {});
-                  },
-                  icon: Icon(LineIcons.user,color: rcSecondaryTextColor,size: 30),
-                ),
-              ],
-            ),
+      backgroundColor: appStore.isDarkModeOn ? Colors.black : Colors.white,
+      body: getTabs(),
+      floatingActionButton: Material(
+        elevation: 5,
+        borderRadius: radius(24),
+        child: Container(
+          width: context.width() - 32,
+          decoration: boxDecorationDefault(
+              borderRadius: radius(24), color: Colors.white),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              selectedIndex == 0
+                  ? Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text('Inicio',
+                            style: boldTextStyle(color: primaryColor)),
+                        4.height,
+                        Icon(Icons.circle, size: 10, color: primaryColor),
+                      ],
+                    )
+                  : IconButton(
+                      onPressed: () {
+                        selectedIndex = 0;
+                        setState(() {});
+                      },
+                      icon: Icon(LineIcons.home,
+                          color: rcSecondaryTextColor, size: 30),
+                    ),
+              selectedIndex == 1
+                  ? Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text('Escanear',
+                            style: boldTextStyle(color: primaryColor)),
+                        4.height,
+                        Icon(Icons.circle, size: 10, color: primaryColor),
+                      ],
+                    )
+                  : IconButton(
+                      onPressed: () {
+                        selectedIndex = 1;
+                        setState(() {});
+                      },
+                      icon: Icon(Icons.qr_code_scanner,
+                          color: rcSecondaryTextColor, size: 30),
+                    ),
+              selectedIndex == 2
+                  ? Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text('Perfil',
+                            style: boldTextStyle(color: primaryColor)),
+                        4.height,
+                        Icon(Icons.circle, size: 10, color: primaryColor),
+                      ],
+                    )
+                  : IconButton(
+                      onPressed: () {
+                        selectedIndex = 2;
+                        setState(() {});
+                      },
+                      icon: Icon(LineIcons.user,
+                          color: rcSecondaryTextColor, size: 30),
+                    ),
+            ],
           ),
-        ) ,
-
+        ),
+      ),
     );
   }
 }
-

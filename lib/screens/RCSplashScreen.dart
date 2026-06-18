@@ -4,7 +4,6 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:recipe_prokit/screens/RCWelcomeScreen.dart';
 import 'package:recipe_prokit/utils/RCColors.dart';
 
-
 class RCSplashScreen extends StatefulWidget {
   const RCSplashScreen({Key? key}) : super(key: key);
 
@@ -13,7 +12,6 @@ class RCSplashScreen extends StatefulWidget {
 }
 
 class _RCSplashScreenState extends State<RCSplashScreen> {
-
   @override
   void initState() {
     super.initState();
@@ -23,7 +21,7 @@ class _RCSplashScreenState extends State<RCSplashScreen> {
 
   Future<void> init() async {
     setStatusBarColor(Colors.transparent);
-    await 3.seconds.delay;
+    await 10.seconds.delay;
     finish(context);
     RCWelcomeScreen().launch(context);
   }
@@ -41,7 +39,8 @@ class _RCSplashScreenState extends State<RCSplashScreen> {
           Positioned(
             bottom: -110,
             right: -60,
-            child: Icon(Icons.cloud,color: Colors.white.withOpacity(0.2) , size: 350),
+            child: Icon(Icons.cloud,
+                color: Colors.white.withOpacity(0.2), size: 350),
           ),
           Positioned(
             right: 0,
@@ -49,28 +48,40 @@ class _RCSplashScreenState extends State<RCSplashScreen> {
               height: 300,
               width: 250,
               decoration: BoxDecoration(
-                borderRadius: radius(16),
-                color: Colors.white.withOpacity(0.2)
-              ),
+                  borderRadius: radius(16),
+                  color: Colors.white.withOpacity(0.2)),
               transform: Matrix4.rotationZ(6),
             ),
           ),
           Positioned(
             top: 200,
             left: -100,
-            child: Image.asset('images/recipe/fork.png',height: 350,color: Colors.white.withOpacity(0.2)),
+            child: Image.asset('images/recipe/fork.png',
+                height: 350, color: Colors.white.withOpacity(0.2)),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               RotatedBox(
                 quarterTurns: 2,
-                child: Text('K', style: boldTextStyle(size: 68, color: Colors.white,fontFamily:GoogleFonts.playfairDisplay().fontFamily)),
+                child: Text('K',
+                    style: boldTextStyle(
+                        size: 68,
+                        color: Colors.white,
+                        fontFamily: GoogleFonts.playfairDisplay().fontFamily)),
               ),
-              Text('ifot', style: boldTextStyle(size: 50, color: Colors.white,fontFamily:GoogleFonts.playfairDisplay().fontFamily)),
+              Text('ifot',
+                  style: boldTextStyle(
+                      size: 50,
+                      color: Colors.white,
+                      fontFamily: GoogleFonts.playfairDisplay().fontFamily)),
               RotatedBox(
                 quarterTurns: 2,
-                child: Text('A', style: boldTextStyle(size: 68, color: Colors.white,fontFamily:GoogleFonts.playfairDisplay().fontFamily)),
+                child: Text('A',
+                    style: boldTextStyle(
+                        size: 68,
+                        color: Colors.white,
+                        fontFamily: GoogleFonts.playfairDisplay().fontFamily)),
               ),
             ],
           ).center(),

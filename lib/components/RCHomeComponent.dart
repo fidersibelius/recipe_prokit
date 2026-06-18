@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:recipe_prokit/components/RCStoryComponent.dart';
-import 'package:recipe_prokit/models/RCHomeStoryModel.dart';
-import 'package:recipe_prokit/utils/RCClipperPaths.dart';
-import 'package:recipe_prokit/utils/RCColors.dart';
+import 'package:recipe_prokit/screens/QRScannerScreen.dart';
+import 'package:recipe_prokit/services/TicketService.dart';
 
 class RCHomeComponent extends StatefulWidget {
   String name;
@@ -16,105 +14,101 @@ class RCHomeComponent extends StatefulWidget {
 }
 
 class _RCHomeComponentState extends State<RCHomeComponent> {
-  bool no = false;
-
-  List<RCHomeStoryModel> list = getHomeStoryList();
-
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            (context.statusBarHeight + 16).toInt().height,
-            Text('Good Morning,', style: boldTextStyle(size: 30, fontFamily: GoogleFonts.playfairDisplay().fontFamily))
-                .paddingSymmetric(horizontal: 16),
-            Text('${widget.name} !', style: boldTextStyle(size: 30, fontFamily: GoogleFonts.playfairDisplay().fontFamily))
-                .paddingSymmetric(horizontal: 16),
-            16.height,
-            Text('Would you consider a solely plant-based out of climate change reasons?', style: secondaryTextStyle(color: rcSecondaryTextColor))
-                .paddingSymmetric(horizontal: 16),
-            16.height,
-            Wrap(
-              runSpacing: 8,
-              spacing: 16,
-              children: [
-                Container(
-                  child: Stack(
-                    children: [
-                      ClipPath(
-                        clipper: BackgroundClipper(),
-                        child: Container(
-                            height: 180,
-                            width: 150,
-                            color: !no ? primaryColor : rcSecondaryColor,
-                            child: Align(
-                              alignment: Alignment.bottomCenter,
-                              child: Text(
-                                'Yes',
-                                style: boldTextStyle(color: !no ? Colors.white : rcSecondaryTextColor),
-                              ).paddingOnly(bottom: 8),
-                            )),
-                      ),
-                      Positioned(
-                        top: 8,
-                        child: Image.asset(
-                          'images/recipe/leonardo.png',
-                          height: 130,
-                        ),
-                      )
-                    ],
-                  ),
-                ).onTap(() {
-                  no = !no;
-                  setState(() {});
-                }, splashColor: Colors.transparent, highlightColor: Colors.transparent),
-                Container(
-                  child: Stack(
-                    children: [
-                      ClipPath(
-                        clipper: BackgroundClipper(),
-                        child: Container(
-                            height: 180,
-                            width: 150,
-                            color: no ? primaryColor : rcSecondaryColor,
-                            child: Align(
-                              alignment: Alignment.bottomCenter,
-                              child: Text(
-                                'No',
-                                style: boldTextStyle(color: no ? Colors.white : rcSecondaryTextColor),
-                              ).paddingOnly(bottom: 8),
-                            )),
-                      ),
-                      Positioned(
-                        top: 8,
-                        child: Image.asset(
-                          'images/recipe/leonardo.png',
-                          height: 130,
-                        ),
-                      )
-                    ],
-                  ),
-                ).onTap(() {
-                  no = !no;
-                  setState(() {});
-                }, splashColor: Colors.transparent, highlightColor: Colors.transparent),
-              ],
-            ).paddingSymmetric(horizontal: 16).center(),
-            20.height,
-            Text('Today\'s Story', style: boldTextStyle(size: 24, fontFamily: GoogleFonts.playfairDisplay().fontFamily))
-                .paddingSymmetric(horizontal: 16),
-            20.height,
-            Wrap(
-              runSpacing: 26,
-              children: list.map((element) {
-                return RCStoryComponent(element: element, isProfile: false);
-              }).toList(),
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          (context.statusBarHeight + 16).toInt().height,
+          Text(
+            'Bienvenido,',
+            style: boldTextStyle(
+              size: 30,
+              fontFamily: GoogleFonts.playfairDisplay().fontFamily,
             ),
-            70.height,
-          ],
-        ),
+          ).paddingSymmetric(horizontal: 16),
+          Text(
+            widget.name,
+            style: boldTextStyle(
+              size: 30,
+              fontFamily: GoogleFonts.playfairDisplay().fontFamily,
+            ),
+          ).paddingSymmetric(horizontal: 16),
+          24.height,
+          Center(
+            child: Image.asset(
+              'images/recipe_app_logo.png',
+              height: 180,
+            ),
+          ),
+          32.height,
+          Container(
+            width: context.width(),
+            margin: EdgeInsets.symmetric(horizontal: 16),
+            padding: EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: Colors.teal,
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Column(
+              children: [
+                Icon(
+                  Icons.qr_code_scanner,
+                  color: Colors.white,
+                  size: 60,
+                ),
+                12.height,
+                Text(
+                  'Escanear QR',
+                  style: boldTextStyle(
+                    color: Colors.white,
+                    size: 20,
+                  ),
+                ),
+              ],
+            ),
+          ).onTap(() async {
+            QRScannerScreen().launch(context);
+
+            // prueba temporal
+            /*final resp = await TicketService.registrarIngreso(
+              '58d2907a|39c2|4bf7|ac5d|4423a6dd9ece||bd9b1bf0|c08e|498d|99d4|3f5ed09ca388',
+            );
+
+            print(resp);*/
+          },
+              splashColor: Colors.transparent,
+              highlightColor: Colors.transparent),
+          20.height,
+          Container(
+            width: context.width(),
+            margin: EdgeInsets.symmetric(horizontal: 16),
+            padding: EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: Colors.blueGrey,
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Column(
+              children: [
+                Icon(
+                  Icons.verified_user,
+                  color: Colors.white,
+                  size: 60,
+                ),
+                12.height,
+                Text(
+                  'Verificar Ticket',
+                  style: boldTextStyle(
+                    color: Colors.white,
+                    size: 20,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          80.height,
+        ],
       ),
     );
   }

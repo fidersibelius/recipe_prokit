@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:recipe_prokit/screens/RCSplashScreen.dart';
+//import 'package:recipe_prokit/screens/RCSplashScreen.dart';
 import 'package:recipe_prokit/store/AppStore.dart';
 import 'package:recipe_prokit/utils/AppTheme.dart';
 import 'package:recipe_prokit/utils/RCConstants.dart';
 import 'package:recipe_prokit/utils/RCDataGenerator.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:recipe_prokit/screens/RCSignUpScreen.dart';
+import 'utils/NavigationService.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 AppStore appStore = AppStore();
 
@@ -18,6 +21,9 @@ void main() async {
   appStore.toggleDarkMode(value: getBoolAsync(isDarkModeOnPref));
 
   defaultToastGravityGlobal = ToastGravity.BOTTOM;
+  await dotenv.load(fileName: ".env");
+
+  print("BASE_URL: ${dotenv.env['BASE_URL']}");
 
   runApp(const MyApp());
 }
@@ -32,13 +38,13 @@ class MyApp extends StatelessWidget {
       builder: (_) => MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Sneaker Shopping${!isMobile ? ' ${platformName()}' : ''}',
-        home: RCSplashScreen(),
+        home: RCSignUpScreen(selectedIndex: 1),
 
         theme: !appStore.isDarkModeOn
             ? AppThemeData.lightTheme
             : AppThemeData.darkTheme,
 
-        navigatorKey: navigatorKey,
+        navigatorKey: globalNavigatorKey,
         scrollBehavior: SBehavior(),
 
         // YA EXISTIA

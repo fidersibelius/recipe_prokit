@@ -89,7 +89,7 @@ class _RCProfileScreenState extends State<RCProfileScreen> {
                 'Versión 1.0.0',
                 style: secondaryTextStyle(),
               ),
-              4.height,
+              /*4.height,
               Text(
                 'Powered by BitsofMX',
                 style: secondaryTextStyle(
@@ -102,7 +102,7 @@ class _RCProfileScreenState extends State<RCProfileScreen> {
                 style: secondaryTextStyle(
                   size: 12,
                 ),
-              ),
+              ),*/
             ],
           ),
         ),

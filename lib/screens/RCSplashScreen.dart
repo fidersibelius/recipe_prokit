@@ -41,29 +41,28 @@ class _RCSplashScreenState extends State<RCSplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.asset(
-            'images/bitsoftickets.png',
-            width: 350,
-          ),
-          20.height,
-          Text(
-            'BITSOFMX Tickets',
-            style: boldTextStyle(
-              size: 28,
-              color: Colors.black,
+      body: SafeArea(
+        child: Column(
+          children: [
+            Expanded(
+              child: Center(
+                child: Image.asset(
+                  'images/bitsoftickets.png',
+                  width: 350,
+                ),
+              ),
             ),
-          ),
-          120.height,
-          Text(
-            'Powered by BitsofMX',
-            style: secondaryTextStyle(
-              size: 14,
+            Padding(
+              padding: const EdgeInsets.only(bottom: 24),
+              child: Text(
+                'Powered BITSOFMX',
+                style: secondaryTextStyle(
+                  size: 14,
+                ),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -84,6 +84,25 @@ class _RCProfileScreenState extends State<RCProfileScreen> {
                   );
                 },
               ),
+              20.height,
+              Text(
+                'Versión 1.0.0',
+                style: secondaryTextStyle(),
+              ),
+              4.height,
+              Text(
+                'Powered by BitsofMX',
+                style: secondaryTextStyle(
+                  size: 12,
+                ),
+              ),
+              2.height,
+              Text(
+                'Developed by Chiki and Polar Bear',
+                style: secondaryTextStyle(
+                  size: 12,
+                ),
+              ),
             ],
           ),
         ),

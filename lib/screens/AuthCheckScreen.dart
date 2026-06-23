@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:recipe_prokit/screens/RCSignUpScreen.dart';
 import 'package:recipe_prokit/screens/RcDashBoardScreen.dart';
+import 'package:recipe_prokit/screens/VersionBloqueadaScreen.dart';
 import 'package:recipe_prokit/services/AuthStorage.dart';
+import 'package:recipe_prokit/services/VersionService.dart';
 
 class AuthCheckScreen extends StatefulWidget {
   const AuthCheckScreen({super.key});
@@ -18,6 +20,18 @@ class _AuthCheckScreenState extends State<AuthCheckScreen> {
   }
 
   Future<void> _checkLogin() async {
+    final version = await VersionService.cargaInicial();
+
+    if (version['estatus'] != true) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (_) => const VersionBloqueadaScreen(),
+        ),
+      );
+      return;
+    }
+
     final token = await AuthStorage.getToken();
 
     if (!mounted) return;

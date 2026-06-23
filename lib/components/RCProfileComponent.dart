@@ -4,6 +4,7 @@ import 'package:recipe_prokit/main.dart';
 import 'package:recipe_prokit/utils/RCColors.dart';
 import 'package:recipe_prokit/services/AuthStorage.dart';
 import 'package:recipe_prokit/screens/RCSignUpScreen.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class RCProfileScreen extends StatefulWidget {
   @override
@@ -31,6 +32,8 @@ class _RCProfileScreenState extends State<RCProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final version = dotenv.env['APP_VERSION'] ?? '1.0.0';
+
     return Scaffold(
       backgroundColor: appStore.isDarkModeOn ? Colors.black : Colors.white,
       body: SafeArea(
@@ -86,7 +89,7 @@ class _RCProfileScreenState extends State<RCProfileScreen> {
               ),
               20.height,
               Text(
-                'Versión 1.0.0',
+                'Versión: $version',
                 style: secondaryTextStyle(),
               ),
               /*4.height,

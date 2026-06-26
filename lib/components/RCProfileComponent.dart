@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:recipe_prokit/components/RCFooterComponent.dart';
 import 'package:recipe_prokit/main.dart';
 import 'package:recipe_prokit/utils/RCColors.dart';
 import 'package:recipe_prokit/services/AuthStorage.dart';
@@ -92,20 +93,9 @@ class _RCProfileScreenState extends State<RCProfileScreen> {
                 'Versión: $version',
                 style: secondaryTextStyle(),
               ),
-              /*4.height,
-              Text(
-                'Powered by BitsofMX',
-                style: secondaryTextStyle(
-                  size: 12,
-                ),
-              ),
-              2.height,
-              Text(
-                'Developed by Chiki and Polar Bear',
-                style: secondaryTextStyle(
-                  size: 12,
-                ),
-              ),*/
+              Spacer(),
+              const RCFooterComponent(),
+              24.height,
             ],
           ),
         ),

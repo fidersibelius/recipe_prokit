@@ -6,6 +6,17 @@ class AuthStorage {
   static const _keyToken = "jwt_token";
   static const _keyUser = "username";
   static const _keyFirstTime = "first_time";
+  static const _keyLogo = "logo";
+
+  /// 🖼️ GUARDAR LOGO
+  static Future<void> saveLogo(String logo) async {
+    await _storage.write(key: _keyLogo, value: logo);
+  }
+
+  /// 🖼️ OBTENER LOGO
+  static Future<String?> getLogo() async {
+    return await _storage.read(key: _keyLogo);
+  }
 
   /// 🔑 GUARDAR TOKEN
   static Future<void> saveToken(String token) async {

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+//import 'package:google_fonts/google_fonts.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:recipe_prokit/screens/QRScannerScreen.dart';
+import 'package:recipe_prokit/services/AuthStorage.dart';
 
 class RCHomeComponent extends StatefulWidget {
   String name;
@@ -36,9 +37,27 @@ class _RCHomeComponentState extends State<RCHomeComponent> {
           ).paddingSymmetric(horizontal: 16),*/
           24.height,
           Center(
-            child: Image.asset(
-              'images/recipe_app_logo.png',
-              height: 180,
+            child: FutureBuilder<String?>(
+              future: AuthStorage.getLogo(),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData || snapshot.data == null) {
+                  return Image.asset(
+                    'images/recipe_app_logo.png',
+                    height: 180,
+                  );
+                }
+
+                return Image.network(
+                  snapshot.data!,
+                  height: 180,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Image.asset(
+                      'images/recipe_app_logo.png',
+                      height: 180,
+                    );
+                  },
+                );
+              },
             ),
           ),
           32.height,

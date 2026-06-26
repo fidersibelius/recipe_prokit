@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 //import 'package:google_fonts/google_fonts.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:recipe_prokit/components/RCFooterComponent.dart';
 import 'package:recipe_prokit/screens/RCWelcomeScreen.dart';
 //import 'package:recipe_prokit/utils/RCColors.dart';
 import 'package:recipe_prokit/screens/AuthCheckScreen.dart';
@@ -54,11 +55,12 @@ class _RCSplashScreenState extends State<RCSplashScreen> {
             ),
             Padding(
               padding: const EdgeInsets.only(bottom: 24),
-              child: Text(
-                'Powered BITSOFMX',
-                style: secondaryTextStyle(
-                  size: 14,
-                ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const RCFooterComponent(),
+                  24.height,
+                ],
               ),
             ),
           ],

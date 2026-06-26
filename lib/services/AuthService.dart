@@ -25,6 +25,10 @@ class AuthService {
         jsonData['token_jwt'],
       );
 
+      await AuthStorage.saveLogo(
+        jsonData['logo'],
+      );
+      print(await AuthStorage.getLogo());
       return true;
     }
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:recipe_prokit/components/RCFooterComponent.dart';
 import 'package:recipe_prokit/screens/RcDashBoardScreen.dart';
 import 'package:recipe_prokit/screens/VersionBloqueadaScreen.dart';
 import 'package:recipe_prokit/services/AuthStorage.dart';
@@ -22,15 +23,25 @@ class RCSignInComponent extends StatelessWidget {
         key: form_key,
         autovalidateMode: AutovalidateMode.onUserInteraction,
         child: Column(children: [
+          (context.statusBarHeight + 40).toInt().height,
           Text('Bienvenido a',
               style: boldTextStyle(
                   size: 30,
                   fontFamily: GoogleFonts.playfairDisplay().fontFamily)),
           12.height,
           Image.asset(
-            'images/recipe_app_logo.png',
+            'images/bitsoftickets.png',
             height: 120,
           ),
+          16.height,
+          Text(
+            'Ingresa tus credenciales a continuación:',
+            textAlign: TextAlign.center,
+            style: secondaryTextStyle(
+              size: 16,
+            ),
+          ),
+          24.height,
           24.height,
           TextFormField(
             controller: nameController,
@@ -117,6 +128,9 @@ class RCSignInComponent extends StatelessWidget {
           },
                   splashColor: Colors.transparent,
                   highlightColor: Colors.transparent),
+          SizedBox(height: 80),
+          const RCFooterComponent(),
+          24.height,
         ]));
   }
 }

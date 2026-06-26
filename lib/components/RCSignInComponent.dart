@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:recipe_prokit/screens/RcDashBoardScreen.dart';
+import 'package:recipe_prokit/screens/VersionBloqueadaScreen.dart';
 import 'package:recipe_prokit/services/AuthStorage.dart';
+import 'package:recipe_prokit/services/VersionService.dart';
 import 'package:recipe_prokit/utils/RCColors.dart';
 import 'package:recipe_prokit/services/AuthService.dart';
 
@@ -84,6 +86,18 @@ class RCSignInComponent extends StatelessWidget {
               );
 
               if (ok) {
+                final version = await VersionService.cargaInicial();
+
+                if (version['estatus'] != true) {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => const VersionBloqueadaScreen(),
+                    ),
+                  );
+                  return;
+                }
+
                 await AuthStorage.saveUser(
                   nameController.text,
                 );

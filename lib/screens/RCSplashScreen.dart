@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 //import 'package:google_fonts/google_fonts.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:recipe_prokit/screens/RCWelcomeScreen.dart';
-import 'package:recipe_prokit/utils/RCColors.dart';
+//import 'package:recipe_prokit/utils/RCColors.dart';
 import 'package:recipe_prokit/screens/AuthCheckScreen.dart';
 
 class RCSplashScreen extends StatefulWidget {

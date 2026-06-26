@@ -20,23 +20,23 @@ class _AuthCheckScreenState extends State<AuthCheckScreen> {
   }
 
   Future<void> _checkLogin() async {
-    final version = await VersionService.cargaInicial();
-
-    if (version['estatus'] != true) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (_) => const VersionBloqueadaScreen(),
-        ),
-      );
-      return;
-    }
-
     final token = await AuthStorage.getToken();
 
     if (!mounted) return;
 
     if (token != null && token.isNotEmpty) {
+      final version = await VersionService.cargaInicial();
+
+      if (version['estatus'] != true) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (_) => const VersionBloqueadaScreen(),
+          ),
+        );
+        return;
+      }
+
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(

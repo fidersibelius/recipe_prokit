@@ -8,6 +8,7 @@ import 'package:recipe_prokit/services/AuthStorage.dart';
 import 'package:recipe_prokit/services/VersionService.dart';
 import 'package:recipe_prokit/utils/RCColors.dart';
 import 'package:recipe_prokit/services/AuthService.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class RCSignInComponent extends StatelessWidget {
   FocusNode password = FocusNode();
@@ -19,6 +20,8 @@ class RCSignInComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final version = dotenv.env['APP_VERSION'] ?? '1.1';
+
     return Form(
         key: form_key,
         autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -33,7 +36,7 @@ class RCSignInComponent extends StatelessWidget {
             'images/bitsoftickets.png',
             height: 120,
           ),
-          16.height,
+          32.height,
           Text(
             'Ingresa tus credenciales a continuación:',
             textAlign: TextAlign.center,
@@ -41,8 +44,7 @@ class RCSignInComponent extends StatelessWidget {
               size: 16,
             ),
           ),
-          24.height,
-          24.height,
+          12.height,
           TextFormField(
             controller: nameController,
             style: boldTextStyle(),
@@ -128,7 +130,14 @@ class RCSignInComponent extends StatelessWidget {
           },
                   splashColor: Colors.transparent,
                   highlightColor: Colors.transparent),
-          SizedBox(height: 80),
+          24.height,
+          Text(
+            'Versión $version',
+            style: secondaryTextStyle(
+              size: 13,
+            ),
+          ),
+          SizedBox(height: 56),
           const RCFooterComponent(),
           24.height,
         ]));

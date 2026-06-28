@@ -30,7 +30,12 @@ class _RCSplashScreenState extends State<RCSplashScreen> {
 
     finish(context);
 
-    const AuthCheckScreen().launch(context);
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (_) => const AuthCheckScreen(),
+      ),
+    );
   }
 
   @override

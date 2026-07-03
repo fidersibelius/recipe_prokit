@@ -37,18 +37,18 @@ class _QRScannerScreenState extends State<QRScannerScreen> {
           onDetect: (capture) async {
             if (scanned) return;
 
+            if (capture.barcodes.isEmpty) return;
+
+            final code = capture.barcodes.first.rawValue;
+
+            if (code == null || code.isEmpty) return;
+
             scanned = true;
-
-            final barcode = capture.barcodes.first;
-            //
-            final code = barcode.rawValue;
-            print('QR LEIDO: $code');
-
-            if (code == null) return;
 
             print('QR: $code');
 
             final resp = await TicketService.registrarIngreso(code);
+
             await QRResultScreen(
               success: resp['estatus'] == true,
               message: resp['estatus'] == true

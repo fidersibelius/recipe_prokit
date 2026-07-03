@@ -14,11 +14,9 @@ class ApiClient {
 
   /// 🔑 HEADERS AUTOMÁTICOS
   static Future<Map<String, String>> _getHeaders() async {
-    String? token;
+    final token = await AuthStorage.getToken();
 
-    if (!kIsWeb) {
-      token = await AuthStorage.getToken();
-    }
+    print("TOKEN: $token");
 
     Map<String, String> headers = {
       "Accept": "application/json",

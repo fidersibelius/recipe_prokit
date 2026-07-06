@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:recipe_prokit/main.dart';
-import 'package:recipe_prokit/models/RCSearchModel.dart';
-import 'package:recipe_prokit/screens/RCSearchedComponentScreen.dart';
-import 'package:recipe_prokit/utils/RCColors.dart';
+import 'package:bitsoftickets/main.dart';
+import 'package:bitsoftickets/models/RCSearchModel.dart';
+import 'package:bitsoftickets/screens/RCSearchedComponentScreen.dart';
+import 'package:bitsoftickets/utils/RCColors.dart';
 
 class RCSearchScreen extends StatelessWidget {
   List<RCSearchModel> list = getShareNameList();
@@ -16,11 +16,18 @@ class RCSearchScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           (context.statusBarHeight + 16).toInt().height,
-          Text('Search', style: boldTextStyle(size: 30, fontFamily: GoogleFonts.playfairDisplay().fontFamily)),
+          Text('Search',
+              style: boldTextStyle(
+                  size: 30,
+                  fontFamily: GoogleFonts.playfairDisplay().fontFamily)),
           16.height,
           Container(
             padding: EdgeInsets.symmetric(horizontal: 16),
-            decoration: boxDecorationDefault(borderRadius: radius(16), color: appStore.isDarkModeOn ? rcSecondaryTextColor : rcSecondaryColor),
+            decoration: boxDecorationDefault(
+                borderRadius: radius(16),
+                color: appStore.isDarkModeOn
+                    ? rcSecondaryTextColor
+                    : rcSecondaryColor),
             child: Row(
               children: [
                 Icon(LineIcons.search),
@@ -28,7 +35,10 @@ class RCSearchScreen extends StatelessWidget {
                 AppTextField(
                   textFieldType: TextFieldType.NAME,
                   textStyle: boldTextStyle(),
-                  decoration: InputDecoration(hintText: 'Search', hintStyle: secondaryTextStyle(), border: InputBorder.none),
+                  decoration: InputDecoration(
+                      hintText: 'Search',
+                      hintStyle: secondaryTextStyle(),
+                      border: InputBorder.none),
                 ).expand()
               ],
             ),
@@ -45,7 +55,9 @@ class RCSearchScreen extends StatelessWidget {
                 padding: EdgeInsets.all(16),
                 decoration: BoxDecoration(
                   borderRadius: radius(16),
-                  color: appStore.isDarkModeOn ? rcSecondaryTextColor : rcSecondaryColor,
+                  color: appStore.isDarkModeOn
+                      ? rcSecondaryTextColor
+                      : rcSecondaryColor,
                 ),
                 child: Column(mainAxisSize: MainAxisSize.min, children: [
                   Image.asset(e.image, height: 80),
@@ -54,7 +66,9 @@ class RCSearchScreen extends StatelessWidget {
                 ]),
               ).onTap(() {
                 RCSearchedComponentScreen(element: e).launch(context);
-              }, splashColor: Colors.transparent, highlightColor: Colors.transparent);
+              },
+                  splashColor: Colors.transparent,
+                  highlightColor: Colors.transparent);
             }).toList(),
           )
         ],

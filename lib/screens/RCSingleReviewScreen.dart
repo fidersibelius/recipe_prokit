@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:recipe_prokit/models/RCReviewModel.dart';
-import 'package:recipe_prokit/utils/RCColors.dart';
-import 'package:recipe_prokit/utils/RCCommon.dart';
+import 'package:bitsoftickets/models/RCReviewModel.dart';
+import 'package:bitsoftickets/utils/RCColors.dart';
+import 'package:bitsoftickets/utils/RCCommon.dart';
 
 import '../main.dart';
 
@@ -29,28 +29,44 @@ class _RCSingleReviewScreenState extends State<RCSingleReviewScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
-                  decoration: BoxDecoration(border: Border.all(color: rcSecondaryTextColor), borderRadius: radius(16)),
+                  decoration: BoxDecoration(
+                      border: Border.all(color: rcSecondaryTextColor),
+                      borderRadius: radius(16)),
                   child: IconButton(
-                    icon: Icon(Icons.cancel, color: appStore.isDarkModeOn ? Colors.white : Colors.black),
+                    icon: Icon(Icons.cancel,
+                        color: appStore.isDarkModeOn
+                            ? Colors.white
+                            : Colors.black),
                     onPressed: () {
                       finish(context);
                     },
                   )),
               Container(
-                  decoration: BoxDecoration(border: Border.all(color: rcSecondaryTextColor), borderRadius: radius(16)),
+                  decoration: BoxDecoration(
+                      border: Border.all(color: rcSecondaryTextColor),
+                      borderRadius: radius(16)),
                   child: IconButton(
-                    icon: Icon(Icons.more_horiz, color: appStore.isDarkModeOn ? Colors.white : Colors.black),
+                    icon: Icon(Icons.more_horiz,
+                        color: appStore.isDarkModeOn
+                            ? Colors.white
+                            : Colors.black),
                     onPressed: () {},
                   )),
             ],
           ).paddingSymmetric(vertical: context.statusBarHeight + 16),
-          Image.asset(widget.element.foodImage, height: 400, width: context.width() - 16, fit: BoxFit.cover).cornerRadiusWithClipRRect(20),
+          Image.asset(widget.element.foodImage,
+                  height: 400, width: context.width() - 16, fit: BoxFit.cover)
+              .cornerRadiusWithClipRRect(20),
           Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
-                children: [profileImage(widget.element.profile, 30, 30), 8.width, Text(widget.element.name, style: boldTextStyle())],
+                children: [
+                  profileImage(widget.element.profile, 30, 30),
+                  8.width,
+                  Text(widget.element.name, style: boldTextStyle())
+                ],
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -59,7 +75,9 @@ class _RCSingleReviewScreenState extends State<RCSingleReviewScreen> {
                     children: [
                       Icon(LineIcons.clock, color: rcSecondaryTextColor),
                       4.width,
-                      Text('${widget.element.time} ago', style: secondaryTextStyle(color: rcSecondaryTextColor)),
+                      Text('${widget.element.time} ago',
+                          style:
+                              secondaryTextStyle(color: rcSecondaryTextColor)),
                     ],
                   ),
                   IconButton(
@@ -67,7 +85,9 @@ class _RCSingleReviewScreenState extends State<RCSingleReviewScreen> {
                       liked = !liked;
                       setState(() {});
                     },
-                    icon: liked ? Icon(LineIcons.heart_1, color: Colors.red) : Icon(LineIcons.heart, color: rcSecondaryTextColor),
+                    icon: liked
+                        ? Icon(LineIcons.heart_1, color: Colors.red)
+                        : Icon(LineIcons.heart, color: rcSecondaryTextColor),
                   )
                 ],
               )

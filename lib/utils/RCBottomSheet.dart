@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:recipe_prokit/components/RCCollectionComponent.dart';
-import 'package:recipe_prokit/components/RCSortComponent.dart';
-import 'package:recipe_prokit/models/RCCollectionModel.dart';
-import 'package:recipe_prokit/models/RCShareNameModel.dart';
-import 'package:recipe_prokit/models/RCSortModel.dart';
-import 'package:recipe_prokit/models/RCVideoModel.dart';
-import 'package:recipe_prokit/screens/RCVideoPlayerScreen.dart';
-import 'package:recipe_prokit/utils/RCColors.dart';
-import 'package:recipe_prokit/utils/RCCommon.dart';
+import 'package:bitsoftickets/components/RCCollectionComponent.dart';
+import 'package:bitsoftickets/components/RCSortComponent.dart';
+import 'package:bitsoftickets/models/RCCollectionModel.dart';
+import 'package:bitsoftickets/models/RCShareNameModel.dart';
+import 'package:bitsoftickets/models/RCSortModel.dart';
+import 'package:bitsoftickets/models/RCVideoModel.dart';
+import 'package:bitsoftickets/screens/RCVideoPlayerScreen.dart';
+import 'package:bitsoftickets/utils/RCColors.dart';
+import 'package:bitsoftickets/utils/RCCommon.dart';
 
 List<RCShareNameModel> shareNameList = getShareNameList();
 

@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:recipe_prokit/main.dart';
-import 'package:recipe_prokit/models/RCSortModel.dart';
-import 'package:recipe_prokit/utils/RCColors.dart';
-
+import 'package:bitsoftickets/main.dart';
+import 'package:bitsoftickets/models/RCSortModel.dart';
+import 'package:bitsoftickets/utils/RCColors.dart';
 
 class RCSortComponent extends StatefulWidget {
-
   @override
   _RCSortComponentState createState() => _RCSortComponentState();
 }
 
 class _RCSortComponentState extends State<RCSortComponent> {
-
   late int selectedIndex = 1;
 
   List<RCSortModel> sortList = getSortList();
@@ -26,18 +23,31 @@ class _RCSortComponentState extends State<RCSortComponent> {
         children: [
           SettingItemWidget(
             title: e.title,
-            titleTextStyle: boldTextStyle(color: selectedIndex == index? primaryColor : appStore.isDarkModeOn ? Colors.white : Colors.black),
-            leading: Icon(e.icon,color: selectedIndex == index ? primaryColor : appStore.isDarkModeOn ? Colors.white : Colors.black,),
-            trailing:  selectedIndex == index ? Icon(LineIcons.check,color: primaryColor) : Offstage(),
-            onTap: (){
-              selectedIndex = index ;
+            titleTextStyle: boldTextStyle(
+                color: selectedIndex == index
+                    ? primaryColor
+                    : appStore.isDarkModeOn
+                        ? Colors.white
+                        : Colors.black),
+            leading: Icon(
+              e.icon,
+              color: selectedIndex == index
+                  ? primaryColor
+                  : appStore.isDarkModeOn
+                      ? Colors.white
+                      : Colors.black,
+            ),
+            trailing: selectedIndex == index
+                ? Icon(LineIcons.check, color: primaryColor)
+                : Offstage(),
+            onTap: () {
+              selectedIndex = index;
               setState(() {});
             },
           ),
           Divider()
         ],
       );
-    }).toList()
-    );
+    }).toList());
   }
 }

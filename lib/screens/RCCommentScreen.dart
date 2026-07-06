@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:recipe_prokit/components/RCBackComponent.dart';
-import 'package:recipe_prokit/components/RCCommentComponent.dart';
-import 'package:recipe_prokit/main.dart';
-import 'package:recipe_prokit/utils/RCColors.dart';
-
+import 'package:bitsoftickets/components/RCBackComponent.dart';
+import 'package:bitsoftickets/components/RCCommentComponent.dart';
+import 'package:bitsoftickets/main.dart';
+import 'package:bitsoftickets/utils/RCColors.dart';
 
 class RCCommentScreen extends StatelessWidget {
   const RCCommentScreen({Key? key}) : super(key: key);
@@ -20,15 +19,35 @@ class RCCommentScreen extends StatelessWidget {
             (context.statusBarHeight + 10).toInt().height,
             Row(
               children: [
-                RCBackComponent(color:appStore.isDarkModeOn ? Colors.white : Colors.black, borderColor: rcSecondaryTextColor),
+                RCBackComponent(
+                    color: appStore.isDarkModeOn ? Colors.white : Colors.black,
+                    borderColor: rcSecondaryTextColor),
                 70.width,
-                Text('Comments',style: boldTextStyle(size: 20,fontFamily: GoogleFonts.playfairDisplay().fontFamily))
+                Text('Comments',
+                    style: boldTextStyle(
+                        size: 20,
+                        fontFamily: GoogleFonts.playfairDisplay().fontFamily))
               ],
             ).paddingSymmetric(vertical: 16),
             8.height,
-            RCCommentComponent(name: 'Anita Rose',comment: 'Wow! amazing',time: '3 mins',likes: '139',showLikes: true,liked: false,path : 'images/recipe/faceOne.jpg'),
+            RCCommentComponent(
+                name: 'Anita Rose',
+                comment: 'Wow! amazing',
+                time: '3 mins',
+                likes: '139',
+                showLikes: true,
+                liked: false,
+                path: 'images/recipe/faceOne.jpg'),
             Divider(height: 50),
-            RCCommentComponent(name: 'Melanis',comment: 'Beautiful, I\'ll like to see what good he has to offer me',time: '4 hours',likes: '29',showLikes: true,liked: false,path : 'images/recipe/faceThree.jpg'),
+            RCCommentComponent(
+                name: 'Melanis',
+                comment:
+                    'Beautiful, I\'ll like to see what good he has to offer me',
+                time: '4 hours',
+                likes: '29',
+                showLikes: true,
+                liked: false,
+                path: 'images/recipe/faceThree.jpg'),
             16.height,
             IntrinsicHeight(
               child: Row(
@@ -39,42 +58,62 @@ class RCCommentScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        width : context.width() - 70,
-                          child: RCCommentComponent(name: 'Lisa Horn',comment: 'I think the same as you',time: '1 min',likes: '0',showLikes: true,liked: false,path : 'images/recipe/faceOne.jpg')
-                      ),
+                          width: context.width() - 70,
+                          child: RCCommentComponent(
+                              name: 'Lisa Horn',
+                              comment: 'I think the same as you',
+                              time: '1 min',
+                              likes: '0',
+                              showLikes: true,
+                              liked: false,
+                              path: 'images/recipe/faceOne.jpg')),
                       16.height,
                       Container(
-                          width : context.width() - 70,
-                          child: RCCommentComponent(name: 'Alex Will',comment: 'I think the same as you',time: '1 min',likes: '0',showLikes: true,liked: false,path : 'images/recipe/faceTwo.jpg')
-                      ),
+                          width: context.width() - 70,
+                          child: RCCommentComponent(
+                              name: 'Alex Will',
+                              comment: 'I think the same as you',
+                              time: '1 min',
+                              likes: '0',
+                              showLikes: true,
+                              liked: false,
+                              path: 'images/recipe/faceTwo.jpg')),
                     ],
                   )
                 ],
               ),
             ),
             Divider(height: 50),
-            RCCommentComponent(name: 'Anita Rose',comment: 'Wow! amazing',time: '3 mins',likes: '139',showLikes: true,liked: false,path : 'images/recipe/faceOne.jpg'),
+            RCCommentComponent(
+                name: 'Anita Rose',
+                comment: 'Wow! amazing',
+                time: '3 mins',
+                likes: '139',
+                showLikes: true,
+                liked: false,
+                path: 'images/recipe/faceOne.jpg'),
           ],
         ).paddingAll(16),
       ),
-      bottomNavigationBar:  Container(
+      bottomNavigationBar: Container(
         padding: EdgeInsets.symmetric(horizontal: 16),
-        margin: EdgeInsets.only(left:16,right: 16,bottom: 16),
-        decoration: boxDecorationDefault(borderRadius: radius(16),color:appStore.isDarkModeOn ? Colors.black : Colors.white),
+        margin: EdgeInsets.only(left: 16, right: 16, bottom: 16),
+        decoration: boxDecorationDefault(
+            borderRadius: radius(16),
+            color: appStore.isDarkModeOn ? Colors.black : Colors.white),
         child: Row(
           children: [
-            Icon(LineIcons.camera,color: primaryColor),
+            Icon(LineIcons.camera, color: primaryColor),
             8.width,
             AppTextField(
               textFieldType: TextFieldType.NAME,
               textStyle: boldTextStyle(),
               decoration: InputDecoration(
-                hintText: 'Write a comment',
-                hintStyle: secondaryTextStyle(),
-                border: InputBorder.none
-              ),
+                  hintText: 'Write a comment',
+                  hintStyle: secondaryTextStyle(),
+                  border: InputBorder.none),
             ).expand(),
-            Icon(Icons.send_outlined,color: primaryColor),
+            Icon(Icons.send_outlined, color: primaryColor),
           ],
         ),
       ),

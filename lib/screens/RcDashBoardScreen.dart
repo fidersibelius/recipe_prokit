@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:recipe_prokit/components/RCHomeComponent.dart';
-import 'package:recipe_prokit/components/RCProfileComponent.dart';
-//import 'package:recipe_prokit/components/RCSearchComponent.dart';
-import 'package:recipe_prokit/main.dart';
-import 'package:recipe_prokit/utils/RCColors.dart';
-import 'package:recipe_prokit/screens/QRScannerScreen.dart';
+import 'package:bitsoftickets/components/RCHomeComponent.dart';
+import 'package:bitsoftickets/components/RCProfileComponent.dart';
+//import 'package:bitsoftickets/components/RCSearchComponent.dart';
+import 'package:bitsoftickets/main.dart';
+import 'package:bitsoftickets/utils/RCColors.dart';
+import 'package:bitsoftickets/screens/QRScannerScreen.dart';
 
 class RcDashBoardScreen extends StatefulWidget {
   String name;

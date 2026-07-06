@@ -1,11 +1,11 @@
 {
-    "name": "recipe_prokit",
-    "short_name": "recipe_prokit",
+    "name": "BitsOfTickets",
+    "short_name": "BitsOfTickets",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "Tu ticketera Bajo Control",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

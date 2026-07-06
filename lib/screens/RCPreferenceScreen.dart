@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:recipe_prokit/components/RCBackComponent.dart';
-import 'package:recipe_prokit/main.dart';
-import 'package:recipe_prokit/screens/RcDashBoardScreen.dart';
-import 'package:recipe_prokit/utils/RCColors.dart';
+import 'package:bitsoftickets/components/RCBackComponent.dart';
+import 'package:bitsoftickets/main.dart';
+import 'package:bitsoftickets/screens/RcDashBoardScreen.dart';
+import 'package:bitsoftickets/utils/RCColors.dart';
 
 class RCPreferenceScreen extends StatefulWidget {
   String name;
@@ -35,12 +35,18 @@ class _RCPreferenceScreenState extends State<RCPreferenceScreen> {
             children: [
               (context.statusBarHeight + 16).toInt().height,
               Align(
-                child: RCBackComponent(color: appStore.isDarkModeOn ? Colors.white : Colors.black, borderColor: rcSecondaryTextColor),
+                child: RCBackComponent(
+                    color: appStore.isDarkModeOn ? Colors.white : Colors.black,
+                    borderColor: rcSecondaryTextColor),
                 alignment: Alignment.topLeft,
               ).paddingAll(16),
-              Text('Tell us what cuisines do you prefer', style: boldTextStyle(size: 30, fontFamily: GoogleFonts.playfairDisplay().fontFamily))
+              Text('Tell us what cuisines do you prefer',
+                      style: boldTextStyle(
+                          size: 30,
+                          fontFamily: GoogleFonts.playfairDisplay().fontFamily))
                   .paddingSymmetric(horizontal: 16, vertical: 16),
-              Text('Tap on what you like.', style: secondaryTextStyle(color: rcSecondaryTextColor)),
+              Text('Tap on what you like.',
+                  style: secondaryTextStyle(color: rcSecondaryTextColor)),
               20.height,
               Container(
                 height: 400,
@@ -52,15 +58,26 @@ class _RCPreferenceScreenState extends State<RCPreferenceScreen> {
                         height: 130,
                         width: 130,
                         decoration: BoxDecoration(
-                            border: Border.all(color: beef ? primaryColor : rcSecondaryColor.withAlpha(130)),
+                            border: Border.all(
+                                color: beef
+                                    ? primaryColor
+                                    : rcSecondaryColor.withAlpha(130)),
                             borderRadius: radius(100),
-                            color: beef ? primaryColor.withAlpha(30) : rcSecondaryColor.withAlpha(130)),
+                            color: beef
+                                ? primaryColor.withAlpha(30)
+                                : rcSecondaryColor.withAlpha(130)),
                         child: Column(
                           children: [
                             10.height,
-                            Image.asset('images/recipe/walkThroughImages/imageFour.png', height: 70),
+                            Image.asset(
+                                'images/recipe/walkThroughImages/imageFour.png',
+                                height: 70),
                             10.height,
-                            Text('Beef', style: secondaryTextStyle(color: beef ? primaryColor : rcSecondaryTextColor)),
+                            Text('Beef',
+                                style: secondaryTextStyle(
+                                    color: beef
+                                        ? primaryColor
+                                        : rcSecondaryTextColor)),
                           ],
                         ),
                       ).onTap(() {
@@ -75,15 +92,23 @@ class _RCPreferenceScreenState extends State<RCPreferenceScreen> {
                         height: 100,
                         width: 100,
                         decoration: BoxDecoration(
-                            border: Border.all(color: salad ? primaryColor : rcSecondaryColor.withAlpha(130)),
+                            border: Border.all(
+                                color: salad
+                                    ? primaryColor
+                                    : rcSecondaryColor.withAlpha(130)),
                             borderRadius: radius(100),
-                            color: salad ? primaryColor.withAlpha(30) : rcSecondaryColor.withAlpha(130)),
+                            color: salad
+                                ? primaryColor.withAlpha(30)
+                                : rcSecondaryColor.withAlpha(130)),
                         child: Column(
                           children: [
                             Image.asset('images/recipe/salad.png', height: 70),
                             Text(
                               'Salad',
-                              style: secondaryTextStyle(color: salad ? primaryColor : rcSecondaryTextColor),
+                              style: secondaryTextStyle(
+                                  color: salad
+                                      ? primaryColor
+                                      : rcSecondaryTextColor),
                             ).center(),
                           ],
                         ),
@@ -99,17 +124,27 @@ class _RCPreferenceScreenState extends State<RCPreferenceScreen> {
                         height: 150,
                         width: 150,
                         decoration: BoxDecoration(
-                            border: Border.all(color: sandwich ? primaryColor : rcSecondaryColor.withAlpha(130)),
+                            border: Border.all(
+                                color: sandwich
+                                    ? primaryColor
+                                    : rcSecondaryColor.withAlpha(130)),
                             borderRadius: radius(100),
-                            color: sandwich ? primaryColor.withAlpha(30) : rcSecondaryColor.withAlpha(130)),
+                            color: sandwich
+                                ? primaryColor.withAlpha(30)
+                                : rcSecondaryColor.withAlpha(130)),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             10.height,
-                            Image.asset('images/recipe/walkThroughImages/imageThree.png', height: 80),
+                            Image.asset(
+                                'images/recipe/walkThroughImages/imageThree.png',
+                                height: 80),
                             Text(
                               'Sandwich',
-                              style: secondaryTextStyle(color: sandwich ? primaryColor : rcSecondaryTextColor),
+                              style: secondaryTextStyle(
+                                  color: sandwich
+                                      ? primaryColor
+                                      : rcSecondaryTextColor),
                             ).center(),
                           ],
                         ),
@@ -125,16 +160,24 @@ class _RCPreferenceScreenState extends State<RCPreferenceScreen> {
                         height: 110,
                         width: 110,
                         decoration: BoxDecoration(
-                            border: Border.all(color: spring ? primaryColor : rcSecondaryColor.withAlpha(130)),
+                            border: Border.all(
+                                color: spring
+                                    ? primaryColor
+                                    : rcSecondaryColor.withAlpha(130)),
                             borderRadius: radius(100),
-                            color: spring ? primaryColor.withAlpha(30) : rcSecondaryColor.withAlpha(130)),
+                            color: spring
+                                ? primaryColor.withAlpha(30)
+                                : rcSecondaryColor.withAlpha(130)),
                         child: Column(
                           children: [
                             10.height,
                             Image.asset('images/recipe/soup.png', height: 70),
                             Text(
                               'Spring',
-                              style: secondaryTextStyle(color: spring ? primaryColor : rcSecondaryTextColor),
+                              style: secondaryTextStyle(
+                                  color: spring
+                                      ? primaryColor
+                                      : rcSecondaryTextColor),
                             ).center(),
                           ],
                         ),
@@ -150,16 +193,24 @@ class _RCPreferenceScreenState extends State<RCPreferenceScreen> {
                         height: 90,
                         width: 90,
                         decoration: BoxDecoration(
-                            border: Border.all(color: sushi ? primaryColor : rcSecondaryColor.withAlpha(130)),
+                            border: Border.all(
+                                color: sushi
+                                    ? primaryColor
+                                    : rcSecondaryColor.withAlpha(130)),
                             borderRadius: radius(100),
-                            color: sushi ? primaryColor.withAlpha(30) : rcSecondaryColor.withAlpha(130)),
+                            color: sushi
+                                ? primaryColor.withAlpha(30)
+                                : rcSecondaryColor.withAlpha(130)),
                         child: Column(
                           children: [
                             10.height,
                             Image.asset('images/recipe/sushi.png', height: 50),
                             Text(
                               'Sushi',
-                              style: secondaryTextStyle(color: sushi ? primaryColor : rcSecondaryTextColor),
+                              style: secondaryTextStyle(
+                                  color: sushi
+                                      ? primaryColor
+                                      : rcSecondaryTextColor),
                             ).center(),
                           ],
                         ),
@@ -175,9 +226,14 @@ class _RCPreferenceScreenState extends State<RCPreferenceScreen> {
                         height: 120,
                         width: 120,
                         decoration: BoxDecoration(
-                            border: Border.all(color: pizza ? primaryColor : rcSecondaryColor.withAlpha(130)),
+                            border: Border.all(
+                                color: pizza
+                                    ? primaryColor
+                                    : rcSecondaryColor.withAlpha(130)),
                             borderRadius: radius(100),
-                            color: pizza ? primaryColor.withAlpha(30) : rcSecondaryColor.withAlpha(130)),
+                            color: pizza
+                                ? primaryColor.withAlpha(30)
+                                : rcSecondaryColor.withAlpha(130)),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -185,7 +241,10 @@ class _RCPreferenceScreenState extends State<RCPreferenceScreen> {
                             Image.asset('images/recipe/pizza.png', height: 50),
                             Text(
                               'Pizza',
-                              style: secondaryTextStyle(color: pizza ? primaryColor : rcSecondaryTextColor),
+                              style: secondaryTextStyle(
+                                  color: pizza
+                                      ? primaryColor
+                                      : rcSecondaryTextColor),
                             ).center(),
                           ],
                         ),
@@ -201,16 +260,26 @@ class _RCPreferenceScreenState extends State<RCPreferenceScreen> {
                         height: 140,
                         width: 140,
                         decoration: BoxDecoration(
-                            border: Border.all(color: noodles ? primaryColor : rcSecondaryColor.withAlpha(130)),
+                            border: Border.all(
+                                color: noodles
+                                    ? primaryColor
+                                    : rcSecondaryColor.withAlpha(130)),
                             borderRadius: radius(100),
-                            color: noodles ? primaryColor.withAlpha(30) : rcSecondaryColor.withAlpha(130)),
+                            color: noodles
+                                ? primaryColor.withAlpha(30)
+                                : rcSecondaryColor.withAlpha(130)),
                         child: Column(
                           children: [
                             10.height,
-                            Image.asset('images/recipe/walkThroughImages/imageFive.png', height: 70),
+                            Image.asset(
+                                'images/recipe/walkThroughImages/imageFive.png',
+                                height: 70),
                             Text(
                               'Noodles',
-                              style: secondaryTextStyle(color: noodles ? primaryColor : rcSecondaryTextColor),
+                              style: secondaryTextStyle(
+                                  color: noodles
+                                      ? primaryColor
+                                      : rcSecondaryTextColor),
                             ).center(),
                           ],
                         ),
@@ -226,16 +295,26 @@ class _RCPreferenceScreenState extends State<RCPreferenceScreen> {
                         height: 100,
                         width: 100,
                         decoration: BoxDecoration(
-                            border: Border.all(color: chinese ? primaryColor : rcSecondaryColor.withAlpha(130)),
+                            border: Border.all(
+                                color: chinese
+                                    ? primaryColor
+                                    : rcSecondaryColor.withAlpha(130)),
                             borderRadius: radius(100),
-                            color: chinese ? primaryColor.withAlpha(30) : rcSecondaryColor.withAlpha(130)),
+                            color: chinese
+                                ? primaryColor.withAlpha(30)
+                                : rcSecondaryColor.withAlpha(130)),
                         child: Column(
                           children: [
                             10.height,
-                            Image.asset('images/recipe/walkThroughImages/imageThree.png', height: 60),
+                            Image.asset(
+                                'images/recipe/walkThroughImages/imageThree.png',
+                                height: 60),
                             Text(
                               'Chinese',
-                              style: secondaryTextStyle(color: chinese ? primaryColor : rcSecondaryTextColor),
+                              style: secondaryTextStyle(
+                                  color: chinese
+                                      ? primaryColor
+                                      : rcSecondaryTextColor),
                             ).center(),
                           ],
                         ),
@@ -249,14 +328,19 @@ class _RCPreferenceScreenState extends State<RCPreferenceScreen> {
               ),
               10.height,
               Container(
-                child: Text('Continue', style: boldTextStyle(size: 18, color: Colors.white)).center(),
+                child: Text('Continue',
+                        style: boldTextStyle(size: 18, color: Colors.white))
+                    .center(),
                 width: context.width() - 40,
                 margin: EdgeInsets.all(16),
                 padding: EdgeInsets.symmetric(vertical: 8),
-                decoration: BoxDecoration(borderRadius: radius(32), color: primaryColor),
+                decoration: BoxDecoration(
+                    borderRadius: radius(32), color: primaryColor),
               ).onTap(() {
                 RcDashBoardScreen(name: widget.name).launch(context);
-              }, splashColor: Colors.transparent, highlightColor: Colors.transparent),
+              },
+                  splashColor: Colors.transparent,
+                  highlightColor: Colors.transparent),
             ],
           ),
         ));

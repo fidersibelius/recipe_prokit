@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:recipe_prokit/components/RCFooterComponent.dart';
-import 'package:recipe_prokit/screens/RcDashBoardScreen.dart';
-import 'package:recipe_prokit/screens/VersionBloqueadaScreen.dart';
-import 'package:recipe_prokit/services/AuthStorage.dart';
-import 'package:recipe_prokit/services/VersionService.dart';
-import 'package:recipe_prokit/utils/RCColors.dart';
-import 'package:recipe_prokit/services/AuthService.dart';
+import 'package:bitsoftickets/components/RCFooterComponent.dart';
+import 'package:bitsoftickets/screens/RcDashBoardScreen.dart';
+import 'package:bitsoftickets/screens/VersionBloqueadaScreen.dart';
+import 'package:bitsoftickets/services/AuthStorage.dart';
+import 'package:bitsoftickets/services/VersionService.dart';
+import 'package:bitsoftickets/utils/RCColors.dart';
+import 'package:bitsoftickets/services/AuthService.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class RCSignInComponent extends StatelessWidget {

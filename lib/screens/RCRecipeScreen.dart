@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:recipe_prokit/components/RCBackComponent.dart';
-import 'package:recipe_prokit/components/RCCircularWrapComponent.dart';
-import 'package:recipe_prokit/components/RCReviewComponent.dart';
-import 'package:recipe_prokit/components/RCVideoListComponent.dart';
-import 'package:recipe_prokit/main.dart';
-import 'package:recipe_prokit/models/RCCollectionModel.dart';
-import 'package:recipe_prokit/models/RCHomeStoryModel.dart';
-import 'package:recipe_prokit/models/RCSearchModel.dart';
-import 'package:recipe_prokit/models/RCVideoModel.dart';
-import 'package:recipe_prokit/screens/RCReviewScreen.dart';
-import 'package:recipe_prokit/utils/RCBottomSheet.dart';
-import 'package:recipe_prokit/utils/RCColors.dart';
-import 'package:recipe_prokit/utils/RCCommon.dart';
+import 'package:bitsoftickets/components/RCBackComponent.dart';
+import 'package:bitsoftickets/components/RCCircularWrapComponent.dart';
+import 'package:bitsoftickets/components/RCReviewComponent.dart';
+import 'package:bitsoftickets/components/RCVideoListComponent.dart';
+import 'package:bitsoftickets/main.dart';
+import 'package:bitsoftickets/models/RCCollectionModel.dart';
+import 'package:bitsoftickets/models/RCHomeStoryModel.dart';
+import 'package:bitsoftickets/models/RCSearchModel.dart';
+import 'package:bitsoftickets/models/RCVideoModel.dart';
+import 'package:bitsoftickets/screens/RCReviewScreen.dart';
+import 'package:bitsoftickets/utils/RCBottomSheet.dart';
+import 'package:bitsoftickets/utils/RCColors.dart';
+import 'package:bitsoftickets/utils/RCCommon.dart';
 
 class RCRecipeScreen extends StatefulWidget {
   RCHomeStoryModel element;
@@ -34,11 +34,19 @@ class _RCRecipeScreenState extends State<RCRecipeScreen> {
 
   @override
   void initState() {
-    ingredientList.add(RCSearchModel(name: '9 oz', image: 'images/recipe/walkThroughImages/imageFive.png'));
-    ingredientList.add(RCSearchModel(name: '7 oz', image: 'images/recipe/walkThroughImages/imageFour.png'));
-    ingredientList.add(RCSearchModel(name: '2 cups', image: 'images/recipe/walkThroughImages/imageThree.png'));
-    ingredientList.add(RCSearchModel(name: '2 clovest', image: 'images/recipe/walkThroughImages/imageFive.png'));
-    ingredientList.add(RCSearchModel(name: '2 cloves', image: 'images/recipe/walkThroughImages/imageFour.png'));
+    ingredientList.add(RCSearchModel(
+        name: '9 oz', image: 'images/recipe/walkThroughImages/imageFive.png'));
+    ingredientList.add(RCSearchModel(
+        name: '7 oz', image: 'images/recipe/walkThroughImages/imageFour.png'));
+    ingredientList.add(RCSearchModel(
+        name: '2 cups',
+        image: 'images/recipe/walkThroughImages/imageThree.png'));
+    ingredientList.add(RCSearchModel(
+        name: '2 clovest',
+        image: 'images/recipe/walkThroughImages/imageFive.png'));
+    ingredientList.add(RCSearchModel(
+        name: '2 cloves',
+        image: 'images/recipe/walkThroughImages/imageFour.png'));
 
     super.initState();
     setStatusBarColor(appStore.isDarkModeOn ? Colors.black : Colors.white);
@@ -62,35 +70,52 @@ class _RCRecipeScreenState extends State<RCRecipeScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                RCBackComponent(color: appStore.isDarkModeOn ? Colors.white : Colors.black, borderColor: rcSecondaryTextColor),
+                RCBackComponent(
+                    color: appStore.isDarkModeOn ? Colors.white : Colors.black,
+                    borderColor: rcSecondaryTextColor),
                 Row(
                   children: [
                     Container(
-                        decoration: BoxDecoration(border: Border.all(color: rcSecondaryTextColor), borderRadius: radius(16)),
+                        decoration: BoxDecoration(
+                            border: Border.all(color: rcSecondaryTextColor),
+                            borderRadius: radius(16)),
                         margin: EdgeInsets.all(6),
                         child: IconButton(
                           icon: liked
                               ? Icon(LineIcons.heart_1, color: Colors.red)
-                              : Icon(LineIcons.heart, color: appStore.isDarkModeOn ? Colors.white : Colors.black),
+                              : Icon(LineIcons.heart,
+                                  color: appStore.isDarkModeOn
+                                      ? Colors.white
+                                      : Colors.black),
                           onPressed: () {
                             liked = !liked;
                             setState(() {});
                           },
                         )),
                     Container(
-                        decoration: BoxDecoration(border: Border.all(color: rcSecondaryTextColor), borderRadius: radius(16)),
+                        decoration: BoxDecoration(
+                            border: Border.all(color: rcSecondaryTextColor),
+                            borderRadius: radius(16)),
                         margin: EdgeInsets.all(6),
                         child: IconButton(
-                          icon: Icon(LineIcons.bookmark, color: appStore.isDarkModeOn ? Colors.white : Colors.black),
+                          icon: Icon(LineIcons.bookmark,
+                              color: appStore.isDarkModeOn
+                                  ? Colors.white
+                                  : Colors.black),
                           onPressed: () {
                             showSaveBottomSheet(context, widget.collectionList);
                           },
                         )),
                     Container(
-                        decoration: BoxDecoration(border: Border.all(color: rcSecondaryTextColor), borderRadius: radius(16)),
+                        decoration: BoxDecoration(
+                            border: Border.all(color: rcSecondaryTextColor),
+                            borderRadius: radius(16)),
                         margin: EdgeInsets.all(6),
                         child: IconButton(
-                          icon: Icon(Icons.share, color: appStore.isDarkModeOn ? Colors.white : Colors.black),
+                          icon: Icon(Icons.share,
+                              color: appStore.isDarkModeOn
+                                  ? Colors.white
+                                  : Colors.black),
                           onPressed: () {
                             showShareBottomSheet(context);
                           },
@@ -102,19 +127,25 @@ class _RCRecipeScreenState extends State<RCRecipeScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Image.asset('images/recipe/walkThroughImages/imageThree.png', height: 120),
+                Image.asset('images/recipe/walkThroughImages/imageThree.png',
+                    height: 120),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text('Spaghetti', style: boldTextStyle(fontFamily: GoogleFonts.playfairDisplay().fontFamily, size: 26)),
+                    Text('Spaghetti',
+                        style: boldTextStyle(
+                            fontFamily:
+                                GoogleFonts.playfairDisplay().fontFamily,
+                            size: 26)),
                     8.height,
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         ...List.generate(5, (index) {
                           if (index == 4) {
-                            return Icon(LineIcons.star_1, color: rcSecondaryColor, size: 20);
+                            return Icon(LineIcons.star_1,
+                                color: rcSecondaryColor, size: 20);
                           }
                           return Icon(
                             LineIcons.star_1,
@@ -134,8 +165,12 @@ class _RCRecipeScreenState extends State<RCRecipeScreen> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(widget.element.name, style: boldTextStyle(color: primaryColor, size: 18)),
-                            Text(widget.element.subTitle, style: primaryTextStyle(color: rcSecondaryTextColor, size: 14)),
+                            Text(widget.element.name,
+                                style: boldTextStyle(
+                                    color: primaryColor, size: 18)),
+                            Text(widget.element.subTitle,
+                                style: primaryTextStyle(
+                                    color: rcSecondaryTextColor, size: 14)),
                           ],
                         )
                       ],
@@ -151,20 +186,27 @@ class _RCRecipeScreenState extends State<RCRecipeScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text('Reviews', style: boldTextStyle(size: 20)),
-                Text('More', style: boldTextStyle(color: primaryColor, size: 20)).onTap(() {
+                Text('More',
+                        style: boldTextStyle(color: primaryColor, size: 20))
+                    .onTap(() {
                   RCReviewScreen().launch(context);
-                },splashColor: Colors.transparent,highlightColor: Colors.transparent),
+                },
+                        splashColor: Colors.transparent,
+                        highlightColor: Colors.transparent),
               ],
             ).paddingAll(16),
             RCReviewComponent().onTap(() {
               RCReviewScreen().launch(context);
-            },splashColor: Colors.transparent,highlightColor: Colors.transparent),
+            },
+                splashColor: Colors.transparent,
+                highlightColor: Colors.transparent),
             20.height,
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text('Ingredients', style: boldTextStyle(size: 20)),
-                Text('More', style: boldTextStyle(color: primaryColor, size: 20)),
+                Text('More',
+                    style: boldTextStyle(color: primaryColor, size: 20)),
               ],
             ).paddingAll(16),
             Wrap(
@@ -176,7 +218,9 @@ class _RCRecipeScreenState extends State<RCRecipeScreen> {
                   padding: EdgeInsets.all(16),
                   decoration: BoxDecoration(
                     borderRadius: radius(16),
-                    color: appStore.isDarkModeOn ? rcSecondaryTextColor : rcSecondaryColor,
+                    color: appStore.isDarkModeOn
+                        ? rcSecondaryTextColor
+                        : rcSecondaryColor,
                   ),
                   child: Column(mainAxisSize: MainAxisSize.min, children: [
                     Image.asset(e.image, height: 70),
@@ -187,11 +231,14 @@ class _RCRecipeScreenState extends State<RCRecipeScreen> {
               }).toList(),
             ).paddingAll(16),
             Container(
-              child: Text('Add to shopping list', style: boldTextStyle(size: 18, color: Colors.white)).center(),
+              child: Text('Add to shopping list',
+                      style: boldTextStyle(size: 18, color: Colors.white))
+                  .center(),
               width: context.width() - 40,
               margin: EdgeInsets.all(16),
               padding: EdgeInsets.symmetric(vertical: 8),
-              decoration: BoxDecoration(borderRadius: radius(32), color: primaryColor),
+              decoration:
+                  BoxDecoration(borderRadius: radius(32), color: primaryColor),
             ),
             Text('How to video', style: boldTextStyle(size: 20)).paddingAll(16),
             HorizontalList(
@@ -201,50 +248,74 @@ class _RCRecipeScreenState extends State<RCRecipeScreen> {
               },
             ),
             16.height,
-            Text('Utensils', style: boldTextStyle(size: 20)).paddingSymmetric(horizontal: 16),
+            Text('Utensils', style: boldTextStyle(size: 20))
+                .paddingSymmetric(horizontal: 16),
             16.height,
-            Text('Cutting board, knief, cooking spoon, deep pan, 2 pasta tongs', style: secondaryTextStyle()).paddingSymmetric(horizontal: 16),
+            Text('Cutting board, knief, cooking spoon, deep pan, 2 pasta tongs',
+                    style: secondaryTextStyle())
+                .paddingSymmetric(horizontal: 16),
             16.height,
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text('Steps', style: boldTextStyle(size: 20)),
-                Text('See all', style: boldTextStyle(color: primaryColor, size: 20)),
+                Text('See all',
+                    style: boldTextStyle(color: primaryColor, size: 20)),
               ],
             ).paddingSymmetric(horizontal: 16),
             16.height,
             Row(
               children: [
-                Text('01', style: boldTextStyle(fontFamily: GoogleFonts.playfairDisplay().fontFamily, size: 30, color: primaryColor)),
+                Text('01',
+                    style: boldTextStyle(
+                        fontFamily: GoogleFonts.playfairDisplay().fontFamily,
+                        size: 30,
+                        color: primaryColor)),
                 16.width,
-                Text('Clean spanish. Cut onion into thin strips, finely chop garlic, and halve cherry tomatoes.', style: secondaryTextStyle())
+                Text('Clean spanish. Cut onion into thin strips, finely chop garlic, and halve cherry tomatoes.',
+                        style: secondaryTextStyle())
                     .expand()
               ],
             ).paddingSymmetric(horizontal: 16),
             16.height,
             Row(
               children: [
-                Text('02', style: boldTextStyle(fontFamily: GoogleFonts.playfairDisplay().fontFamily, size: 30, color: primaryColor)),
+                Text('02',
+                    style: boldTextStyle(
+                        fontFamily: GoogleFonts.playfairDisplay().fontFamily,
+                        size: 30,
+                        color: primaryColor)),
                 16.width,
-                Text('Clean spanish. Cut onion into thin strips, finely chop garlic, and halve cherry tomatoes.', style: secondaryTextStyle())
+                Text('Clean spanish. Cut onion into thin strips, finely chop garlic, and halve cherry tomatoes.',
+                        style: secondaryTextStyle())
                     .expand()
               ],
             ).paddingSymmetric(horizontal: 16),
             16.height,
             Row(
               children: [
-                Text('03', style: boldTextStyle(fontFamily: GoogleFonts.playfairDisplay().fontFamily, size: 30, color: primaryColor)),
+                Text('03',
+                    style: boldTextStyle(
+                        fontFamily: GoogleFonts.playfairDisplay().fontFamily,
+                        size: 30,
+                        color: primaryColor)),
                 16.width,
-                Text('Clean spanish. Cut onion into thin strips, finely chop garlic, and halve cherry tomatoes.', style: secondaryTextStyle())
+                Text('Clean spanish. Cut onion into thin strips, finely chop garlic, and halve cherry tomatoes.',
+                        style: secondaryTextStyle())
                     .expand()
               ],
             ).paddingSymmetric(horizontal: 16),
             16.height,
             Row(
               children: [
-                Text('04', style: boldTextStyle(fontFamily: GoogleFonts.playfairDisplay().fontFamily, size: 30, color: primaryColor)),
+                Text('04',
+                    style: boldTextStyle(
+                        fontFamily: GoogleFonts.playfairDisplay().fontFamily,
+                        size: 30,
+                        color: primaryColor)),
                 16.width,
-                Text('Clean spanish. Cut onion into thin strips, finely chop garlic, and halve cherry tomatoes.', style: secondaryTextStyle())
+                Text('Clean spanish. Cut onion into thin strips, finely chop garlic, and halve cherry tomatoes.',
+                        style: secondaryTextStyle())
                     .expand()
               ],
             ).paddingSymmetric(horizontal: 16),
@@ -253,12 +324,15 @@ class _RCRecipeScreenState extends State<RCRecipeScreen> {
         ),
       ),
       floatingActionButton: Container(
-        child: Text('Start Cooking', style: boldTextStyle(size: 18, color: Colors.white)).center(),
+        child: Text('Start Cooking',
+                style: boldTextStyle(size: 18, color: Colors.white))
+            .center(),
         width: context.width() - 60,
         height: 50,
         margin: EdgeInsets.all(16),
         padding: EdgeInsets.symmetric(vertical: 8),
-        decoration: BoxDecoration(borderRadius: radius(32), color: primaryColor),
+        decoration:
+            BoxDecoration(borderRadius: radius(32), color: primaryColor),
       ),
     );
   }

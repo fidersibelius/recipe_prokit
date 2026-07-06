@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 //import 'package:google_fonts/google_fonts.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:recipe_prokit/components/RCFooterComponent.dart';
-import 'package:recipe_prokit/screens/RCWelcomeScreen.dart';
-//import 'package:recipe_prokit/utils/RCColors.dart';
-import 'package:recipe_prokit/screens/AuthCheckScreen.dart';
+import 'package:bitsoftickets/components/RCFooterComponent.dart';
+import 'package:bitsoftickets/screens/RCWelcomeScreen.dart';
+//import 'package:bitsoftickets/utils/RCColors.dart';
+import 'package:bitsoftickets/screens/AuthCheckScreen.dart';
 
 class RCSplashScreen extends StatefulWidget {
   const RCSplashScreen({Key? key}) : super(key: key);

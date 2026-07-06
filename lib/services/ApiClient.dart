@@ -3,10 +3,10 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
-import 'package:recipe_prokit/screens/RCSignUpScreen.dart';
+import 'package:bitsoftickets/screens/RCSignUpScreen.dart';
 
 import 'AuthStorage.dart';
-import 'package:recipe_prokit/utils/NavigationService.dart';
+import 'package:bitsoftickets/utils/NavigationService.dart';
 import 'package:flutter/foundation.dart';
 
 class ApiClient {

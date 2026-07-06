@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:recipe_prokit/components/RCSignInComponent.dart';
-import 'package:recipe_prokit/components/RCSignUpComponent.dart';
-import 'package:recipe_prokit/main.dart';
+import 'package:bitsoftickets/components/RCSignInComponent.dart';
+import 'package:bitsoftickets/components/RCSignUpComponent.dart';
+import 'package:bitsoftickets/main.dart';
 
 class RCSignUpScreen extends StatefulWidget {
   int selectedIndex;

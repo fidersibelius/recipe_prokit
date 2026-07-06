@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:recipe_prokit/components/RCWalkThroughComponents.dart';
-import 'package:recipe_prokit/main.dart';
-import 'package:recipe_prokit/models/RCWalkThroughModel.dart';
-import 'package:recipe_prokit/screens/RCSignUpScreen.dart';
-import 'package:recipe_prokit/utils/RCColors.dart';
+import 'package:bitsoftickets/components/RCWalkThroughComponents.dart';
+import 'package:bitsoftickets/main.dart';
+import 'package:bitsoftickets/models/RCWalkThroughModel.dart';
+import 'package:bitsoftickets/screens/RCSignUpScreen.dart';
+import 'package:bitsoftickets/utils/RCColors.dart';
 
 class RCWalkThroughScreen extends StatefulWidget {
   const RCWalkThroughScreen({Key? key}) : super(key: key);
@@ -46,7 +46,11 @@ class _RCWalkThroughScreenState extends State<RCWalkThroughScreen> {
               height: context.height(),
               child: PageView(
                 controller: pageController,
-                children: [RCWalkThroughComponentOne(), RCWalkThroughComponentTwo(), RCWalkThroughComponentThree()],
+                children: [
+                  RCWalkThroughComponentOne(),
+                  RCWalkThroughComponentTwo(),
+                  RCWalkThroughComponentThree()
+                ],
                 onPageChanged: (value) {
                   setState(() => currentIndexPage = value);
                 },
@@ -56,9 +60,12 @@ class _RCWalkThroughScreenState extends State<RCWalkThroughScreen> {
             Positioned(
               right: 20,
               top: context.statusBarHeight + 40,
-              child: Text('Skip', style: boldTextStyle(color: primaryColor)).onTap(() {
+              child: Text('Skip', style: boldTextStyle(color: primaryColor))
+                  .onTap(() {
                 RCSignUpScreen(selectedIndex: 0).launch(context);
-              },splashColor: Colors.transparent,highlightColor: Colors.transparent),
+              },
+                      splashColor: Colors.transparent,
+                      highlightColor: Colors.transparent),
             ),
             Positioned(
               top: context.statusBarHeight + 40,

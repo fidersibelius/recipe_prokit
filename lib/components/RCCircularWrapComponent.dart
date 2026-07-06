@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:recipe_prokit/utils/RCCircularProgress.dart';
-import 'package:recipe_prokit/utils/RCColors.dart';
-
+import 'package:bitsoftickets/utils/RCCircularProgress.dart';
+import 'package:bitsoftickets/utils/RCColors.dart';
 
 class RCCircularWrapComponent extends StatelessWidget {
   const RCCircularWrapComponent({Key? key}) : super(key: key);
@@ -16,99 +15,99 @@ class RCCircularWrapComponent extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             CustomPaint(
-              foregroundPainter: RCCircularProgress(primaryColor,25),
+              foregroundPainter: RCCircularProgress(primaryColor, 25),
               child: Container(
                 height: 100,
                 width: 100,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Icon(LineIcons.cheese,color: primaryColor,size: 30,),
+                    Icon(
+                      LineIcons.cheese,
+                      color: primaryColor,
+                      size: 30,
+                    ),
                     8.height,
                     RichText(
                       text: TextSpan(
                           text: '25',
                           style: boldTextStyle(size: 20),
                           children: [
-                            TextSpan(
-                                text: ' min',
-                                style: secondaryTextStyle()
-                            )
-                          ]
-                      ),
+                            TextSpan(text: ' min', style: secondaryTextStyle())
+                          ]),
                     )
                   ],
                 ).center(),
               ),
             ),
             8.height,
-            Text('Cooking',style: boldTextStyle())
+            Text('Cooking', style: boldTextStyle())
           ],
         ),
         Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             CustomPaint(
-              foregroundPainter: RCCircularProgress(Colors.orange,60),
+              foregroundPainter: RCCircularProgress(Colors.orange, 60),
               child: Container(
                 height: 100,
                 width: 100,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Icon(LineIcons.cookie,color: Colors.orange,size: 30,),
+                    Icon(
+                      LineIcons.cookie,
+                      color: Colors.orange,
+                      size: 30,
+                    ),
                     8.height,
                     RichText(
                       text: TextSpan(
                           text: '45',
                           style: boldTextStyle(size: 20),
                           children: [
-                            TextSpan(
-                                text: ' min',
-                                style: secondaryTextStyle()
-                            )
-                          ]
-                      ),
+                            TextSpan(text: ' min', style: secondaryTextStyle())
+                          ]),
                     )
                   ],
                 ).center(),
               ),
             ),
             8.height,
-            Text('Baking',style: boldTextStyle())
+            Text('Baking', style: boldTextStyle())
           ],
         ),
         Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             CustomPaint(
-              foregroundPainter: RCCircularProgress(Colors.blue,10),
+              foregroundPainter: RCCircularProgress(Colors.blue, 10),
               child: Container(
                 height: 100,
                 width: 100,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Icon(LineIcons.leaf,color: Colors.blue,size: 30,),
+                    Icon(
+                      LineIcons.leaf,
+                      color: Colors.blue,
+                      size: 30,
+                    ),
                     8.height,
                     RichText(
                       text: TextSpan(
                           text: '5',
                           style: boldTextStyle(size: 20),
                           children: [
-                            TextSpan(
-                                text: ' min',
-                                style: secondaryTextStyle()
-                            )
-                          ]
-                      ),
+                            TextSpan(text: ' min', style: secondaryTextStyle())
+                          ]),
                     )
                   ],
                 ).center(),
               ),
             ),
             8.height,
-            Text('Resting',style: boldTextStyle())
+            Text('Resting', style: boldTextStyle())
           ],
         ),
       ],

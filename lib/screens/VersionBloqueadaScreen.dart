@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:recipe_prokit/components/RCFooterComponent.dart';
+import 'package:bitsoftickets/components/RCFooterComponent.dart';
 
 class VersionBloqueadaScreen extends StatelessWidget {
   const VersionBloqueadaScreen({super.key});

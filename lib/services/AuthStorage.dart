@@ -6,16 +6,30 @@ class AuthStorage {
   static const _keyToken = "jwt_token";
   static const _keyUser = "username";
   static const _keyFirstTime = "first_time";
-  static const _keyLogo = "logo";
+  static const _keyLogoBitsof = "logo_bitsofmx";
+  static const _keyLogoOrg = "logo_org";
 
-  /// 🖼️ GUARDAR LOGO
-  static Future<void> saveLogo(String logo) async {
-    await _storage.write(key: _keyLogo, value: logo);
+  static const _keyEvento = "evento_nombre";
+  static const _keyEventoImagen = "evento_imagen";
+
+  /// 🖼️ LOGO BITSOFTICKETS
+  static Future<String?> getLogoBitsof() async {
+    return await _storage.read(key: _keyLogoBitsof);
   }
 
-  /// 🖼️ OBTENER LOGO
-  static Future<String?> getLogo() async {
-    return await _storage.read(key: _keyLogo);
+  /// 🖼️ LOGO ORGANIZADOR
+  static Future<String?> getLogoOrg() async {
+    return await _storage.read(key: _keyLogoOrg);
+  }
+
+  /// 🎫 OBTENER NOMBRE DEL EVENTO
+  static Future<String?> getEvento() async {
+    return await _storage.read(key: _keyEvento);
+  }
+
+  /// 🖼️ OBTENER IMAGEN DEL EVENTO
+  static Future<String?> getEventoImagen() async {
+    return await _storage.read(key: _keyEventoImagen);
   }
 
   /// 🔑 GUARDAR TOKEN
@@ -26,6 +40,34 @@ class AuthStorage {
   /// 👤 GUARDAR USUARIO
   static Future<void> saveUser(String user) async {
     await _storage.write(key: _keyUser, value: user);
+  }
+
+  /// 🎫 GUARDAR DATOS DEL EVENTO
+  static Future<void> saveEvento({
+    required String logoBitsof,
+    required String logoOrg,
+    required String nombre,
+    required String imagen,
+  }) async {
+    await _storage.write(
+      key: _keyLogoBitsof,
+      value: logoBitsof,
+    );
+
+    await _storage.write(
+      key: _keyLogoOrg,
+      value: logoOrg,
+    );
+
+    await _storage.write(
+      key: _keyEvento,
+      value: nombre,
+    );
+
+    await _storage.write(
+      key: _keyEventoImagen,
+      value: imagen,
+    );
   }
 
   /// 🔍 OBTENER TOKEN

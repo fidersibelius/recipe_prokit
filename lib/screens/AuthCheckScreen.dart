@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:recipe_prokit/screens/RCSignUpScreen.dart';
-import 'package:recipe_prokit/screens/RcDashBoardScreen.dart';
-import 'package:recipe_prokit/screens/VersionBloqueadaScreen.dart';
-import 'package:recipe_prokit/services/AuthStorage.dart';
-import 'package:recipe_prokit/services/VersionService.dart';
+import 'package:bitsoftickets/screens/RCSignUpScreen.dart';
+import 'package:bitsoftickets/screens/RcDashBoardScreen.dart';
+import 'package:bitsoftickets/screens/VersionBloqueadaScreen.dart';
+import 'package:bitsoftickets/services/AuthStorage.dart';
+import 'package:bitsoftickets/services/VersionService.dart';
 
 class AuthCheckScreen extends StatefulWidget {
   const AuthCheckScreen({super.key});

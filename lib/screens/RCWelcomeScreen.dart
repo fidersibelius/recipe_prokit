@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:recipe_prokit/components/RCWelcomeImageComponent.dart';
-import 'package:recipe_prokit/main.dart';
-import 'package:recipe_prokit/screens/RCSignUpScreen.dart';
-import 'package:recipe_prokit/screens/RCWalkThroughScreen.dart';
-import 'package:recipe_prokit/utils/RCColors.dart';
-
+import 'package:bitsoftickets/components/RCWelcomeImageComponent.dart';
+import 'package:bitsoftickets/main.dart';
+import 'package:bitsoftickets/screens/RCSignUpScreen.dart';
+import 'package:bitsoftickets/screens/RCWalkThroughScreen.dart';
+import 'package:bitsoftickets/utils/RCColors.dart';
 
 class RCWelcomeScreen extends StatefulWidget {
   const RCWelcomeScreen({Key? key}) : super(key: key);
@@ -15,7 +14,6 @@ class RCWelcomeScreen extends StatefulWidget {
 }
 
 class _RCWelcomeScreenState extends State<RCWelcomeScreen> {
-
   @override
   void initState() {
     super.initState();
@@ -28,37 +26,44 @@ class _RCWelcomeScreenState extends State<RCWelcomeScreen> {
       backgroundColor: appStore.isDarkModeOn ? Colors.black : Colors.white,
       body: SingleChildScrollView(
         child: Column(
-          crossAxisAlignment : CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             RCWelcomeImageComponent(),
             100.height,
-            Text('Browse 1000+ unique recipes of different cuisines from best chefs',style: secondaryTextStyle(color : rcSecondaryTextColor)).paddingSymmetric(horizontal: 32),
+            Text('Browse 1000+ unique recipes of different cuisines from best chefs',
+                    style: secondaryTextStyle(color: rcSecondaryTextColor))
+                .paddingSymmetric(horizontal: 32),
             16.height,
             Container(
-              child : Text('I am new',style : boldTextStyle(size:18,color : Colors.white)).center(),
-              width : context.width(),
-              margin: EdgeInsets.symmetric(horizontal: 32),
-              padding : EdgeInsets.symmetric(vertical : 8,horizontal: 32),
-              decoration : BoxDecoration(
-                borderRadius : radius(32),
-                color : primaryColor
-              )
-            ).onTap((){
+                    child: Text('I am new',
+                            style: boldTextStyle(size: 18, color: Colors.white))
+                        .center(),
+                    width: context.width(),
+                    margin: EdgeInsets.symmetric(horizontal: 32),
+                    padding: EdgeInsets.symmetric(vertical: 8, horizontal: 32),
+                    decoration: BoxDecoration(
+                        borderRadius: radius(32), color: primaryColor))
+                .onTap(() {
               RCWalkThroughScreen().launch(context);
-            },splashColor: Colors.transparent,highlightColor: Colors.transparent),
+            },
+                    splashColor: Colors.transparent,
+                    highlightColor: Colors.transparent),
             16.height,
             Container(
-                child : Text('I\'ve been here',style : primaryTextStyle(size:18)).center(),
-                width : context.width(),
-                padding : EdgeInsets.symmetric(vertical : 8,horizontal: 32),
+                child:
+                    Text('I\'ve been here', style: primaryTextStyle(size: 18))
+                        .center(),
+                width: context.width(),
+                padding: EdgeInsets.symmetric(vertical: 8, horizontal: 32),
                 margin: EdgeInsets.symmetric(horizontal: 32),
-                decoration : BoxDecoration(
-                    border :Border.all(color : primaryColor, width : 3),
-                  borderRadius : radius(32),
-                )
-            ).onTap((){
-              RCSignUpScreen(selectedIndex : 1).launch(context);
-            },splashColor: Colors.transparent,highlightColor: Colors.transparent),
+                decoration: BoxDecoration(
+                  border: Border.all(color: primaryColor, width: 3),
+                  borderRadius: radius(32),
+                )).onTap(() {
+              RCSignUpScreen(selectedIndex: 1).launch(context);
+            },
+                splashColor: Colors.transparent,
+                highlightColor: Colors.transparent),
             50.height,
           ],
         ),

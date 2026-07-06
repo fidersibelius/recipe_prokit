@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import 'package:google_fonts/google_fonts.dart';
-import 'package:recipe_prokit/components/RCBackComponent.dart';
-import 'package:recipe_prokit/components/RCMiniStoryComponent.dart';
-import 'package:recipe_prokit/main.dart';
-import 'package:recipe_prokit/models/RCHomeStoryModel.dart';
-import 'package:recipe_prokit/models/RCSearchModel.dart';
-import 'package:recipe_prokit/utils/RCBottomSheet.dart';
-import 'package:recipe_prokit/utils/RCColors.dart';
+import 'package:bitsoftickets/components/RCBackComponent.dart';
+import 'package:bitsoftickets/components/RCMiniStoryComponent.dart';
+import 'package:bitsoftickets/main.dart';
+import 'package:bitsoftickets/models/RCHomeStoryModel.dart';
+import 'package:bitsoftickets/models/RCSearchModel.dart';
+import 'package:bitsoftickets/utils/RCBottomSheet.dart';
+import 'package:bitsoftickets/utils/RCColors.dart';
 
 import 'RCSearchStoryScreen.dart';
 
@@ -18,7 +18,8 @@ class RCSearchedComponentScreen extends StatefulWidget {
   RCSearchedComponentScreen({required this.element});
 
   @override
-  _RCSearchedComponentScreenState createState() => _RCSearchedComponentScreenState();
+  _RCSearchedComponentScreenState createState() =>
+      _RCSearchedComponentScreenState();
 }
 
 class _RCSearchedComponentScreenState extends State<RCSearchedComponentScreen> {
@@ -37,13 +38,23 @@ class _RCSearchedComponentScreenState extends State<RCSearchedComponentScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                RCBackComponent(color: appStore.isDarkModeOn ? Colors.white : Colors.black, borderColor: rcSecondaryTextColor),
-                Text(widget.element.name, style: boldTextStyle(size: 20, fontFamily: GoogleFonts.playfairDisplay().fontFamily)),
+                RCBackComponent(
+                    color: appStore.isDarkModeOn ? Colors.white : Colors.black,
+                    borderColor: rcSecondaryTextColor),
+                Text(widget.element.name,
+                    style: boldTextStyle(
+                        size: 20,
+                        fontFamily: GoogleFonts.playfairDisplay().fontFamily)),
                 Container(
-                    decoration: BoxDecoration(border: Border.all(color: rcSecondaryTextColor), borderRadius: radius(16)),
+                    decoration: BoxDecoration(
+                        border: Border.all(color: rcSecondaryTextColor),
+                        borderRadius: radius(16)),
                     margin: EdgeInsets.all(6),
                     child: IconButton(
-                      icon: Icon(LineIcons.filter, color: appStore.isDarkModeOn ? Colors.white : Colors.black),
+                      icon: Icon(LineIcons.filter,
+                          color: appStore.isDarkModeOn
+                              ? Colors.white
+                              : Colors.black),
                       onPressed: () {
                         showFilterBottomSheet(context);
                       },
@@ -55,8 +66,10 @@ class _RCSearchedComponentScreenState extends State<RCSearchedComponentScreen> {
               child: Container(
                 padding: EdgeInsets.all(8),
                 width: context.width() / 2,
-                decoration:
-                    BoxDecoration(border: Border.all(color: primaryColor, width: 2), borderRadius: radius(12), color: primaryColor.withAlpha(30)),
+                decoration: BoxDecoration(
+                    border: Border.all(color: primaryColor, width: 2),
+                    borderRadius: radius(12),
+                    color: primaryColor.withAlpha(30)),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -65,10 +78,12 @@ class _RCSearchedComponentScreenState extends State<RCSearchedComponentScreen> {
                       children: [
                         Icon(LineIcons.clock, color: primaryColor),
                         4.width,
-                        Text('Latest', style: secondaryTextStyle(color: primaryColor)),
+                        Text('Latest',
+                            style: secondaryTextStyle(color: primaryColor)),
                       ],
                     ),
-                    Icon(Icons.arrow_drop_down_rounded, color: rcSecondaryTextColor),
+                    Icon(Icons.arrow_drop_down_rounded,
+                        color: rcSecondaryTextColor),
                   ],
                 ),
               ).onTap(() {
@@ -80,9 +95,13 @@ class _RCSearchedComponentScreenState extends State<RCSearchedComponentScreen> {
                 spacing: 24,
                 runSpacing: 16,
                 children: list.map((e) {
-                  return RCMiniStoryComponentRecipe(element: e, isProfile: false).onTap(() {
+                  return RCMiniStoryComponentRecipe(
+                          element: e, isProfile: false)
+                      .onTap(() {
                     RCSearchStoryScreen(element: e).launch(context);
-                  }, splashColor: Colors.transparent, highlightColor: Colors.transparent);
+                  },
+                          splashColor: Colors.transparent,
+                          highlightColor: Colors.transparent);
                 }).toList()),
             50.height,
           ],

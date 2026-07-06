@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:recipe_prokit/utils/RCColors.dart';
-import 'package:recipe_prokit/utils/RCCommon.dart';
-
+import 'package:bitsoftickets/utils/RCColors.dart';
+import 'package:bitsoftickets/utils/RCCommon.dart';
 
 class RCCommentComponent extends StatefulWidget {
   String name;
@@ -13,7 +12,14 @@ class RCCommentComponent extends StatefulWidget {
   bool showLikes;
   bool liked;
 
-  RCCommentComponent({required this.name, required this.comment, required this.time,required this.likes,required this.showLikes,required this.liked,required this.path});
+  RCCommentComponent(
+      {required this.name,
+      required this.comment,
+      required this.time,
+      required this.likes,
+      required this.showLikes,
+      required this.liked,
+      required this.path});
 
   @override
   State<RCCommentComponent> createState() => _RCCommentComponentState();
@@ -30,16 +36,17 @@ class _RCCommentComponentState extends State<RCCommentComponent> {
           children: [
             Row(
               children: [
-                profileImage(widget.path,30,30),
+                profileImage(widget.path, 30, 30),
                 8.width,
                 Text(widget.name, style: boldTextStyle(size: 16))
               ],
             ),
             Row(
               children: [
-                Icon(LineIcons.clock,color: rcSecondaryTextColor),
+                Icon(LineIcons.clock, color: rcSecondaryTextColor),
                 4.width,
-                Text('${widget.time} ago', style: secondaryTextStyle(color: rcSecondaryTextColor)),
+                Text('${widget.time} ago',
+                    style: secondaryTextStyle(color: rcSecondaryTextColor)),
               ],
             ),
           ],
@@ -49,28 +56,29 @@ class _RCCommentComponentState extends State<RCCommentComponent> {
         widget.showLikes ? 8.height : Offstage(),
         widget.showLikes
             ? Row(
-          children: [
-            widget.liked ? Icon(LineIcons.heart_1,color: Colors.red).onTap((){
-              widget.liked = !widget.liked;
-              setState(() {});
-            }) : Icon(LineIcons.heart,color: rcSecondaryTextColor).onTap((){
-              widget.liked = !widget.liked;
-              setState(() {});
-            })  ,
-            8.width,
-            Text(widget.likes,style: secondaryTextStyle(color: rcSecondaryTextColor)),
-            50.width,
-            Icon(LineIcons.comment,color: rcSecondaryTextColor),
-            8.width,
-            Text('Reply',style: secondaryTextStyle(color: rcSecondaryTextColor)),
-
-          ],
-        ).paddingOnly(left: 50)
+                children: [
+                  widget.liked
+                      ? Icon(LineIcons.heart_1, color: Colors.red).onTap(() {
+                          widget.liked = !widget.liked;
+                          setState(() {});
+                        })
+                      : Icon(LineIcons.heart, color: rcSecondaryTextColor)
+                          .onTap(() {
+                          widget.liked = !widget.liked;
+                          setState(() {});
+                        }),
+                  8.width,
+                  Text(widget.likes,
+                      style: secondaryTextStyle(color: rcSecondaryTextColor)),
+                  50.width,
+                  Icon(LineIcons.comment, color: rcSecondaryTextColor),
+                  8.width,
+                  Text('Reply',
+                      style: secondaryTextStyle(color: rcSecondaryTextColor)),
+                ],
+              ).paddingOnly(left: 50)
             : Offstage()
       ],
     );
   }
 }
-
-
-

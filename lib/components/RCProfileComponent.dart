@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:recipe_prokit/components/RCFooterComponent.dart';
-import 'package:recipe_prokit/main.dart';
-import 'package:recipe_prokit/utils/RCColors.dart';
-import 'package:recipe_prokit/services/AuthStorage.dart';
-import 'package:recipe_prokit/screens/RCSignUpScreen.dart';
+import 'package:bitsoftickets/components/RCFooterComponent.dart';
+import 'package:bitsoftickets/main.dart';
+import 'package:bitsoftickets/utils/RCColors.dart';
+import 'package:bitsoftickets/services/AuthStorage.dart';
+import 'package:bitsoftickets/screens/RCSignUpScreen.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class RCProfileScreen extends StatefulWidget {

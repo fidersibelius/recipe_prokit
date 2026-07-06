@@ -3,10 +3,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:recipe_prokit/components/RCBackComponent.dart';
-import 'package:recipe_prokit/main.dart';
-import 'package:recipe_prokit/screens/RCPreferenceScreen.dart';
-import 'package:recipe_prokit/utils/RCColors.dart';
+import 'package:bitsoftickets/components/RCBackComponent.dart';
+import 'package:bitsoftickets/main.dart';
+import 'package:bitsoftickets/screens/RCPreferenceScreen.dart';
+import 'package:bitsoftickets/utils/RCColors.dart';
 
 class RCOTPScreen extends StatefulWidget {
   String email;
@@ -77,14 +77,25 @@ class _RCOTPScreenState extends State<RCOTPScreen> {
             children: [
               (context.statusBarHeight + 16).toInt().height,
               Align(
-                child: RCBackComponent(color: appStore.isDarkModeOn ? Colors.white : Colors.black, borderColor: rcSecondaryTextColor).paddingAll(16),
+                child: RCBackComponent(
+                        color:
+                            appStore.isDarkModeOn ? Colors.white : Colors.black,
+                        borderColor: rcSecondaryTextColor)
+                    .paddingAll(16),
                 alignment: Alignment.topLeft,
               ),
               Image.asset('images/recipe/leonardo.png', height: 250),
               50.height,
-              Text('OTP Verification', style: boldTextStyle(size: 40, fontFamily: GoogleFonts.playfairDisplay().fontFamily)).center(),
-              Text('Please enter 4 digit code sent to you at', style: secondaryTextStyle(color: rcSecondaryTextColor)),
-              Text(widget.email, style: secondaryTextStyle(color: primaryColor, weight: FontWeight.bold)),
+              Text('OTP Verification',
+                      style: boldTextStyle(
+                          size: 40,
+                          fontFamily: GoogleFonts.playfairDisplay().fontFamily))
+                  .center(),
+              Text('Please enter 4 digit code sent to you at',
+                  style: secondaryTextStyle(color: rcSecondaryTextColor)),
+              Text(widget.email,
+                  style: secondaryTextStyle(
+                      color: primaryColor, weight: FontWeight.bold)),
               40.height,
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -100,8 +111,12 @@ class _RCOTPScreenState extends State<RCOTPScreen> {
                       controller: controller[index],
                       textAlign: TextAlign.center,
                       nextFocus: nodes[index + 1],
-                      textInputAction: index == 3 ? TextInputAction.done : TextInputAction.next,
-                      decoration: InputDecoration(focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: primaryColor))),
+                      textInputAction: index == 3
+                          ? TextInputAction.done
+                          : TextInputAction.next,
+                      decoration: InputDecoration(
+                          focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: primaryColor))),
                       focus: nodes[index],
                       maxLength: 1,
                       validator: (no) {
@@ -129,10 +144,14 @@ class _RCOTPScreenState extends State<RCOTPScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('Didn\'t get the code?', style: secondaryTextStyle(color: rcSecondaryTextColor)),
+                  Text('Didn\'t get the code?',
+                      style: secondaryTextStyle(color: rcSecondaryTextColor)),
                   counter > 0
-                      ? Text('Resend OTP [00:${counter.toString()}]', style: secondaryTextStyle(color: primaryColor))
-                      : Text('Resend Link', style: boldTextStyle(color: primaryColor)).onTap(() {
+                      ? Text('Resend OTP [00:${counter.toString()}]',
+                          style: secondaryTextStyle(color: primaryColor))
+                      : Text('Resend Link',
+                              style: boldTextStyle(color: primaryColor))
+                          .onTap(() {
                           startTimer();
                           setState(() {});
                         }),
@@ -140,17 +159,22 @@ class _RCOTPScreenState extends State<RCOTPScreen> {
               ).paddingAll(16),
               20.height,
               Container(
-                child: Text('Verify', style: boldTextStyle(size: 18, color: Colors.white)).center(),
+                child: Text('Verify',
+                        style: boldTextStyle(size: 18, color: Colors.white))
+                    .center(),
                 width: context.width() - 40,
                 padding: EdgeInsets.symmetric(vertical: 8),
-                decoration: BoxDecoration(borderRadius: radius(32), color: primaryColor),
+                decoration: BoxDecoration(
+                    borderRadius: radius(32), color: primaryColor),
               ).onTap(() {
                 if (form_key.currentState!.validate()) {
                   RCPreferenceScreen(
                     name: widget.name,
                   ).launch(context);
                 }
-              }, splashColor: Colors.transparent, highlightColor: Colors.transparent),
+              },
+                  splashColor: Colors.transparent,
+                  highlightColor: Colors.transparent),
               20.height
             ],
           ),

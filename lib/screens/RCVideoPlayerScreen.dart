@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:recipe_prokit/components/RCBackComponent.dart';
+import 'package:bitsoftickets/components/RCBackComponent.dart';
 import 'package:video_player/video_player.dart';
 
 class RCVideoPlayerScreen extends StatefulWidget {
@@ -16,7 +16,8 @@ class _RCVideoPlayerScreenState extends State<RCVideoPlayerScreen> {
 
   @override
   void initState() {
-    _controller = VideoPlayerController.network('https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4');
+    _controller = VideoPlayerController.network(
+        'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4');
     _initializeVideoPlayerFuture = _controller.initialize();
     setOrientationLandscape();
     super.initState();
@@ -46,7 +47,8 @@ class _RCVideoPlayerScreenState extends State<RCVideoPlayerScreen> {
                 Positioned(
                   top: context.statusBarHeight + 20,
                   left: 20,
-                  child: RCBackComponent(color: Colors.white, borderColor: Colors.white),
+                  child: RCBackComponent(
+                      color: Colors.white, borderColor: Colors.white),
                 ),
                 IconButton(
                   onPressed: () {
@@ -59,7 +61,9 @@ class _RCVideoPlayerScreenState extends State<RCVideoPlayerScreen> {
                     });
                   },
                   icon: Icon(
-                    _controller.value.isPlaying ? Icons.pause_circle : Icons.play_circle,
+                    _controller.value.isPlaying
+                        ? Icons.pause_circle
+                        : Icons.play_circle,
                     color: Colors.white,
                     size: 70,
                   ),

@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:recipe_prokit/screens/RCOTPScreen.dart';
-import 'package:recipe_prokit/utils/RCColors.dart';
+import 'package:bitsoftickets/screens/RCOTPScreen.dart';
+import 'package:bitsoftickets/utils/RCColors.dart';
 
 class RCSignUpComponent extends StatelessWidget {
-
   var form_key = GlobalKey<FormState>();
 
   FocusNode name = FocusNode();
@@ -16,13 +15,16 @@ class RCSignUpComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Form(
-      key : form_key,
-        autovalidateMode: AutovalidateMode.onUserInteraction ,
-        child : Column(
-        children : [
-          Text('Sign Up', style: boldTextStyle(size: 30, fontFamily: GoogleFonts.playfairDisplay().fontFamily)),
+        key: form_key,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
+        child: Column(children: [
+          Text('Sign Up',
+              style: boldTextStyle(
+                  size: 30,
+                  fontFamily: GoogleFonts.playfairDisplay().fontFamily)),
           12.height,
-          Text('To discover all our tastebud tickling recipes and features', style: secondaryTextStyle(color: rcSecondaryTextColor)),
+          Text('To discover all our tastebud tickling recipes and features',
+              style: secondaryTextStyle(color: rcSecondaryTextColor)),
           16.height,
           AppTextField(
             controller: emailController,
@@ -30,10 +32,14 @@ class RCSignUpComponent extends StatelessWidget {
             textFieldType: TextFieldType.EMAIL,
             textStyle: boldTextStyle(),
             decoration: InputDecoration(
-              prefixIcon:   Icon(Icons.mail_outlined, color: rcSecondaryTextColor,),
+              prefixIcon: Icon(
+                Icons.mail_outlined,
+                color: rcSecondaryTextColor,
+              ),
               hintText: 'Enter email',
               hintStyle: secondaryTextStyle(),
-              focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: rcSecondaryTextColor)),
+              focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: rcSecondaryTextColor)),
             ),
           ),
           16.height,
@@ -44,10 +50,12 @@ class RCSignUpComponent extends StatelessWidget {
             textFieldType: TextFieldType.NAME,
             textStyle: boldTextStyle(),
             decoration: InputDecoration(
-              prefixIcon: Icon(Icons.person_outlined, color: rcSecondaryTextColor),
+              prefixIcon:
+                  Icon(Icons.person_outlined, color: rcSecondaryTextColor),
               hintText: 'Enter username',
               hintStyle: secondaryTextStyle(),
-              focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: rcSecondaryTextColor)),
+              focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: rcSecondaryTextColor)),
             ),
           ),
           16.height,
@@ -57,10 +65,12 @@ class RCSignUpComponent extends StatelessWidget {
             suffixIconColor: rcSecondaryTextColor,
             textStyle: boldTextStyle(),
             decoration: InputDecoration(
-              prefixIcon: Icon(Icons.lock_outlined, color: rcSecondaryTextColor),
+              prefixIcon:
+                  Icon(Icons.lock_outlined, color: rcSecondaryTextColor),
               hintText: 'Enter password',
               hintStyle: secondaryTextStyle(),
-              focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: rcSecondaryTextColor)),
+              focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: rcSecondaryTextColor)),
             ),
           ),
           32.height,
@@ -69,34 +79,42 @@ class RCSignUpComponent extends StatelessWidget {
                   text: 'By signing up I accept the ',
                   style: secondaryTextStyle(color: rcSecondaryTextColor),
                   children: <TextSpan>[
-                    TextSpan(
-                        text: 'terms of use ',
-                        style: secondaryTextStyle(color: primaryColor, weight: FontWeight.bold, decoration: TextDecoration.underline)
-                    ),
-                    TextSpan(
-                      text: 'and ',
-                      style: secondaryTextStyle(color: rcSecondaryTextColor),
-                    ),
-                    TextSpan(
-                        text: 'data,private,policy.',
-                        style: secondaryTextStyle(color: primaryColor, weight: FontWeight.bold, decoration: TextDecoration.underline)
-                    ),
-                  ]
-              )
-          ),
+                TextSpan(
+                    text: 'terms of use ',
+                    style: secondaryTextStyle(
+                        color: primaryColor,
+                        weight: FontWeight.bold,
+                        decoration: TextDecoration.underline)),
+                TextSpan(
+                  text: 'and ',
+                  style: secondaryTextStyle(color: rcSecondaryTextColor),
+                ),
+                TextSpan(
+                    text: 'data,private,policy.',
+                    style: secondaryTextStyle(
+                        color: primaryColor,
+                        weight: FontWeight.bold,
+                        decoration: TextDecoration.underline)),
+              ])),
           50.height,
           Container(
-              child: Text('Sign Up', style: boldTextStyle(size: 18, color: Colors.white)).center(),
-              width: context.width() - 40,
-              padding: EdgeInsets.symmetric(vertical: 8),
-              decoration: BoxDecoration(borderRadius: radius(32), color: primaryColor)
-          ).onTap(() {
-            if(form_key.currentState!.validate()){
-              RCOTPScreen(email: emailController.text,name: nameController.text,).launch(context);
+                  child: Text('Sign Up',
+                          style: boldTextStyle(size: 18, color: Colors.white))
+                      .center(),
+                  width: context.width() - 40,
+                  padding: EdgeInsets.symmetric(vertical: 8),
+                  decoration: BoxDecoration(
+                      borderRadius: radius(32), color: primaryColor))
+              .onTap(() {
+            if (form_key.currentState!.validate()) {
+              RCOTPScreen(
+                email: emailController.text,
+                name: nameController.text,
+              ).launch(context);
             }
-          },splashColor: Colors.transparent,highlightColor: Colors.transparent),
-        ]
-      )
-    );
+          },
+                  splashColor: Colors.transparent,
+                  highlightColor: Colors.transparent),
+        ]));
   }
 }

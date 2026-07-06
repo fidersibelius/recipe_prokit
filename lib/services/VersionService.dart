@@ -1,5 +1,5 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:recipe_prokit/services/ApiClient.dart';
+import 'package:bitsoftickets/services/ApiClient.dart';
 
 class VersionService {
   static Future<dynamic> cargaInicial() async {

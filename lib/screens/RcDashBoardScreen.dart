@@ -1,3 +1,5 @@
+import 'package:bitsoftickets/modules/developer/screens/DeveloperDashboardScreen.dart';
+import 'package:bitsoftickets/services/AuthStorage.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:bitsoftickets/components/RCHomeComponent.dart';
@@ -8,9 +10,14 @@ import 'package:bitsoftickets/utils/RCColors.dart';
 import 'package:bitsoftickets/screens/QRScannerScreen.dart';
 
 class RcDashBoardScreen extends StatefulWidget {
-  String name;
+  final String name;
 
-  RcDashBoardScreen({required this.name});
+  const RcDashBoardScreen({
+    super.key,
+    required this.name,
+  });
+
+  //RcDashBoardScreen({required this.name});
 
   @override
   _RcDashBoardScreenState createState() => _RcDashBoardScreenState();
@@ -18,10 +25,31 @@ class RcDashBoardScreen extends StatefulWidget {
 
 class _RcDashBoardScreenState extends State<RcDashBoardScreen> {
   int selectedIndex = 0;
+  int role = 0;
+  //final role = await AuthStorage.getRole();
+  @override
+  void initState() {
+    super.initState();
+    cargarRol();
+  }
+
+  Future<void> cargarRol() async {
+    role = await AuthStorage.getRole();
+
+    setState(() {});
+  }
 
   Widget getTabs() {
     if (selectedIndex == 0) {
-      return RCHomeComponent(name: widget.name);
+      //final role = await AuthStorage.getRole();
+
+      if (role == 1) {
+        return const DeveloperDashboardScreen();
+      }
+
+      return RCHomeComponent(
+        name: widget.name,
+      );
     } else if (selectedIndex == 2) {
       return RCProfileScreen();
     } else {

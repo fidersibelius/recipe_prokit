@@ -25,11 +25,19 @@ class AuthService {
         jsonData['token_jwt'],
       );
 
+      await AuthStorage.saveRole(
+        jsonData['role_id'],
+      );
+      print("ROLE: ${jsonData['role_id']}");
+      print("LOGO BITSOF: ${jsonData['logo_bitsofmx']}");
+      print("LOGO ORG: ${jsonData['logo_org']}");
+      print("EVENTO: ${jsonData['evento_nombre']}");
+      print("IMAGEN: ${jsonData['evento_imagen']}");
       await AuthStorage.saveEvento(
-        logoBitsof: jsonData['logo_bitsofmx'],
-        logoOrg: jsonData['logo_org'],
-        nombre: jsonData['evento_nombre'],
-        imagen: jsonData['evento_imagen'],
+        logoBitsof: jsonData['logo_bitsofmx'] ?? "",
+        logoOrg: jsonData['logo_org'] ?? "",
+        nombre: jsonData['evento_nombre'] ?? "",
+        imagen: jsonData['evento_imagen'] ?? "",
       );
 
       return true;

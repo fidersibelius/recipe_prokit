@@ -11,6 +11,7 @@ class AuthStorage {
 
   static const _keyEvento = "evento_nombre";
   static const _keyEventoImagen = "evento_imagen";
+  static const _keyRole = "role_id";
 
   /// 🖼️ LOGO BITSOFTICKETS
   static Future<String?> getLogoBitsof() async {
@@ -40,6 +41,14 @@ class AuthStorage {
   /// 👤 GUARDAR USUARIO
   static Future<void> saveUser(String user) async {
     await _storage.write(key: _keyUser, value: user);
+  }
+
+  /// 👮 GUARDAR ROL
+  static Future<void> saveRole(int role) async {
+    await _storage.write(
+      key: _keyRole,
+      value: role.toString(),
+    );
   }
 
   /// 🎫 GUARDAR DATOS DEL EVENTO
@@ -78,6 +87,13 @@ class AuthStorage {
   /// 👤 OBTENER USUARIO
   static Future<String?> getUser() async {
     return await _storage.read(key: _keyUser);
+  }
+
+  /// 👮 OBTENER ROL
+  static Future<int> getRole() async {
+    final role = await _storage.read(key: _keyRole);
+
+    return int.tryParse(role ?? "0") ?? 0;
   }
 
   /// ❌ BORRAR TOKEN (logout)

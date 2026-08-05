@@ -5,9 +5,17 @@ class VersionService {
   static Future<dynamic> cargaInicial() async {
     final version = dotenv.env['APP_VERSION'] ?? '1.0.0';
 
-    return await ApiClient.post(
+    print("ANTES DEL POST");
+
+    final r = await ApiClient.post(
       'tickets/carga_inicial/$version',
       {},
     );
+
+    print("DESPUES DEL POST");
+
+    print(r);
+
+    return r;
   }
 }

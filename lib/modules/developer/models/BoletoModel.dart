@@ -1,4 +1,5 @@
 class BoletoModel {
+  final String boletoUid;
   final String fechaCreacion;
   final String quienRegistro;
   final String nombre;
@@ -7,6 +8,7 @@ class BoletoModel {
   final int intentos;
 
   BoletoModel({
+    required this.boletoUid,
     required this.fechaCreacion,
     required this.quienRegistro,
     required this.nombre,
@@ -17,6 +19,7 @@ class BoletoModel {
 
   factory BoletoModel.fromJson(Map<String, dynamic> json) {
     return BoletoModel(
+      boletoUid: json['boleto_uid'] ?? '',
       fechaCreacion: json['fecha_creacion'] ?? '',
       quienRegistro: json['quien_registro'] ?? '',
       nombre: json['nombre'] ?? '',
@@ -28,6 +31,7 @@ class BoletoModel {
 
   Map<String, dynamic> toJson() {
     return {
+      'boleto_uid': boletoUid,
       'fecha_creacion': fechaCreacion,
       'quien_registro': quienRegistro,
       'nombre': nombre,

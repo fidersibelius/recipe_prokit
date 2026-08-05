@@ -1,15 +1,46 @@
 import 'package:flutter/material.dart';
+import 'package:nb_utils/nb_utils.dart';
 
 import '../../../shared/widgets/BTScaffold.dart';
 import '../models/BoletoModel.dart';
+import '../services/BoletoService.dart';
+import 'DeveloperQrScreen.dart';
 
-class DeveloperBoletoDetailScreen extends StatelessWidget {
+class DeveloperBoletoDetailScreen extends StatefulWidget {
   final BoletoModel boleto;
 
   const DeveloperBoletoDetailScreen({
     super.key,
     required this.boleto,
   });
+
+  @override
+  State<DeveloperBoletoDetailScreen> createState() =>
+      _DeveloperBoletoDetailScreenState();
+}
+
+class _DeveloperBoletoDetailScreenState
+    extends State<DeveloperBoletoDetailScreen> {
+  Future<void> reenviarQr() async {
+    final qr = await BoletoService.obtenerQr(
+      widget.boleto.boletoUid,
+    );
+
+    if (qr == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            "No fue posible obtener el QR.",
+          ),
+        ),
+      );
+
+      return;
+    }
+    DeveloperQrScreen(
+      qrBytes: qr,
+    ).launch(context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +61,7 @@ class DeveloperBoletoDetailScreen extends StatelessWidget {
             ),
             const SizedBox(height: 24),
             Text(
-              boleto.nombre,
+              widget.boleto.nombre,
               style: const TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
@@ -46,23 +77,33 @@ class DeveloperBoletoDetailScreen extends StatelessWidget {
                     ListTile(
                       leading: const Icon(Icons.person),
                       title: const Text("Registró"),
-                      subtitle: Text(boleto.quienRegistro),
+                      subtitle: Text(widget.boleto.quienRegistro),
                     ),
                     ListTile(
                       leading: Icon(
-                        boleto.checkIn == 1
+                        widget.boleto.checkIn == 1
                             ? Icons.check_circle
                             : Icons.pending_actions,
-                        color:
-                            boleto.checkIn == 1 ? Colors.green : Colors.orange,
+                        color: widget.boleto.checkIn == 1
+                            ? Colors.green
+                            : Colors.orange,
                       ),
                       title: const Text("Estado"),
                       subtitle: Text(
-                        boleto.checkIn == 1 ? "Utilizado" : "Disponible",
+                        widget.boleto.checkIn == 1 ? "Utilizado" : "Disponible",
                       ),
                     ),
                   ],
                 ),
+              ),
+            ),
+            const SizedBox(height: 30),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton.icon(
+                onPressed: reenviarQr,
+                icon: const Icon(Icons.qr_code),
+                label: const Text("Reenviar QR"),
               ),
             ),
           ],

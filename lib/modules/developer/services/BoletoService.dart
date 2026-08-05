@@ -71,4 +71,37 @@ class BoletoService {
 
     return null;
   }
+
+  /// ============================
+  /// OBTENER QR DEL BOLETO
+  /// ============================
+  static Future<Uint8List?> obtenerQr(
+    String boletoUid,
+  ) async {
+    try {
+      final token = await AuthStorage.getToken();
+
+      final response = await http.post(
+        Uri.parse(
+          '$_baseUrl/tickets/eventos/$boletoUid/boletos/qr',
+        ),
+        headers: {
+          "Authorization": "Bearer $token",
+        },
+      );
+
+      if (response.statusCode == 200) {
+        print(response.statusCode);
+        print(response.headers);
+        print(response.body);
+        print(response.bodyBytes.length);
+        print(response.headers['content-type']);
+        return response.bodyBytes;
+      }
+    } catch (e) {
+      print(e);
+    }
+
+    return null;
+  }
 }

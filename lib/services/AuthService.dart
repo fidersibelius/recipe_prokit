@@ -8,39 +8,59 @@ class AuthService {
     String username,
     String password,
   ) async {
-    final baseUrl = dotenv.env['BASE_URL']!;
+    try {
+      final baseUrl = dotenv.env['BASE_URL']!;
 
-    final response = await http.post(
-      Uri.parse('$baseUrl/tickets/login'),
-      body: {
-        "username": username,
-        "password": password,
-      },
-    );
+      print("LOGIN 1");
+      print("$baseUrl/tickets/login");
 
-    final jsonData = jsonDecode(response.body);
-
-    if (jsonData['status'] == true) {
-      await AuthStorage.saveToken(
-        jsonData['token_jwt'],
+      final response = await http.post(
+        Uri.parse('$baseUrl/tickets/login'),
+        body: {
+          "username": username,
+          "password": password,
+        },
       );
 
-      await AuthStorage.saveRole(
-        jsonData['role_id'],
-      );
-      print("ROLE: ${jsonData['role_id']}");
-      print("LOGO BITSOF: ${jsonData['logo_bitsofmx']}");
-      print("LOGO ORG: ${jsonData['logo_org']}");
-      print("EVENTO: ${jsonData['evento_nombre']}");
-      print("IMAGEN: ${jsonData['evento_imagen']}");
-      await AuthStorage.saveEvento(
-        logoBitsof: jsonData['logo_bitsofmx'] ?? "",
-        logoOrg: jsonData['logo_org'] ?? "",
-        nombre: jsonData['evento_nombre'] ?? "",
-        imagen: jsonData['evento_imagen'] ?? "",
-      );
+      print("LOGIN 2");
+      print(response.statusCode);
+      print(response.body);
 
-      return true;
+      final jsonData = jsonDecode(response.body);
+
+      if (jsonData['status'] == true) {
+        print("LOGIN 3");
+
+        await AuthStorage.saveToken(
+          jsonData['token_jwt'],
+        );
+
+        print("LOGIN 4");
+
+        await AuthStorage.saveRole(
+          jsonData['role_id'],
+        );
+
+        print("LOGIN 5");
+
+        await AuthStorage.saveEvento(
+          logoBitsof: jsonData['logo_bitsofmx'] ?? "",
+          logoOrg: jsonData['logo_org'] ?? "",
+          nombre: jsonData['evento_nombre'] ?? "",
+          imagen: jsonData['evento_imagen'] ?? "",
+        );
+
+        print("LOGIN 6");
+
+        return true;
+      }
+
+      print("LOGIN STATUS FALSE");
+      return false;
+    } catch (e, s) {
+      print("ERROR LOGIN");
+      print(e);
+      print(s);
     }
 
     return false;

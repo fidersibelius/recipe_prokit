@@ -7,6 +7,7 @@ class EventoModel {
   final String fechaFin;
   final int isActive;
   final int boletos;
+  final String texto;
 
   EventoModel({
     required this.uid,
@@ -17,6 +18,7 @@ class EventoModel {
     required this.fechaFin,
     required this.isActive,
     required this.boletos,
+    required this.texto,
   });
 
   factory EventoModel.fromJson(Map<String, dynamic> json) {
@@ -29,6 +31,7 @@ class EventoModel {
       fechaFin: json['fecha_fin'] ?? '',
       isActive: json['is_active'] ?? 0,
       boletos: json['boletos'] ?? 0,
+      texto: json['texto'] ?? '',
     );
   }
 
@@ -42,6 +45,7 @@ class EventoModel {
       'fecha_fin': fechaFin,
       'is_active': isActive,
       'boletos': boletos,
+      'texto': texto,
     };
   }
 }

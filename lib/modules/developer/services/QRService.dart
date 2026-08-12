@@ -12,7 +12,11 @@ class QRService {
     String nombre,
   ) async {
     try {
-      final token = await AuthStorage.getToken();
+      final token = await ApiClient.requireToken();
+
+      if (token == null) {
+        return null;
+      }
 
       final response = await http.post(
         Uri.parse(

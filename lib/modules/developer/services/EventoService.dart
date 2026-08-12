@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 
 import '../models/EventosResponseModel.dart';
 import '../../../services/AuthStorage.dart';
+import '../../../services/ApiClient.dart';
 
 class EventoService {
   static final String _baseUrl = dotenv.env['BASE_URL']!;
@@ -14,7 +15,11 @@ class EventoService {
   /// ============================
   static Future<EventosResponseModel?> listarEventos() async {
     try {
-      final token = await AuthStorage.getToken();
+      final token = await ApiClient.requireToken();
+
+      if (token == null) {
+        return null;
+      }
 
       final response = await http.post(
         Uri.parse('$_baseUrl/tickets/eventos/listado'),
@@ -22,6 +27,11 @@ class EventoService {
           "Authorization": "Bearer $token",
         },
       );
+
+      if (await ApiClient.handleUnauthorized(response)) {
+        return null;
+      }
+
       print(response.body);
       if (response.statusCode == 200) {
         return EventosResponseModel.fromJson(

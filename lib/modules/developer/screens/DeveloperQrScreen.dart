@@ -9,11 +9,24 @@ import 'dart:io';
 
 class DeveloperQrScreen extends StatelessWidget {
   final Uint8List qrBytes;
+  final String texto;
+  final String folio;
+  final String nombreAsistente;
 
   const DeveloperQrScreen({
     super.key,
     required this.qrBytes,
+    required this.texto,
+    required this.folio,
+    required this.nombreAsistente,
   });
+
+  String get mensajeCompartir {
+    return texto.replaceAll('{folio}', folio).replaceAll(
+          '{nombre_asistente}',
+          nombreAsistente,
+        );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +63,7 @@ class DeveloperQrScreen extends StatelessWidget {
             ),
             const SizedBox(height: 30),
             ElevatedButton.icon(
-              onPressed: compartirQr,
+              onPressed: () => compartirQr(context),
               icon: const Icon(Icons.share),
               label: const Text("Compartir"),
             ),
@@ -60,7 +73,7 @@ class DeveloperQrScreen extends StatelessWidget {
     );
   }
 
-  Future<void> compartirQr() async {
+  Future<void> compartirQr(BuildContext context) async {
     final tempDir = await getTemporaryDirectory();
 
     final file = File(
@@ -73,7 +86,11 @@ class DeveloperQrScreen extends StatelessWidget {
       [
         XFile(file.path),
       ],
-      text: 'Tu boleto para el evento.',
+      text: mensajeCompartir,
     );
+
+    if (context.mounted) {
+      Navigator.pop(context);
+    }
   }
 }

@@ -7,11 +7,15 @@ import '../services/BoletoService.dart';
 import 'DeveloperQrScreen.dart';
 
 class DeveloperBoletoDetailScreen extends StatefulWidget {
+  final String eventoUid;
   final BoletoModel boleto;
+  final String textoEvento;
 
   const DeveloperBoletoDetailScreen({
     super.key,
+    required this.eventoUid,
     required this.boleto,
+    required this.textoEvento,
   });
 
   @override
@@ -23,10 +27,15 @@ class _DeveloperBoletoDetailScreenState
     extends State<DeveloperBoletoDetailScreen> {
   Future<void> reenviarQr() async {
     final qr = await BoletoService.obtenerQr(
+      widget.eventoUid,
       widget.boleto.boletoUid,
     );
 
-    if (qr == null) {
+    if (!mounted) {
+      return;
+    }
+
+    if (qr == null || qr.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text(
@@ -37,9 +46,17 @@ class _DeveloperBoletoDetailScreenState
 
       return;
     }
-    DeveloperQrScreen(
+
+    await DeveloperQrScreen(
       qrBytes: qr,
+      texto: widget.textoEvento,
+      folio: widget.boleto.folio,
+      nombreAsistente: widget.boleto.nombre,
     ).launch(context);
+
+    if (mounted) {
+      Navigator.pop(context);
+    }
   }
 
   @override

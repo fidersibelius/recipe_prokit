@@ -29,14 +29,11 @@ class _DeveloperBoletosScreenState extends State<DeveloperBoletosScreen> {
   bool loading = true;
 
   List<BoletoModel> boletos = [];
-  int paginaActual = 1;
+  List<BoletoModel> boletosFiltrados = [];
+
+  final TextEditingController buscarController = TextEditingController();
 
   int registrosPorPagina = 15;
-
-  List<BoletoModel> boletosPagina = [];
-  int get totalPaginas {
-    return (boletos.length / registrosPorPagina).ceil();
-  }
 
   @override
   void initState() {
@@ -54,11 +51,21 @@ class _DeveloperBoletosScreenState extends State<DeveloperBoletosScreen> {
       final BoletosResponseModel? response = await BoletoService.listarBoletos(
         widget.evento.uid,
       );
+      print("RESPONSE BOLETOS: $response");
+
+      if (response != null && response.status) {
+        print("TOTAL BOLETOS: ${response.boletos.length}");
+      }
 
       if (response != null && response.status) {
         boletos = response.boletos;
 
-        actualizarPagina();
+        boletosFiltrados = List.from(
+          boletos,
+        );
+
+        print("SCREEN BOLETOS: ${boletos.length}");
+        print("SCREEN FILTRADOS: ${boletosFiltrados.length}");
       }
     } catch (e) {
       debugPrint(e.toString());
@@ -71,66 +78,53 @@ class _DeveloperBoletosScreenState extends State<DeveloperBoletosScreen> {
     }
   }
 
-  void actualizarPagina() {
-    final inicio = (paginaActual - 1) * registrosPorPagina;
-
-    int fin = inicio + registrosPorPagina;
-
-    if (fin > boletos.length) {
-      fin = boletos.length;
-    }
-
-    boletosPagina = boletos.sublist(
-      inicio,
-      fin,
-    );
-
-    setState(() {});
-  }
-
   Future<void> mostrarCrearBoleto() async {
-    final controller = TextEditingController();
+    String nombre = '';
 
-    await showDialog(
+    final nombreConfirmado = await showDialog<String>(
       context: context,
-      builder: (_) {
+      builder: (dialogContext) {
         return AlertDialog(
           title: const Text("Nuevo boleto"),
           content: TextField(
-            controller: controller,
+            autofocus: true,
+            textCapitalization: TextCapitalization.words,
+            onChanged: (texto) {
+              nombre = texto;
+            },
+            onSubmitted: (texto) {
+              final valor = texto.trim();
+
+              if (valor.isNotEmpty) {
+                Navigator.pop(
+                  dialogContext,
+                  valor,
+                );
+              }
+            },
             decoration: const InputDecoration(
               labelText: "Nombre",
             ),
           ),
           actions: [
             TextButton(
-              onPressed: () => Navigator.pop(context),
+              onPressed: () {
+                Navigator.pop(dialogContext);
+              },
               child: const Text("Cancelar"),
             ),
             ElevatedButton(
-              onPressed: () async {
-                print(controller.text);
-                final ok = await BoletoService.crearBoleto(
-                  widget.evento.uid,
-                  controller.text,
-                );
+              onPressed: () {
+                final valor = nombre.trim();
 
-                Navigator.pop(context);
-
-                final qr = await BoletoService.crearBoleto(
-                  widget.evento.uid,
-                  controller.text,
-                );
-
-                Navigator.pop(context);
-
-                if (qr != null) {
-                  await DeveloperQrScreen(
-                    qrBytes: qr,
-                  ).launch(context);
-
-                  cargarBoletos();
+                if (valor.isEmpty) {
+                  return;
                 }
+
+                Navigator.pop(
+                  dialogContext,
+                  valor,
+                );
               },
               child: const Text("Crear"),
             ),
@@ -138,6 +132,43 @@ class _DeveloperBoletosScreenState extends State<DeveloperBoletosScreen> {
         );
       },
     );
+
+    if (nombreConfirmado == null || nombreConfirmado.isEmpty || !mounted) {
+      return;
+    }
+
+    final qr = await BoletoService.crearBoleto(
+      widget.evento.uid,
+      nombreConfirmado,
+    );
+
+    if (!mounted) {
+      return;
+    }
+
+    if (qr == null || qr.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            "El boleto se creó, pero no fue posible obtener el QR.",
+          ),
+        ),
+      );
+
+      await cargarBoletos();
+      return;
+    }
+
+    await DeveloperQrScreen(
+      qrBytes: qr,
+      texto: widget.evento.texto,
+      folio: '',
+      nombreAsistente: nombreConfirmado,
+    ).launch(context);
+
+    if (mounted) {
+      await cargarBoletos();
+    }
   }
 
   @override
@@ -168,13 +199,41 @@ class _DeveloperBoletosScreenState extends State<DeveloperBoletosScreen> {
       );
     }
 
-    return DeveloperBoletosGrid(
-      boletos: boletos,
-      onDetalle: (boleto) {
-        DeveloperBoletoDetailScreen(
-          boleto: boleto,
-        ).launch(context);
-      },
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(12),
+          child: TextField(
+            controller: buscarController,
+            onChanged: (texto) {
+              setState(() {
+                boletosFiltrados = boletos.where((boleto) {
+                  return boleto.nombre.toLowerCase().contains(
+                        texto.toLowerCase(),
+                      );
+                }).toList();
+              });
+            },
+            decoration: const InputDecoration(
+              prefixIcon: Icon(Icons.search),
+              hintText: "Buscar boleto...",
+              border: OutlineInputBorder(),
+            ),
+          ),
+        ),
+        Expanded(
+          child: DeveloperBoletosGrid(
+            boletos: boletosFiltrados,
+            onDetalle: (boleto) {
+              DeveloperBoletoDetailScreen(
+                eventoUid: widget.evento.uid,
+                boleto: boleto,
+                textoEvento: widget.evento.texto,
+              ).launch(context);
+            },
+          ),
+        ),
+      ],
     ); /*Column(
       children: [
         Expanded(

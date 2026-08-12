@@ -50,8 +50,8 @@ class _QRScannerScreenState extends State<QRScannerScreen> {
             final resp = await TicketService.registrarIngreso(code);
 
             await QRResultScreen(
-              success: resp['estatus'] == true,
-              message: resp['estatus'] == true
+              success: resp['status'] == true,
+              message: resp['status'] == true
                   ? resp['mensaje']
                   : resp['error_msg'] ?? 'Error',
             ).launch(context);

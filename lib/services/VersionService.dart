@@ -3,7 +3,7 @@ import 'package:bitsoftickets/services/ApiClient.dart';
 
 class VersionService {
   static Future<dynamic> cargaInicial() async {
-    final version = dotenv.env['APP_VERSION'] ?? '1.0.0';
+    final version = dotenv.env['APP_VERSION'] ?? '1.2.3';
 
     print("ANTES DEL POST");
 
@@ -15,6 +15,7 @@ class VersionService {
     print("DESPUES DEL POST");
 
     print(r);
+    print(r["status"]);
 
     return r;
   }

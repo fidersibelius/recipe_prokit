@@ -27,7 +27,7 @@ class _AuthCheckScreenState extends State<AuthCheckScreen> {
     if (token != null && token.isNotEmpty) {
       final version = await VersionService.cargaInicial();
 
-      if (version['estatus'] != true) {
+      if (version['status'] != true) {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(

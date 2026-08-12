@@ -101,7 +101,7 @@ class RCSignInComponent extends StatelessWidget {
               if (ok) {
                 final version = await VersionService.cargaInicial();
 
-                if (version['estatus'] != true) {
+                if (version['status'] != true) {
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(

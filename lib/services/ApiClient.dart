@@ -1,147 +1,236 @@
 import 'dart:convert';
 
+import 'package:bitsoftickets/screens/RCSignUpScreen.dart';
+import 'package:bitsoftickets/utils/NavigationService.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
-import 'package:bitsoftickets/screens/RCSignUpScreen.dart';
 
 import 'AuthStorage.dart';
-import 'package:bitsoftickets/utils/NavigationService.dart';
-import 'package:flutter/foundation.dart';
 
 class ApiClient {
   static String get baseUrl => dotenv.env['BASE_URL']!;
 
-  /// 🔑 HEADERS AUTOMÁTICOS
-  static Future<Map<String, String>> _getHeaders() async {
-    final token = await AuthStorage.getToken();
+  // Evita abrir varias pantallas de login si varias peticiones
+  // reciben 401 al mismo tiempo.
+  static bool _cerrandoSesion = false;
 
-    print("TOKEN: $token");
+  static Future<Map<String, String>?> getHeaders({
+    String accept = 'application/json',
+  }) async {
+    final token = await requireToken();
 
-    Map<String, String> headers = {
-      "Accept": "application/json",
-    };
-
-    if (token != null && token.isNotEmpty) {
-      headers["Authorization"] = "Bearer $token";
+    if (token == null) {
+      return null;
     }
 
-    return headers;
+    return {
+      'Accept': accept,
+      'Authorization': 'Bearer $token',
+    };
   }
 
-  /// 📥 GET
   static Future<dynamic> get(String endpoint) async {
-    final headers = await _getHeaders();
+    final headers = await getHeaders();
 
-    print("🔗 URL: $baseUrl/$endpoint");
+    if (headers == null) {
+      throw Exception('TOKEN_INVALIDO');
+    }
 
     final response = await http.get(
       Uri.parse('$baseUrl/$endpoint'),
       headers: headers,
     );
 
-    print("📡 Status: ${response.statusCode}");
-
-    return await _handleResponse(response);
+    return handleJsonResponse(response);
   }
 
-  /// 📤 POST
   static Future<dynamic> post(
     String endpoint,
     Map<String, dynamic> body,
   ) async {
-    print("🔗 URL: $baseUrl/$endpoint");
+    final headers = await getHeaders();
+
+    if (headers == null) {
+      throw Exception('TOKEN_INVALIDO');
+    }
 
     final response = await http.post(
       Uri.parse('$baseUrl/$endpoint'),
       headers: {
-        ...(await _getHeaders()),
-        "Content-Type": "application/json",
+        ...headers,
+        'Content-Type': 'application/json',
       },
       body: jsonEncode(body),
     );
 
-    print("📡 Status: ${response.statusCode}");
-
-    return await _handleResponse(response);
+    return handleJsonResponse(response);
   }
 
-  /// 🧠 MANEJO GLOBAL
-  static Future<dynamic> _handleResponse(
+  /// Debe llamarse también desde servicios que usan http directamente.
+  ///
+  /// Retorna true si la sesión era inválida y ya inició el cierre.
+  static Future<bool> handleUnauthorized(
     http.Response response,
   ) async {
-    final jsonData = jsonDecode(response.body);
-
-    /// 🔥 TOKEN INVÁLIDO HTTP
     if (response.statusCode == 401) {
       await _logout();
-
-      throw Exception("TOKEN_INVALIDO");
+      return true;
     }
 
-    /// 🔥 TOKEN EXPIRADO CUSTOM API
-    if (jsonData is Map &&
-        jsonData['status'] == false &&
-        jsonData['msg'].toString().toLowerCase().contains('token')) {
+    final jsonData = _tryDecodeJson(response.body);
+
+    if (_respuestaIndicaTokenInvalido(jsonData)) {
       await _logout();
-
-      throw Exception("TOKEN_INVALIDO");
+      return true;
     }
 
-    /// 🔥 ERROR GENERAL
-    if (response.statusCode != 200) {
-      if (jsonData is Map) {
-        throw Exception(
-          jsonData['message'] ?? jsonData['msg'] ?? "Error en API",
-        );
-      }
+    return false;
+  }
 
-      throw Exception("Error en API");
+  static Future<dynamic> handleJsonResponse(
+    http.Response response,
+  ) async {
+    if (await handleUnauthorized(response)) {
+      throw Exception('TOKEN_INVALIDO');
+    }
+
+    final jsonData = _tryDecodeJson(response.body);
+
+    if (response.statusCode < 200 || response.statusCode >= 300) {
+      throw Exception(
+        _obtenerMensajeError(jsonData),
+      );
+    }
+
+    if (jsonData == null) {
+      throw Exception(
+        'La respuesta del servidor no contiene JSON válido.',
+      );
     }
 
     return jsonData;
   }
 
-  /// 🚪 LOGOUT GLOBAL
-  static Future<void> _logout() async {
-    await AuthStorage.clear();
+  /// Para respuestas de imágenes, archivos o multipart.
+  static Future<Uint8List?> handleBytesResponse(
+    http.Response response,
+  ) async {
+    if (await handleUnauthorized(response)) {
+      throw Exception('TOKEN_INVALIDO');
+    }
 
-    globalNavigatorKey.currentState?.pushAndRemoveUntil(
-      MaterialPageRoute(
-        builder: (_) => RCSignUpScreen(selectedIndex: 1),
-      ),
-      (route) => false,
-    );
+    if (response.statusCode < 200 || response.statusCode >= 300) {
+      final jsonData = _tryDecodeJson(response.body);
+
+      throw Exception(
+        _obtenerMensajeError(jsonData),
+      );
+    }
+
+    if (response.bodyBytes.isEmpty) {
+      return null;
+    }
+
+    return response.bodyBytes;
+  }
+
+  static dynamic _tryDecodeJson(String body) {
+    if (body.trim().isEmpty) {
+      return null;
+    }
+
+    try {
+      return jsonDecode(body);
+    } catch (_) {
+      return null;
+    }
+  }
+
+  static bool _respuestaIndicaTokenInvalido(
+    dynamic jsonData,
+  ) {
+    if (jsonData is! Map) {
+      return false;
+    }
+
+    if (jsonData['status'] != false) {
+      return false;
+    }
+
+    final mensaje =
+        (jsonData['message'] ?? jsonData['msg'] ?? '').toString().toLowerCase();
+
+    return mensaje.contains('token') &&
+        (mensaje.contains('inválido') ||
+            mensaje.contains('invalido') ||
+            mensaje.contains('expirado') ||
+            mensaje.contains('expired') ||
+            mensaje.contains('unauthenticated'));
+  }
+
+  static String _obtenerMensajeError(
+    dynamic jsonData,
+  ) {
+    if (jsonData is Map) {
+      return (jsonData['message'] ?? jsonData['msg'] ?? 'Error en API')
+          .toString();
+    }
+
+    return 'Error en API';
+  }
+
+  static Future<void> _logout() async {
+    if (_cerrandoSesion) {
+      return;
+    }
+
+    _cerrandoSesion = true;
+
+    try {
+      await AuthStorage.clear();
+
+      final navigator = globalNavigatorKey.currentState;
+
+      if (navigator == null) {
+        debugPrint(
+          'No fue posible navegar al login: Navigator no disponible.',
+        );
+        return;
+      }
+
+      navigator.pushAndRemoveUntil(
+        MaterialPageRoute(
+          builder: (_) => RCSignUpScreen(
+            selectedIndex: 1,
+          ),
+        ),
+        (route) => false,
+      );
+    } finally {
+      // Dejamos tiempo para que termine la navegación.
+      Future<void>.delayed(
+        const Duration(seconds: 1),
+        () {
+          _cerrandoSesion = false;
+        },
+      );
+    }
   }
 
   static Future<void> logout() async {
     await _logout();
   }
 
-  /// 🔥 MULTIPART RESPONSE
-  static Future<dynamic> handleMultipartResponse(
-    http.Response response,
-  ) async {
-    final jsonData = jsonDecode(response.body);
+  static Future<String?> requireToken() async {
+    final token = await AuthStorage.getToken();
 
-    /// 🔥 TOKEN INVÁLIDO
-    if (response.statusCode == 401) {
+    if (token == null || token.trim().isEmpty) {
       await _logout();
-
-      throw Exception("TOKEN_INVALIDO");
+      return null;
     }
 
-    /// 🔥 ERROR GENERAL
-    if (response.statusCode != 200) {
-      if (jsonData is Map) {
-        throw Exception(
-          jsonData['message'] ?? jsonData['msg'] ?? "Error en API",
-        );
-      }
-
-      throw Exception("Error en API");
-    }
-
-    return jsonData;
+    return token;
   }
 }

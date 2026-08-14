@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 
 import '../../../shared/widgets/BTScaffold.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:path_provider/path_provider.dart';
-import 'dart:io';
 
 class AdminQrScreen extends StatelessWidget {
   final Uint8List qrBytes;
@@ -73,24 +71,54 @@ class AdminQrScreen extends StatelessWidget {
     );
   }
 
-  Future<void> compartirQr(BuildContext context) async {
-    final tempDir = await getTemporaryDirectory();
+  Future<void> compartirQr(
+    BuildContext context,
+  ) async {
+    try {
+      final renderBox = context.findRenderObject() as RenderBox?;
 
-    final file = File(
-      '${tempDir.path}/boleto_qr.png',
-    );
+      final nombreArchivo =
+          folio.trim().isEmpty ? 'boleto_qr.png' : 'boleto_${folio.trim()}.png';
 
-    await file.writeAsBytes(qrBytes);
+      await SharePlus.instance.share(
+        ShareParams(
+          files: [
+            XFile.fromData(
+              qrBytes,
+              mimeType: 'image/png',
+              name: nombreArchivo,
+            ),
+          ],
+          text: mensajeCompartir,
+          subject: folio.trim().isEmpty ? 'Boleto' : 'Boleto ${folio.trim()}',
+          sharePositionOrigin: renderBox == null
+              ? null
+              : renderBox.localToGlobal(
+                    Offset.zero,
+                  ) &
+                  renderBox.size,
+        ),
+      );
 
-    await Share.shareXFiles(
-      [
-        XFile(file.path),
-      ],
-      text: mensajeCompartir,
-    );
+      if (context.mounted) {
+        Navigator.pop(context);
+      }
+    } catch (e) {
+      debugPrint(
+        'ERROR COMPARTIR QR: $e',
+      );
 
-    if (context.mounted) {
-      Navigator.pop(context);
+      if (!context.mounted) {
+        return;
+      }
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            'No fue posible compartir el boleto.',
+          ),
+        ),
+      );
     }
   }
 }

@@ -7,6 +7,7 @@ import 'package:bitsoftickets/utils/AppTheme.dart';
 import 'package:bitsoftickets/utils/RCConstants.dart';
 import 'package:bitsoftickets/utils/RCDataGenerator.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'shared/widgets/BTMobileFrame.dart';
 //import 'package:bitsoftickets/screens/RCSignUpScreen.dart';
 import 'utils/NavigationService.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -48,7 +49,12 @@ class MyApp extends StatelessWidget {
         navigatorKey: globalNavigatorKey,
         scrollBehavior: SBehavior(),
 
-        // YA EXISTIA
+        builder: (context, child) {
+          return BTMobileFrame(
+            child: child ?? const SizedBox.shrink(),
+          );
+        },
+
         supportedLocales: LanguageDataModel.languageLocales(),
 
         // AGREGA ESTO

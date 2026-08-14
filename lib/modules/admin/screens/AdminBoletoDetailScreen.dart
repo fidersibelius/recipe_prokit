@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../shared/widgets/BTScaffold.dart';
-import '../models/BoletoModel.dart';
-import '../services/BoletoService.dart';
-import 'DeveloperQrScreen.dart';
+import '../models/AdminBoletoModel.dart';
+import '../services/AdminBoletoService.dart';
+import 'AdminQrScreen.dart';
 
-class DeveloperBoletoDetailScreen extends StatefulWidget {
+class AdminBoletoDetailScreen extends StatefulWidget {
   final String eventoUid;
-  final BoletoModel boleto;
+  final AdminBoletoModel boleto;
   final String textoEvento;
 
-  const DeveloperBoletoDetailScreen({
+  const AdminBoletoDetailScreen({
     super.key,
     required this.eventoUid,
     required this.boleto,
@@ -19,14 +19,13 @@ class DeveloperBoletoDetailScreen extends StatefulWidget {
   });
 
   @override
-  State<DeveloperBoletoDetailScreen> createState() =>
-      _DeveloperBoletoDetailScreenState();
+  State<AdminBoletoDetailScreen> createState() =>
+      _AdminBoletoDetailScreenState();
 }
 
-class _DeveloperBoletoDetailScreenState
-    extends State<DeveloperBoletoDetailScreen> {
+class _AdminBoletoDetailScreenState extends State<AdminBoletoDetailScreen> {
   Future<void> reenviarQr() async {
-    final qr = await BoletoService.obtenerQr(
+    final qr = await AdminBoletoService.obtenerQr(
       widget.eventoUid,
       widget.boleto.boletoUid,
     );
@@ -47,7 +46,7 @@ class _DeveloperBoletoDetailScreenState
       return;
     }
 
-    await DeveloperQrScreen(
+    await AdminQrScreen(
       qrBytes: qr,
       texto: widget.textoEvento,
       folio: widget.boleto.folio,

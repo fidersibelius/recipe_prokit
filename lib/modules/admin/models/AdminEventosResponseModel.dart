@@ -1,22 +1,22 @@
-import 'EventoModel.dart';
+import 'AdminEventoModel.dart';
 
-class EventosResponseModel {
+class AdminEventosResponseModel {
   final bool status;
-  final List<EventoModel> eventos;
+  final List<AdminEventoModel> eventos;
 
-  EventosResponseModel({
+  AdminEventosResponseModel({
     required this.status,
     required this.eventos,
   });
 
-  factory EventosResponseModel.fromJson(Map<String, dynamic> json) {
-    return EventosResponseModel(
+  factory AdminEventosResponseModel.fromJson(Map<String, dynamic> json) {
+    return AdminEventosResponseModel(
       // Acepta "status" o "estatus"
       status: (json['status'] ?? json['estatus'] ?? false) as bool,
 
       // Si no viene la lista, regresa una lista vacía
       eventos: ((json['eventos'] ?? []) as List)
-          .map((e) => EventoModel.fromJson(e))
+          .map((e) => AdminEventoModel.fromJson(e))
           .toList(),
     );
   }

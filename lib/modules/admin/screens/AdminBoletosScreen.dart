@@ -1,35 +1,35 @@
-import 'package:bitsoftickets/modules/developer/screens/DeveloperBoletoDetailScreen.dart';
+import 'package:bitsoftickets/modules/admin/screens/AdminBoletoDetailScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../shared/widgets/BTScaffold.dart';
-import '../models/EventoModel.dart';
+import '../models/AdminEventoModel.dart';
 import '../../../shared/widgets/BTEmpty.dart';
 import '../../../shared/widgets/BTLoading.dart';
 
-import '../models/BoletoModel.dart';
-import '../models/BoletosResponseModel.dart';
-import '../services/BoletoService.dart';
-import 'package:bitsoftickets/modules/developer/screens/DeveloperQrScreen.dart';
-import '../widgets/DeveloperBoletosGrid.dart';
+import '../models/AdminBoletoModel.dart';
+import '../models/AdminBoletosResponseModel.dart';
+import '../services/AdminBoletoService.dart';
+import 'package:bitsoftickets/modules/admin/screens/AdminQrScreen.dart';
+import '../widgets/AdminBoletosGrid.dart';
 
-class DeveloperBoletosScreen extends StatefulWidget {
-  final EventoModel evento;
+class AdminBoletosScreen extends StatefulWidget {
+  final AdminEventoModel evento;
 
-  const DeveloperBoletosScreen({
+  const AdminBoletosScreen({
     super.key,
     required this.evento,
   });
 
   @override
-  State<DeveloperBoletosScreen> createState() => _DeveloperBoletosScreenState();
+  State<AdminBoletosScreen> createState() => _AdminBoletosScreenState();
 }
 
-class _DeveloperBoletosScreenState extends State<DeveloperBoletosScreen> {
+class _AdminBoletosScreenState extends State<AdminBoletosScreen> {
   bool loading = true;
 
-  List<BoletoModel> boletos = [];
-  List<BoletoModel> boletosFiltrados = [];
+  List<AdminBoletoModel> boletos = [];
+  List<AdminBoletoModel> boletosFiltrados = [];
 
   final TextEditingController buscarController = TextEditingController();
 
@@ -48,7 +48,8 @@ class _DeveloperBoletosScreenState extends State<DeveloperBoletosScreen> {
     });
 
     try {
-      final BoletosResponseModel? response = await BoletoService.listarBoletos(
+      final AdminBoletosResponseModel? response =
+          await AdminBoletoService.listarBoletos(
         widget.evento.uid,
       );
       print("RESPONSE BOLETOS: $response");
@@ -137,7 +138,7 @@ class _DeveloperBoletosScreenState extends State<DeveloperBoletosScreen> {
       return;
     }
 
-    final qr = await BoletoService.crearBoleto(
+    final qr = await AdminBoletoService.crearBoleto(
       widget.evento.uid,
       nombreConfirmado,
     );
@@ -159,7 +160,7 @@ class _DeveloperBoletosScreenState extends State<DeveloperBoletosScreen> {
       return;
     }
 
-    await DeveloperQrScreen(
+    await AdminQrScreen(
       qrBytes: qr,
       texto: widget.evento.texto,
       folio: '',
@@ -222,10 +223,10 @@ class _DeveloperBoletosScreenState extends State<DeveloperBoletosScreen> {
           ),
         ),
         Expanded(
-          child: DeveloperBoletosGrid(
+          child: AdminBoletosGrid(
             boletos: boletosFiltrados,
             onDetalle: (boleto) {
-              DeveloperBoletoDetailScreen(
+              AdminBoletoDetailScreen(
                 eventoUid: widget.evento.uid,
                 boleto: boleto,
                 textoEvento: widget.evento.texto,
@@ -245,7 +246,7 @@ class _DeveloperBoletosScreenState extends State<DeveloperBoletosScreen> {
 
               return InkWell(
                 onTap: () {
-                  DeveloperBoletoDetailScreen(
+                  AdminBoletoDetailScreen(
                     boleto: boleto,
                   ).launch(context);
                 },

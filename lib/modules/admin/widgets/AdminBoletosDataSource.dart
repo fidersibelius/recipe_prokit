@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
-import '../models/BoletoModel.dart';
+import '../models/AdminBoletoModel.dart';
 
-class DeveloperBoletosDataSource extends DataGridSource {
-  List<BoletoModel> boletos;
+class AdminBoletosDataSource extends DataGridSource {
+  List<AdminBoletoModel> boletos;
 
-  final void Function(BoletoModel boleto) onDetalle;
+  final void Function(AdminBoletoModel boleto) onDetalle;
 
   int registrosPorPagina;
 
   List<DataGridRow> _todasLasFilas = [];
   List<DataGridRow> _filasDePagina = [];
 
-  final Map<DataGridRow, BoletoModel> _boletoPorFila = {};
+  final Map<DataGridRow, AdminBoletoModel> _boletoPorFila = {};
 
-  DeveloperBoletosDataSource({
+  AdminBoletosDataSource({
     required this.boletos,
     required this.onDetalle,
     required this.registrosPorPagina,
@@ -25,7 +25,7 @@ class DeveloperBoletosDataSource extends DataGridSource {
   }
 
   void actualizarBoletos(
-    List<BoletoModel> nuevosBoletos,
+    List<AdminBoletoModel> nuevosBoletos,
   ) {
     boletos = nuevosBoletos;
 

@@ -1,4 +1,4 @@
-class EventoModel {
+class AdminEventoModel {
   final String uid;
   final String nombre;
   final String logoOrg;
@@ -9,7 +9,7 @@ class EventoModel {
   final int boletos;
   final String texto;
 
-  EventoModel({
+  AdminEventoModel({
     required this.uid,
     required this.nombre,
     required this.logoOrg,
@@ -21,8 +21,8 @@ class EventoModel {
     required this.texto,
   });
 
-  factory EventoModel.fromJson(Map<String, dynamic> json) {
-    return EventoModel(
+  factory AdminEventoModel.fromJson(Map<String, dynamic> json) {
+    return AdminEventoModel(
       uid: json['uid'] ?? '',
       nombre: json['nombre'] ?? '',
       logoOrg: json['logo_org'] ?? '',

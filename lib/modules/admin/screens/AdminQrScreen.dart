@@ -7,13 +7,13 @@ import 'package:share_plus/share_plus.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:io';
 
-class DeveloperQrScreen extends StatelessWidget {
+class AdminQrScreen extends StatelessWidget {
   final Uint8List qrBytes;
   final String texto;
   final String folio;
   final String nombreAsistente;
 
-  const DeveloperQrScreen({
+  const AdminQrScreen({
     super.key,
     required this.qrBytes,
     required this.texto,

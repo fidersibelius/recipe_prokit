@@ -3,24 +3,24 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
-import '../models/BoletoModel.dart';
-import 'DeveloperBoletosDataSource.dart';
+import '../models/AdminBoletoModel.dart';
+import 'AdminBoletosDataSource.dart';
 
-class DeveloperBoletosGrid extends StatefulWidget {
-  final Function(BoletoModel) onDetalle;
-  final List<BoletoModel> boletos;
+class AdminBoletosGrid extends StatefulWidget {
+  final Function(AdminBoletoModel) onDetalle;
+  final List<AdminBoletoModel> boletos;
 
-  const DeveloperBoletosGrid({
+  const AdminBoletosGrid({
     super.key,
     required this.boletos,
     required this.onDetalle,
   });
 
   @override
-  State<DeveloperBoletosGrid> createState() => _DeveloperBoletosGridState();
+  State<AdminBoletosGrid> createState() => _AdminBoletosGridState();
 }
 
-class _DeveloperBoletosGridState extends State<DeveloperBoletosGrid> {
+class _AdminBoletosGridState extends State<AdminBoletosGrid> {
   static const List<int> opcionesDePaginacion = [
     10,
     50,
@@ -32,13 +32,13 @@ class _DeveloperBoletosGridState extends State<DeveloperBoletosGrid> {
 
   int registrosPorPagina = 10;
 
-  late DeveloperBoletosDataSource dataSource;
+  late AdminBoletosDataSource dataSource;
 
   @override
   void initState() {
     super.initState();
 
-    dataSource = DeveloperBoletosDataSource(
+    dataSource = AdminBoletosDataSource(
       boletos: widget.boletos,
       registrosPorPagina: registrosPorPagina,
       onDetalle: (boleto) {
@@ -49,7 +49,7 @@ class _DeveloperBoletosGridState extends State<DeveloperBoletosGrid> {
 
   @override
   void didUpdateWidget(
-    covariant DeveloperBoletosGrid oldWidget,
+    covariant AdminBoletosGrid oldWidget,
   ) {
     super.didUpdateWidget(oldWidget);
 

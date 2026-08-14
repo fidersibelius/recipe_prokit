@@ -7,16 +7,16 @@ import 'package:http/http.dart' as http;
 import '../../../services/ApiClient.dart';
 
 import '../../../services/AuthStorage.dart';
-import '../models/BoletosResponseModel.dart';
+import '../models/AdminBoletosResponseModel.dart';
 import 'dart:typed_data';
 
-class BoletoService {
+class AdminBoletoService {
   static final String _baseUrl = dotenv.env['BASE_URL']!;
 
   /// ============================
   /// LISTAR BOLETOS
   /// ============================
-  static Future<BoletosResponseModel?> listarBoletos(
+  static Future<AdminBoletosResponseModel?> listarBoletos(
     String uid,
   ) async {
     try {
@@ -43,7 +43,7 @@ class BoletoService {
       print("BODY LISTADO: ${response.body}");
 
       if (response.statusCode == 200) {
-        return BoletosResponseModel.fromJson(
+        return AdminBoletosResponseModel.fromJson(
           jsonDecode(response.body),
         );
       }

@@ -3,17 +3,17 @@ import 'dart:convert';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 
-import '../models/EventosResponseModel.dart';
+import '../models/AdminEventosResponseModel.dart';
 import '../../../services/AuthStorage.dart';
 import '../../../services/ApiClient.dart';
 
-class EventoService {
+class AdminEventoService {
   static final String _baseUrl = dotenv.env['BASE_URL']!;
 
   /// ============================
   /// LISTAR EVENTOS
   /// ============================
-  static Future<EventosResponseModel?> listarEventos() async {
+  static Future<AdminEventosResponseModel?> listarEventos() async {
     try {
       final token = await ApiClient.requireToken();
 
@@ -34,12 +34,12 @@ class EventoService {
 
       print(response.body);
       if (response.statusCode == 200) {
-        return EventosResponseModel.fromJson(
+        return AdminEventosResponseModel.fromJson(
           jsonDecode(response.body),
         );
       }
     } catch (e) {
-      print("EventoService.listarEventos()");
+      print("AdminEventoService.listarEventos()");
       print(e);
     }
 

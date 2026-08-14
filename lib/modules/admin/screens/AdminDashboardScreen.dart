@@ -4,25 +4,24 @@ import 'package:nb_utils/nb_utils.dart';
 import '../../../shared/widgets/BTEmpty.dart';
 import '../../../shared/widgets/BTLoading.dart';
 import '../../../shared/widgets/BTScaffold.dart';
-import '../../../shared/widgets/EventoCard.dart';
+import '../widgets/AdminEventoCard.dart';
 
-import '../models/EventoModel.dart';
-import '../models/EventosResponseModel.dart';
-import '../services/EventoService.dart';
-import 'package:bitsoftickets/modules/developer/screens/DeveloperBoletosScreen.dart';
+import '../models/AdminEventoModel.dart';
+import '../models/AdminEventosResponseModel.dart';
+import '../services/AdminEventoService.dart';
+import 'package:bitsoftickets/modules/admin/screens/AdminBoletosScreen.dart';
 
-class DeveloperDashboardScreen extends StatefulWidget {
-  const DeveloperDashboardScreen({super.key});
+class AdminDashboardScreen extends StatefulWidget {
+  const AdminDashboardScreen({super.key});
 
   @override
-  State<DeveloperDashboardScreen> createState() =>
-      _DeveloperDashboardScreenState();
+  State<AdminDashboardScreen> createState() => _AdminDashboardScreenState();
 }
 
-class _DeveloperDashboardScreenState extends State<DeveloperDashboardScreen> {
+class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
   bool loading = true;
 
-  List<EventoModel> eventos = [];
+  List<AdminEventoModel> eventos = [];
 
   @override
   void initState() {
@@ -36,8 +35,8 @@ class _DeveloperDashboardScreenState extends State<DeveloperDashboardScreen> {
     });
 
     try {
-      final EventosResponseModel? response =
-          await EventoService.listarEventos();
+      final AdminEventosResponseModel? response =
+          await AdminEventoService.listarEventos();
 
       if (response != null && response.status) {
         eventos = response.eventos;
@@ -82,10 +81,10 @@ class _DeveloperDashboardScreenState extends State<DeveloperDashboardScreen> {
         itemBuilder: (context, index) {
           final evento = eventos[index];
 
-          return EventoCard(
+          return AdminEventoCard(
             evento: evento,
             onTap: () {
-              DeveloperBoletosScreen(
+              AdminBoletosScreen(
                 evento: evento,
               ).launch(context);
             },

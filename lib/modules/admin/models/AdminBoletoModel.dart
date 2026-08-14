@@ -1,4 +1,4 @@
-class BoletoModel {
+class AdminBoletoModel {
   final String boletoUid;
   final String folio;
   final String quienRegistro;
@@ -9,7 +9,7 @@ class BoletoModel {
   final String? fechaCheckIn;
   final int intentos;
 
-  BoletoModel({
+  AdminBoletoModel({
     required this.boletoUid,
     required this.folio,
     required this.quienRegistro,
@@ -20,10 +20,10 @@ class BoletoModel {
     required this.intentos,
   });
 
-  factory BoletoModel.fromJson(
+  factory AdminBoletoModel.fromJson(
     Map<String, dynamic> json,
   ) {
-    return BoletoModel(
+    return AdminBoletoModel(
       boletoUid: json['boleto_uid'] ?? "",
       folio: json['folio'] ?? "",
       quienRegistro: json['quien_registro'] ?? "",

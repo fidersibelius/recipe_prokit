@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-import '../../modules/developer/models/EventoModel.dart';
+import '../models/AdminEventoModel.dart';
 
-class EventoCard extends StatelessWidget {
-  final EventoModel evento;
+class AdminEventoCard extends StatelessWidget {
+  final AdminEventoModel evento;
   final VoidCallback onTap;
 
-  const EventoCard({
+  const AdminEventoCard({
     super.key,
     required this.evento,
     required this.onTap,

@@ -1,18 +1,18 @@
-class LoginResponseModel {
+class AdminLoginResponseModel {
   final bool status;
   final String tokenJwt;
   final int roleId;
   final String logoBitsofmx;
 
-  LoginResponseModel({
+  AdminLoginResponseModel({
     required this.status,
     required this.tokenJwt,
     required this.roleId,
     required this.logoBitsofmx,
   });
 
-  factory LoginResponseModel.fromJson(Map<String, dynamic> json) {
-    return LoginResponseModel(
+  factory AdminLoginResponseModel.fromJson(Map<String, dynamic> json) {
+    return AdminLoginResponseModel(
       status: json['status'] ?? false,
       tokenJwt: json['token_jwt'] ?? '',
       roleId: json['role_id'] ?? 0,

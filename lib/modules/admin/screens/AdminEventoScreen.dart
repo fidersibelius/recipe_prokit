@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../shared/widgets/BTScaffold.dart';
-import '../models/EventoModel.dart';
+import '../models/AdminEventoModel.dart';
 
-class DeveloperEventoScreen extends StatelessWidget {
-  final EventoModel evento;
+class AdminEventoScreen extends StatelessWidget {
+  final AdminEventoModel evento;
 
-  const DeveloperEventoScreen({
+  const AdminEventoScreen({
     super.key,
     required this.evento,
   });

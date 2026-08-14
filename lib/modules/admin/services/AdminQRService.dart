@@ -3,9 +3,10 @@ import 'dart:typed_data';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 
+import '../../../services/ApiClient.dart';
 import '../../../services/AuthStorage.dart';
 
-class QRService {
+class AdminQRService {
   static final String _baseUrl = dotenv.env['BASE_URL']!;
 
   static Future<Uint8List?> generarQR(

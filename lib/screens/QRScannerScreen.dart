@@ -47,16 +47,43 @@ class _QRScannerScreenState extends State<QRScannerScreen> {
 
             print('QR: $code');
 
-            final resp = await TicketService.registrarIngreso(code);
+            try {
+              final resp = await TicketService.registrarIngreso(code);
 
-            await QRResultScreen(
-              success: resp['status'] == true,
-              message: resp['status'] == true
-                  ? resp['mensaje']
-                  : resp['error_msg'] ?? 'Error',
-            ).launch(context);
+              if (!mounted) {
+                return;
+              }
 
-            scanned = false;
+              await QRResultScreen(
+                success: resp['status'] == true,
+                message: resp['status'] == true
+                    ? resp['mensaje'] ?? 'Ingreso registrado correctamente.'
+                    : resp['error_msg'] ??
+                        resp['message'] ??
+                        'No fue posible registrar el ingreso.',
+              ).launch(context);
+            } catch (e) {
+              debugPrint(
+                'ERROR REGISTRAR INGRESO: $e',
+              );
+
+              if (!mounted) {
+                return;
+              }
+
+              final mensaje = e.toString().replaceFirst(
+                    'Exception: ',
+                    '',
+                  );
+
+              await QRResultScreen(
+                success: false,
+                title: 'NO FUE POSIBLE VALIDAR',
+                message: mensaje,
+              ).launch(context);
+            } finally {
+              scanned = false;
+            }
           },
         ),
       ),

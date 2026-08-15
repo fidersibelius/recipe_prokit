@@ -68,6 +68,51 @@ class ApiClient {
     return handleJsonResponse(response);
   }
 
+  static Future<dynamic> postMultipart(
+    String endpoint,
+    Map<String, String> fields,
+  ) async {
+    final headers = await getHeaders();
+
+    if (headers == null) {
+      throw Exception('TOKEN_INVALIDO');
+    }
+
+    final request = http.MultipartRequest(
+      'POST',
+      Uri.parse('$baseUrl/$endpoint'),
+    );
+
+    request.headers.addAll(headers);
+    request.fields.addAll(fields);
+
+    final streamedResponse = await request.send();
+
+    final response = await http.Response.fromStream(
+      streamedResponse,
+    );
+
+    if (kDebugMode) {
+      final responsePreview = response.body.length > 500
+          ? '${response.body.substring(0, 500)}...'
+          : response.body;
+
+      debugPrint(
+        'API MULTIPART: $baseUrl/$endpoint',
+      );
+
+      debugPrint(
+        'API STATUS: ${response.statusCode}',
+      );
+
+      debugPrint(
+        'API RESPONSE: $responsePreview',
+      );
+    }
+
+    return handleJsonResponse(response);
+  }
+
   /// Debe llamarse también desde servicios que usan http directamente.
   ///
   /// Retorna true si la sesión era inválida y ya inició el cierre.
@@ -99,8 +144,14 @@ class ApiClient {
     final jsonData = _tryDecodeJson(response.body);
 
     if (response.statusCode < 200 || response.statusCode >= 300) {
+      if (jsonData != null) {
+        throw Exception(
+          _obtenerMensajeError(jsonData),
+        );
+      }
+
       throw Exception(
-        _obtenerMensajeError(jsonData),
+        _mensajeHttp(response.statusCode),
       );
     }
 
@@ -174,7 +225,11 @@ class ApiClient {
     dynamic jsonData,
   ) {
     if (jsonData is Map) {
-      return (jsonData['message'] ?? jsonData['msg'] ?? 'Error en API')
+      return (jsonData['message'] ??
+              jsonData['msg'] ??
+              jsonData['error_msg'] ??
+              jsonData['error'] ??
+              'Error en API')
           .toString();
     }
 
@@ -232,5 +287,24 @@ class ApiClient {
     }
 
     return token;
+  }
+
+  static String _mensajeHttp(int statusCode) {
+    switch (statusCode) {
+      case 400:
+        return 'Solicitud incorrecta (HTTP 400).';
+      case 403:
+        return 'No tienes permiso para realizar esta acción (HTTP 403).';
+      case 404:
+        return 'El servicio para registrar el ingreso no fue encontrado (HTTP 404).';
+      case 405:
+        return 'El método utilizado no está permitido (HTTP 405).';
+      case 422:
+        return 'El código QR no pudo ser validado (HTTP 422).';
+      case 500:
+        return 'El servidor presentó un error interno (HTTP 500).';
+      default:
+        return 'Error de comunicación con el servidor (HTTP $statusCode).';
+    }
   }
 }

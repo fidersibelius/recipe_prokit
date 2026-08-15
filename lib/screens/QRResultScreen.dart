@@ -4,11 +4,13 @@ import 'package:nb_utils/nb_utils.dart';
 class QRResultScreen extends StatelessWidget {
   final bool success;
   final String message;
+  final String? title;
 
   const QRResultScreen({
     super.key,
     required this.success,
     required this.message,
+    this.title,
   });
 
   @override
@@ -29,7 +31,7 @@ class QRResultScreen extends StatelessWidget {
                 ),
                 30.height,
                 Text(
-                  success ? 'ACCESO AUTORIZADO' : 'TICKET YA UTILIZADO',
+                  title ?? (success ? 'ACCESO AUTORIZADO' : 'ACCESO RECHAZADO'),
                   textAlign: TextAlign.center,
                   style: boldTextStyle(
                     color: Colors.white,

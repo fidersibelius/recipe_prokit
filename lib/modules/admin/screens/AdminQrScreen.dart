@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:flutter_file_saver/flutter_file_saver.dart';
 import 'package:flutter/material.dart';
 
 import '../../../shared/widgets/BTScaffold.dart';
@@ -10,6 +11,8 @@ class AdminQrScreen extends StatelessWidget {
   final String texto;
   final String folio;
   final String nombreAsistente;
+  final String nombreEvento;
+  final String? nombreArchivoSugerido;
 
   const AdminQrScreen({
     super.key,
@@ -17,6 +20,8 @@ class AdminQrScreen extends StatelessWidget {
     required this.texto,
     required this.folio,
     required this.nombreAsistente,
+    required this.nombreEvento,
+    this.nombreArchivoSugerido,
   });
 
   String get mensajeCompartir {
@@ -24,6 +29,72 @@ class AdminQrScreen extends StatelessWidget {
           '{nombre_asistente}',
           nombreAsistente,
         );
+  }
+
+  String get nombreArchivo {
+    final sugerido = _limpiarNombreSugerido(nombreArchivoSugerido);
+
+    if (sugerido != null) {
+      return sugerido;
+    }
+
+    final eventoSeguro = _normalizarParte(nombreEvento);
+    final folioSeguro = folio.trim().replaceAll(
+          RegExp(r'[^a-zA-Z0-9_-]'),
+          '',
+        );
+
+    if (eventoSeguro.isNotEmpty && folioSeguro.isNotEmpty) {
+      return '${eventoSeguro}_$folioSeguro.png';
+    }
+
+    if (eventoSeguro.isNotEmpty) {
+      return '${eventoSeguro}_qr.png';
+    }
+
+    return folioSeguro.isEmpty ? 'boleto_qr.png' : 'boleto_$folioSeguro.png';
+  }
+
+  String _normalizarParte(String value) {
+    const reemplazos = {
+      'á': 'a',
+      'é': 'e',
+      'í': 'i',
+      'ó': 'o',
+      'ú': 'u',
+      'ü': 'u',
+      'ñ': 'n',
+    };
+
+    var normalizado = value.trim().toLowerCase();
+
+    reemplazos.forEach((origen, destino) {
+      normalizado = normalizado.replaceAll(origen, destino);
+    });
+
+    return normalizado.replaceAll(RegExp(r'[^a-z0-9]'), '');
+  }
+
+  String? _limpiarNombreSugerido(String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return null;
+    }
+
+    final segmentos = value.trim().split(RegExp(r'[\\/]'));
+    var nombre = segmentos.last.replaceAll(
+      RegExp(r'[^a-zA-Z0-9._-]'),
+      '_',
+    );
+
+    if (nombre.isEmpty) {
+      return null;
+    }
+
+    if (!nombre.toLowerCase().endsWith('.png')) {
+      nombre = '$nombre.png';
+    }
+
+    return nombre;
   }
 
   @override
@@ -60,10 +131,22 @@ class AdminQrScreen extends StatelessWidget {
               },
             ),
             const SizedBox(height: 30),
-            ElevatedButton.icon(
-              onPressed: () => compartirQr(context),
-              icon: const Icon(Icons.share),
-              label: const Text("Compartir"),
+            Wrap(
+              alignment: WrapAlignment.center,
+              spacing: 12,
+              runSpacing: 12,
+              children: [
+                ElevatedButton.icon(
+                  onPressed: () => descargarQr(context),
+                  icon: const Icon(Icons.download),
+                  label: const Text("Descargar"),
+                ),
+                ElevatedButton.icon(
+                  onPressed: () => compartirQr(context),
+                  icon: const Icon(Icons.share),
+                  label: const Text("Compartir"),
+                ),
+              ],
             ),
           ],
         ),
@@ -71,14 +154,50 @@ class AdminQrScreen extends StatelessWidget {
     );
   }
 
+  Future<void> descargarQr(
+    BuildContext context,
+  ) async {
+    try {
+      await FlutterFileSaver().writeFileAsBytes(
+        fileName: nombreArchivo,
+        bytes: qrBytes,
+      );
+
+      if (!context.mounted) {
+        return;
+      }
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            'Boleto descargado correctamente.',
+          ),
+        ),
+      );
+    } catch (e) {
+      debugPrint(
+        'ERROR DESCARGAR QR: $e',
+      );
+
+      if (!context.mounted) {
+        return;
+      }
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            'No fue posible descargar el boleto.',
+          ),
+        ),
+      );
+    }
+  }
+
   Future<void> compartirQr(
     BuildContext context,
   ) async {
     try {
       final renderBox = context.findRenderObject() as RenderBox?;
-
-      final nombreArchivo =
-          folio.trim().isEmpty ? 'boleto_qr.png' : 'boleto_${folio.trim()}.png';
 
       await SharePlus.instance.share(
         ShareParams(

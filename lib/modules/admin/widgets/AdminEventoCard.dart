@@ -5,11 +5,13 @@ import '../models/AdminEventoModel.dart';
 
 class AdminEventoCard extends StatelessWidget {
   final AdminEventoModel evento;
+  final bool esDemo;
   final VoidCallback onTap;
 
   const AdminEventoCard({
     super.key,
     required this.evento,
+    required this.esDemo,
     required this.onTap,
   });
 
@@ -28,114 +30,150 @@ class AdminEventoCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(18),
         onTap: onTap,
         child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(
+          padding: const EdgeInsets.all(16),
+          child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              /// ============================
-              /// TITULO
-              /// ============================
-              Row(
-                children: [
-                  Expanded(
-                    child: Text(
+              _imagenEvento(),
+              14.width,
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
                       evento.nombre,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: boldTextStyle(
-                        size: 22,
+                        size: 20,
                       ),
                     ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 10,
-                      vertical: 5,
-                    ),
-                    decoration: BoxDecoration(
-                      color: activo ? Colors.green.shade50 : Colors.red.shade50,
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
+                    10.height,
+                    Wrap(
+                      spacing: 8,
+                      runSpacing: 8,
                       children: [
-                        Icon(
-                          Icons.circle,
-                          size: 8,
-                          color: activo ? Colors.green : Colors.red,
-                        ),
-                        6.width,
-                        Text(
-                          activo ? "Activo" : "Inactivo",
-                          style: TextStyle(
-                            color: activo ? Colors.green : Colors.red,
-                            fontWeight: FontWeight.bold,
+                        if (esDemo)
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 10,
+                              vertical: 5,
+                            ),
+                            decoration: BoxDecoration(
+                              color: Colors.red.shade600,
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                            child: const Text(
+                              'DEMO',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 10,
+                            vertical: 5,
+                          ),
+                          decoration: BoxDecoration(
+                            color: activo
+                                ? Colors.green.shade50
+                                : Colors.red.shade50,
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Icon(
+                                Icons.circle,
+                                size: 8,
+                                color: activo ? Colors.green : Colors.red,
+                              ),
+                              6.width,
+                              Text(
+                                activo ? 'Activo' : 'Inactivo',
+                                style: TextStyle(
+                                  color: activo ? Colors.green : Colors.red,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ],
                     ),
-                  ),
-                ],
-              ),
-
-              20.height,
-
-              /// ============================
-              /// BOLETOS
-              /// ============================
-
-              Row(
-                children: [
-                  const Icon(
-                    Icons.confirmation_number_outlined,
-                  ),
-                  10.width,
-                  Text(
-                    "${evento.boletos} boletos",
-                    style: primaryTextStyle(),
-                  ),
-                ],
-              ),
-
-              12.height,
-
-              /// ============================
-              /// FECHAS
-              /// ============================
-
-              Row(
-                children: [
-                  const Icon(
-                    Icons.calendar_month_outlined,
-                  ),
-                  10.width,
-                  Expanded(
-                    child: Text(
-                      "${evento.fechaIni}  -  ${evento.fechaFin}",
-                      style: secondaryTextStyle(),
+                    16.height,
+                    Row(
+                      children: [
+                        const Icon(
+                          Icons.confirmation_number_outlined,
+                          size: 20,
+                        ),
+                        8.width,
+                        Expanded(
+                          child: Text(
+                            '${evento.boletos} boletos',
+                            style: primaryTextStyle(),
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                ],
-              ),
-
-              20.height,
-
-              const Divider(),
-
-              Align(
-                alignment: Alignment.centerRight,
-                child: TextButton.icon(
-                  onPressed: onTap,
-                  icon: const Icon(
-                    Icons.arrow_forward_ios,
-                    size: 16,
-                  ),
-                  label: const Text("Abrir"),
+                    10.height,
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Icon(
+                          Icons.calendar_month_outlined,
+                          size: 20,
+                        ),
+                        8.width,
+                        Expanded(
+                          child: Text(
+                            '${evento.fechaIni} - ${evento.fechaFin}',
+                            style: secondaryTextStyle(),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _imagenEvento() {
+    final url = evento.eventoImagen.trim();
+
+    Widget placeholder() {
+      return Image.asset(
+        'images/no_image.png',
+        width: 96,
+        height: 120,
+        fit: BoxFit.cover,
+      );
+    }
+
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(12),
+      child: SizedBox(
+        width: 96,
+        height: 120,
+        child: url.isEmpty
+            ? placeholder()
+            : Image.network(
+                url,
+                width: 96,
+                height: 120,
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) {
+                  return placeholder();
+                },
+              ),
       ),
     );
   }

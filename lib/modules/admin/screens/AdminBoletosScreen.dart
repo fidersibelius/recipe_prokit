@@ -1,11 +1,12 @@
 import 'package:bitsoftickets/modules/admin/screens/AdminBoletoDetailScreen.dart';
+import 'package:bitsoftickets/modules/admin/screens/AdminBoletoErrorScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../shared/widgets/BTScaffold.dart';
+import '../../../shared/widgets/BTError.dart';
 import '../models/AdminEventoModel.dart';
 import '../../../shared/widgets/BTEmpty.dart';
-import '../../../shared/widgets/BTLoading.dart';
 
 import '../models/AdminBoletoModel.dart';
 import '../models/AdminBoletosResponseModel.dart';
@@ -27,6 +28,8 @@ class AdminBoletosScreen extends StatefulWidget {
 
 class _AdminBoletosScreenState extends State<AdminBoletosScreen> {
   bool loading = true;
+  bool creandoBoleto = false;
+  String? errorCarga;
 
   List<AdminBoletoModel> boletos = [];
   List<AdminBoletoModel> boletosFiltrados = [];
@@ -42,9 +45,16 @@ class _AdminBoletosScreenState extends State<AdminBoletosScreen> {
     cargarBoletos();
   }
 
+  @override
+  void dispose() {
+    buscarController.dispose();
+    super.dispose();
+  }
+
   Future<void> cargarBoletos() async {
     setState(() {
       loading = true;
+      errorCarga = null;
     });
 
     try {
@@ -67,9 +77,12 @@ class _AdminBoletosScreenState extends State<AdminBoletosScreen> {
 
         print("SCREEN BOLETOS: ${boletos.length}");
         print("SCREEN FILTRADOS: ${boletosFiltrados.length}");
+      } else {
+        errorCarga = 'No fue posible obtener la lista de boletos.';
       }
     } catch (e) {
-      debugPrint(e.toString());
+      debugPrint('ERROR CARGAR BOLETOS: $e');
+      errorCarga = 'No fue posible comunicarse con el servidor.';
     }
 
     if (mounted) {
@@ -80,95 +93,106 @@ class _AdminBoletosScreenState extends State<AdminBoletosScreen> {
   }
 
   Future<void> mostrarCrearBoleto() async {
-    String nombre = '';
+    if (creandoBoleto) {
+      return;
+    }
 
-    final nombreConfirmado = await showDialog<String>(
-      context: context,
-      builder: (dialogContext) {
-        return AlertDialog(
-          title: const Text("Nuevo boleto"),
-          content: TextField(
-            autofocus: true,
-            textCapitalization: TextCapitalization.words,
-            onChanged: (texto) {
-              nombre = texto;
-            },
-            onSubmitted: (texto) {
-              final valor = texto.trim();
+    setState(() {
+      creandoBoleto = true;
+    });
+    try {
+      String nombre = '';
 
-              if (valor.isNotEmpty) {
-                Navigator.pop(
-                  dialogContext,
-                  valor,
-                );
-              }
-            },
-            decoration: const InputDecoration(
-              labelText: "Nombre",
-            ),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(dialogContext);
+      final nombreConfirmado = await showDialog<String>(
+        context: context,
+        builder: (dialogContext) {
+          return AlertDialog(
+            title: const Text("Nuevo boleto"),
+            content: TextField(
+              autofocus: true,
+              textCapitalization: TextCapitalization.words,
+              onChanged: (texto) {
+                nombre = texto;
               },
-              child: const Text("Cancelar"),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                final valor = nombre.trim();
+              onSubmitted: (texto) {
+                final valor = texto.trim();
 
-                if (valor.isEmpty) {
-                  return;
+                if (valor.isNotEmpty) {
+                  Navigator.pop(
+                    dialogContext,
+                    valor,
+                  );
                 }
-
-                Navigator.pop(
-                  dialogContext,
-                  valor,
-                );
               },
-              child: const Text("Crear"),
+              decoration: const InputDecoration(
+                labelText: "Nombre",
+              ),
             ),
-          ],
-        );
-      },
-    );
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(dialogContext);
+                },
+                child: const Text("Cancelar"),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  final valor = nombre.trim();
 
-    if (nombreConfirmado == null || nombreConfirmado.isEmpty || !mounted) {
-      return;
-    }
+                  if (valor.isEmpty) {
+                    return;
+                  }
 
-    final qr = await AdminBoletoService.crearBoleto(
-      widget.evento.uid,
-      nombreConfirmado,
-    );
-
-    if (!mounted) {
-      return;
-    }
-
-    if (qr == null || qr.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text(
-            "El boleto se creó, pero no fue posible obtener el QR.",
-          ),
-        ),
+                  Navigator.pop(
+                    dialogContext,
+                    valor,
+                  );
+                },
+                child: const Text("Crear"),
+              ),
+            ],
+          );
+        },
       );
 
-      await cargarBoletos();
-      return;
-    }
+      if (nombreConfirmado == null || nombreConfirmado.isEmpty || !mounted) {
+        return;
+      }
 
-    await AdminQrScreen(
-      qrBytes: qr,
-      texto: widget.evento.texto,
-      folio: '',
-      nombreAsistente: nombreConfirmado,
-    ).launch(context);
+      final resultado = await AdminBoletoService.crearBoleto(
+        widget.evento.uid,
+        nombreConfirmado,
+      );
 
-    if (mounted) {
-      await cargarBoletos();
+      if (!mounted) {
+        return;
+      }
+
+      if (!resultado.success) {
+        await AdminBoletoErrorScreen(
+          message: resultado.errorMessage ?? 'No fue posible crear el boleto.',
+        ).launch(context);
+        return;
+      }
+
+      await AdminQrScreen(
+        qrBytes: resultado.qrBytes!,
+        texto: widget.evento.texto,
+        folio: '',
+        nombreAsistente: nombreConfirmado,
+        nombreEvento: widget.evento.nombre,
+        nombreArchivoSugerido: resultado.fileName,
+      ).launch(context);
+
+      if (mounted) {
+        await cargarBoletos();
+      }
+    } finally {
+      if (mounted) {
+        setState(() {
+          creandoBoleto = false;
+        });
+      }
     }
   }
 
@@ -178,8 +202,17 @@ class _AdminBoletosScreenState extends State<AdminBoletosScreen> {
       title: widget.evento.nombre,
       actions: [
         IconButton(
-          onPressed: mostrarCrearBoleto,
-          icon: const Icon(Icons.add),
+          tooltip: creandoBoleto ? 'Creando boleto...' : 'Crear boleto',
+          onPressed: creandoBoleto ? null : mostrarCrearBoleto,
+          icon: creandoBoleto
+              ? const SizedBox(
+                  width: 20,
+                  height: 20,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2,
+                  ),
+                )
+              : const Icon(Icons.add),
         ),
       ],
       body: _body(),
@@ -190,6 +223,14 @@ class _AdminBoletosScreenState extends State<AdminBoletosScreen> {
     if (loading) {
       return const Center(
         child: CircularProgressIndicator(),
+      );
+    }
+
+    if (errorCarga != null) {
+      return BTError(
+        titulo: 'No fue posible cargar los boletos',
+        mensaje: errorCarga!,
+        onRetry: cargarBoletos,
       );
     }
 
@@ -207,11 +248,13 @@ class _AdminBoletosScreenState extends State<AdminBoletosScreen> {
           child: TextField(
             controller: buscarController,
             onChanged: (texto) {
+              final busqueda = texto.trim().toLowerCase();
+
               setState(() {
                 boletosFiltrados = boletos.where((boleto) {
-                  return boleto.nombre.toLowerCase().contains(
-                        texto.toLowerCase(),
-                      );
+                  return boleto.nombre.toLowerCase().contains(busqueda) ||
+                      boleto.folio.toLowerCase().contains(busqueda) ||
+                      boleto.quienRegistro.toLowerCase().contains(busqueda);
                 }).toList();
               });
             },
@@ -228,6 +271,7 @@ class _AdminBoletosScreenState extends State<AdminBoletosScreen> {
             onDetalle: (boleto) {
               AdminBoletoDetailScreen(
                 eventoUid: widget.evento.uid,
+                eventoNombre: widget.evento.nombre,
                 boleto: boleto,
                 textoEvento: widget.evento.texto,
               ).launch(context);

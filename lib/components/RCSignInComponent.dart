@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:bitsoftickets/components/RCFooterComponent.dart';
-import 'package:bitsoftickets/screens/RcDashBoardScreen.dart';
+import 'package:bitsoftickets/navigation/AccessGatewayScreen.dart';
 import 'package:bitsoftickets/screens/VersionBloqueadaScreen.dart';
 import 'package:bitsoftickets/services/AuthStorage.dart';
 import 'package:bitsoftickets/services/VersionService.dart';
@@ -115,13 +115,14 @@ class RCSignInComponent extends StatelessWidget {
                   nameController.text,
                 );
 
-                Navigator.pushReplacement(
+                Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(
-                    builder: (_) => RcDashBoardScreen(
-                      name: nameController.text,
+                    builder: (_) => AccessGatewayScreen(
+                      username: nameController.text,
                     ),
                   ),
+                  (route) => false,
                 );
               } else {
                 toast('Usuario o contraseña incorrectos');

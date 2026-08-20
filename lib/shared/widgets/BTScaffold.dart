@@ -22,7 +22,7 @@ class BTScaffold extends StatelessWidget {
       appBar: AppBar(
         automaticallyImplyLeading: showBack,
         title: Text(title),
-        centerTitle: false,
+        centerTitle: true,
         actions: actions,
       ),
       floatingActionButton: floatingActionButton,

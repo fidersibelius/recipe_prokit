@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:bitsoftickets/components/RCBackComponent.dart';
 import 'package:bitsoftickets/main.dart';
-import 'package:bitsoftickets/screens/RcDashBoardScreen.dart';
+import 'package:bitsoftickets/navigation/AccessGatewayScreen.dart';
 import 'package:bitsoftickets/utils/RCColors.dart';
 
 class RCPreferenceScreen extends StatefulWidget {
@@ -337,7 +337,7 @@ class _RCPreferenceScreenState extends State<RCPreferenceScreen> {
                 decoration: BoxDecoration(
                     borderRadius: radius(32), color: primaryColor),
               ).onTap(() {
-                RcDashBoardScreen(name: widget.name).launch(context);
+                AccessGatewayScreen(username: widget.name).launch(context);
               },
                   splashColor: Colors.transparent,
                   highlightColor: Colors.transparent),

@@ -1,6 +1,8 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import '../models/AccessCapabilities.dart';
 import 'AuthStorage.dart';
 
 class AuthService {
@@ -11,9 +13,6 @@ class AuthService {
     try {
       final baseUrl = dotenv.env['BASE_URL']!;
 
-      print("LOGIN 1");
-      print("$baseUrl/tickets/login");
-
       final response = await http.post(
         Uri.parse('$baseUrl/tickets/login'),
         body: {
@@ -22,45 +21,46 @@ class AuthService {
         },
       );
 
-      print("LOGIN 2");
-      print(response.statusCode);
-      print(response.body);
+      if (kDebugMode) {
+        debugPrint('LOGIN STATUS HTTP: ${response.statusCode}');
+      }
 
       final jsonData = jsonDecode(response.body);
 
-      if (jsonData['status'] == true) {
-        print("LOGIN 3");
+      if (jsonData is Map<String, dynamic> && jsonData['status'] == true) {
+        final token = jsonData['token_jwt']?.toString() ?? '';
+
+        if (token.isEmpty) {
+          return false;
+        }
 
         await AuthStorage.saveToken(
-          jsonData['token_jwt'],
+          token,
         );
-
-        print("LOGIN 4");
 
         await AuthStorage.saveRole(
-          jsonData['role_id'],
+          int.tryParse(jsonData['role_id']?.toString() ?? '') ?? 0,
         );
 
-        print("LOGIN 5");
+        await AuthStorage.saveCapabilities(
+          AccessCapabilities.fromLoginJson(jsonData),
+        );
 
         await AuthStorage.saveEvento(
-          logoBitsof: jsonData['logo_bitsofmx'] ?? "",
+          logoBitsof:
+              jsonData['logo_bitsofm'] ?? jsonData['logo_bitsofmx'] ?? "",
           logoOrg: jsonData['logo_org'] ?? "",
           nombre: jsonData['evento_nombre'] ?? "",
           imagen: jsonData['evento_imagen'] ?? "",
         );
 
-        print("LOGIN 6");
-
         return true;
       }
 
-      print("LOGIN STATUS FALSE");
       return false;
     } catch (e, s) {
-      print("ERROR LOGIN");
-      print(e);
-      print(s);
+      debugPrint('ERROR LOGIN: $e');
+      debugPrintStack(stackTrace: s);
     }
 
     return false;

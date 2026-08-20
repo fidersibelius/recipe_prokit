@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:bitsoftickets/screens/RCSignUpScreen.dart';
-import 'package:bitsoftickets/screens/RcDashBoardScreen.dart';
+import 'package:bitsoftickets/navigation/AccessGatewayScreen.dart';
 import 'package:bitsoftickets/screens/VersionBloqueadaScreen.dart';
 import 'package:bitsoftickets/services/AuthStorage.dart';
 import 'package:bitsoftickets/services/VersionService.dart';
@@ -37,11 +37,15 @@ class _AuthCheckScreenState extends State<AuthCheckScreen> {
         return;
       }
 
+      final username = await AuthStorage.getUser();
+
+      if (!mounted) return;
+
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (_) => RcDashBoardScreen(
-            name: 'Usuario',
+          builder: (_) => AccessGatewayScreen(
+            username: username,
           ),
         ),
       );

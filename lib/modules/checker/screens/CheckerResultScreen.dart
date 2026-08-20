@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-class QRResultScreen extends StatelessWidget {
+class CheckerResultScreen extends StatelessWidget {
   final bool success;
   final String message;
   final String? title;
 
-  const QRResultScreen({
+  const CheckerResultScreen({
     super.key,
     required this.success,
     required this.message,

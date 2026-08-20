@@ -1,5 +1,7 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
+import '../models/AccessCapabilities.dart';
+
 class AuthStorage {
   static final _storage = FlutterSecureStorage();
 
@@ -12,6 +14,9 @@ class AuthStorage {
   static const _keyEvento = "evento_nombre";
   static const _keyEventoImagen = "evento_imagen";
   static const _keyRole = "role_id";
+  static const _keyEsAdmin = "es_admin";
+  static const _keyEsChecker = "es_checker";
+  static const _keyEsDemo = "es_demo";
 
   /// 🖼️ LOGO BITSOFTICKETS
   static Future<String?> getLogoBitsof() async {
@@ -48,6 +53,25 @@ class AuthStorage {
     await _storage.write(
       key: _keyRole,
       value: role.toString(),
+    );
+  }
+
+  static Future<void> saveCapabilities(
+    AccessCapabilities capabilities,
+  ) async {
+    await _storage.write(
+      key: _keyEsAdmin,
+      value: capabilities.esAdmin ? '1' : '0',
+    );
+
+    await _storage.write(
+      key: _keyEsChecker,
+      value: capabilities.esChecker ? '1' : '0',
+    );
+
+    await _storage.write(
+      key: _keyEsDemo,
+      value: capabilities.esDemo ? '1' : '0',
     );
   }
 
@@ -94,6 +118,30 @@ class AuthStorage {
     final role = await _storage.read(key: _keyRole);
 
     return int.tryParse(role ?? "0") ?? 0;
+  }
+
+  static Future<AccessCapabilities> getCapabilities() async {
+    final adminValue = await _storage.read(key: _keyEsAdmin);
+    final checkerValue = await _storage.read(key: _keyEsChecker);
+    final demoValue = await _storage.read(key: _keyEsDemo);
+
+    // Compatibilidad temporal con sesiones creadas antes de que el API
+    // enviara capacidades independientes.
+    if (adminValue == null && checkerValue == null) {
+      final legacyRole = await getRole();
+
+      return AccessCapabilities(
+        esAdmin: legacyRole == 1,
+        esChecker: legacyRole != 1,
+        esDemo: false,
+      );
+    }
+
+    return AccessCapabilities(
+      esAdmin: adminValue == '1',
+      esChecker: checkerValue == '1',
+      esDemo: demoValue == '1',
+    );
   }
 
   /// ❌ BORRAR TOKEN (logout)

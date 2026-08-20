@@ -6,8 +6,8 @@ import 'package:http/http.dart' as http;
 
 import '../../../services/ApiClient.dart';
 
-import '../../../services/AuthStorage.dart';
 import '../models/AdminBoletosResponseModel.dart';
+import '../models/AdminCrearBoletoResult.dart';
 import 'dart:typed_data';
 
 class AdminBoletoService {
@@ -57,7 +57,7 @@ class AdminBoletoService {
   /// ============================
   /// CREAR BOLETO
   /// ============================
-  static Future<Uint8List?> crearBoleto(
+  static Future<AdminCrearBoletoResult> crearBoleto(
     String uid,
     String nombre,
   ) async {
@@ -65,7 +65,9 @@ class AdminBoletoService {
       final token = await ApiClient.requireToken();
 
       if (token == null) {
-        return null;
+        return const AdminCrearBoletoResult.failure(
+          'La sesión no es válida.',
+        );
       }
 
       final request = http.MultipartRequest(
@@ -89,7 +91,9 @@ class AdminBoletoService {
       );
 
       if (await ApiClient.handleUnauthorized(response)) {
-        return null;
+        return const AdminCrearBoletoResult.failure(
+          'La sesión expiró.',
+        );
       }
 
       debugPrint(
@@ -101,13 +105,23 @@ class AdminBoletoService {
         '${response.headers['content-type']}',
       );
 
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        return response.bodyBytes;
+      final respuestaExitosa =
+          response.statusCode == 200 || response.statusCode == 201;
+
+      if (respuestaExitosa && _esPng(response.bodyBytes)) {
+        return AdminCrearBoletoResult.success(
+          response.bodyBytes,
+          _obtenerNombreArchivo(response),
+        );
       }
 
+      final mensaje = _obtenerMensajeError(response);
+
       debugPrint(
-        'ERROR CREAR BOLETO: ${response.body}',
+        'ERROR CREAR BOLETO: $mensaje',
       );
+
+      return AdminCrearBoletoResult.failure(mensaje);
     } catch (e, stackTrace) {
       debugPrint(
         'EXCEPCIÓN CREAR BOLETO: $e',
@@ -116,9 +130,78 @@ class AdminBoletoService {
       debugPrintStack(
         stackTrace: stackTrace,
       );
+
+      return const AdminCrearBoletoResult.failure(
+        'No fue posible comunicarse con el servidor.',
+      );
+    }
+  }
+
+  static bool _esPng(Uint8List bytes) {
+    return bytes.length >= 8 &&
+        bytes[0] == 0x89 &&
+        bytes[1] == 0x50 &&
+        bytes[2] == 0x4E &&
+        bytes[3] == 0x47 &&
+        bytes[4] == 0x0D &&
+        bytes[5] == 0x0A &&
+        bytes[6] == 0x1A &&
+        bytes[7] == 0x0A;
+  }
+
+  static String _obtenerMensajeError(http.Response response) {
+    if (response.body.trim().isNotEmpty) {
+      try {
+        final jsonData = jsonDecode(response.body);
+
+        if (jsonData is Map) {
+          return (jsonData['error_msg'] ??
+                  jsonData['message'] ??
+                  jsonData['msg'] ??
+                  jsonData['error'] ??
+                  'No fue posible crear el boleto.')
+              .toString();
+        }
+      } catch (_) {
+        // La respuesta no era JSON; se usa un mensaje controlado.
+      }
     }
 
-    return null;
+    if (response.statusCode < 200 || response.statusCode >= 300) {
+      return 'Error del servidor (${response.statusCode}).';
+    }
+
+    return 'El servidor no devolvió un código QR válido.';
+  }
+
+  static String? _obtenerNombreArchivo(http.Response response) {
+    final contentDisposition = response.headers['content-disposition'];
+
+    if (contentDisposition == null || contentDisposition.trim().isEmpty) {
+      return null;
+    }
+
+    final utf8Match = RegExp(
+      r"filename\*=UTF-8''([^;]+)",
+      caseSensitive: false,
+    ).firstMatch(contentDisposition);
+
+    final regularMatch = RegExp(
+      r'filename="?([^";]+)"?',
+      caseSensitive: false,
+    ).firstMatch(contentDisposition);
+
+    final encodedName = utf8Match?.group(1) ?? regularMatch?.group(1);
+
+    if (encodedName == null || encodedName.trim().isEmpty) {
+      return null;
+    }
+
+    try {
+      return Uri.decodeComponent(encodedName.trim());
+    } catch (_) {
+      return encodedName.trim();
+    }
   }
 
   /// ============================

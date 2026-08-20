@@ -1,6 +1,6 @@
-import 'ApiClient.dart';
+import '../../../services/ApiClient.dart';
 
-class TicketService {
+class CheckerTicketService {
   static Future<dynamic> registrarIngreso(
     String codigo,
   ) async {

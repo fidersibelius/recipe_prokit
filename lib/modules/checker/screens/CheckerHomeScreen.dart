@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:bitsoftickets/screens/QRScannerScreen.dart';
 import 'package:bitsoftickets/services/AuthStorage.dart';
 
-class RCHomeComponent extends StatefulWidget {
+import 'CheckerScannerScreen.dart';
+
+class CheckerHomeScreen extends StatefulWidget {
   final String name;
 
-  const RCHomeComponent({
+  const CheckerHomeScreen({
     super.key,
     required this.name,
   });
 
   @override
-  State<RCHomeComponent> createState() => _RCHomeComponentState();
+  State<CheckerHomeScreen> createState() => _CheckerHomeScreenState();
 }
 
-class _RCHomeComponentState extends State<RCHomeComponent> {
+class _CheckerHomeScreenState extends State<CheckerHomeScreen> {
   String logoBitsof = "";
   String logoOrg = "";
 
@@ -173,7 +174,7 @@ class _RCHomeComponentState extends State<RCHomeComponent> {
                   ],
                 ),
               ).onTap(
-                () => QRScannerScreen().launch(context),
+                () => const CheckerScannerScreen().launch(context),
                 splashColor: Colors.transparent,
                 highlightColor: Colors.transparent,
               ),

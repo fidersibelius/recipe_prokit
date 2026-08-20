@@ -21,6 +21,7 @@ dependencies:
   http: ^1.2.2
   mobile_scanner: ^7.0.1
   share_plus:
+  flutter_file_saver: ^0.9.0
   # Base
   cupertino_icons: ^1.0.8
   nb_utils: ^7.0.4

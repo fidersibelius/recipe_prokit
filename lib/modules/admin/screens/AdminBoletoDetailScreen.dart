@@ -8,12 +8,14 @@ import 'AdminQrScreen.dart';
 
 class AdminBoletoDetailScreen extends StatefulWidget {
   final String eventoUid;
+  final String eventoNombre;
   final AdminBoletoModel boleto;
   final String textoEvento;
 
   const AdminBoletoDetailScreen({
     super.key,
     required this.eventoUid,
+    required this.eventoNombre,
     required this.boleto,
     required this.textoEvento,
   });
@@ -51,6 +53,7 @@ class _AdminBoletoDetailScreenState extends State<AdminBoletoDetailScreen> {
       texto: widget.textoEvento,
       folio: widget.boleto.folio,
       nombreAsistente: widget.boleto.nombre,
+      nombreEvento: widget.eventoNombre,
     ).launch(context);
 
     if (mounted) {
